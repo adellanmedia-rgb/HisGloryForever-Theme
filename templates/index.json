@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "welcome": {
+      "type": "rich-text",
+      "settings": {
+        "heading": "His Glory Forever",
+        "text": "<p>The homepage sections arrive in the next build step.</p>",
+        "color_scheme": "white"
+      }
+    }
+  },
+  "order": ["welcome"]
+}

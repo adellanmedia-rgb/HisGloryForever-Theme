@@ -1,0 +1,25 @@
+{%- liquid
+  assign networks = 'instagram,facebook,tiktok,youtube,pinterest' | split: ','
+  assign has_any = false
+  for network in networks
+    assign key = 'social_' | append: network | append: '_link'
+    if settings[key] != blank
+      assign has_any = true
+    endif
+  endfor
+-%}
+{%- if has_any -%}
+  <ul class="social-list" role="list">
+    {%- for network in networks -%}
+      {%- assign key = 'social_' | append: network | append: '_link' -%}
+      {%- if settings[key] != blank -%}
+        <li>
+          <a href="{{ settings[key] }}" target="_blank" rel="noopener">
+            {% render 'icon', icon: network %}
+            <span class="visually-hidden">{{ network | capitalize }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

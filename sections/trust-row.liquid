@@ -1,0 +1,76 @@
+<div class="trust-row scheme-{{ section.settings.color_scheme }} section-spacing" style="--pad-top: {{ section.settings.padding_top }}px; --pad-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width">
+    <div class="trust-row__grid">
+      {%- for block in section.blocks -%}
+        <div class="trust-row__item" {{ block.shopify_attributes }}>
+          {% render 'icon', icon: block.settings.icon, class: 'trust-row__icon' %}
+          {%- if block.settings.title != blank -%}
+            <h3 class="trust-row__title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p class="trust-row__text">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trust row",
+  "class": "section-trust-row",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Colors",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "white", "label": "White" },
+        { "value": "navy", "label": "Navy" }
+      ],
+      "default": "light"
+    },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 8, "unit": "px", "label": "Top spacing", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 8, "unit": "px", "label": "Bottom spacing", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "made", "label": "Made for you" },
+            { "value": "truck", "label": "Shipping" },
+            { "value": "lock", "label": "Secure checkout" },
+            { "value": "return", "label": "Returns" },
+            { "value": "cross", "label": "Cross" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "mail", "label": "Mail" }
+          ],
+          "default": "made"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Made for you" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Each piece is made for you after you order." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust row",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "made", "title": "Made for you", "text": "Each piece is made for you after you order." } },
+        { "type": "item", "settings": { "icon": "truck", "title": "Free shipping", "text": "On orders over $75 within the U.S." } },
+        { "type": "item", "settings": { "icon": "lock", "title": "Secure checkout", "text": "Protected by Shopify's secure checkout." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

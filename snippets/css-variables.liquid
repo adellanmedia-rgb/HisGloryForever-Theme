@@ -1,0 +1,41 @@
+{%- liquid
+  assign heading_font = settings.type_heading_font
+  assign body_font = settings.type_body_font
+  assign body_font_medium = body_font | font_modify: 'weight', '500'
+  assign body_font_semibold = body_font | font_modify: 'weight', '600'
+  assign body_font_italic = body_font | font_modify: 'style', 'italic'
+  assign heading_font_italic = heading_font | font_modify: 'style', 'italic'
+-%}
+<style>
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+  {{ body_font_medium | font_face: font_display: 'swap' }}
+  {{ body_font_semibold | font_face: font_display: 'swap' }}
+  {{ body_font_italic | font_face: font_display: 'swap' }}
+  {{ heading_font_italic | font_face: font_display: 'swap' }}
+
+  :root {
+    --color-navy: {{ settings.color_navy }};
+    --color-navy-rgb: {{ settings.color_navy.red }}, {{ settings.color_navy.green }}, {{ settings.color_navy.blue }};
+    --color-white: {{ settings.color_white }};
+    --color-light: {{ settings.color_light }};
+    --color-muted: {{ settings.color_muted }};
+    --color-border: {{ settings.color_border }};
+    --color-sale: {{ settings.color_sale }};
+
+    --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --font-heading-weight: {{ heading_font.weight }};
+    --font-heading-style: {{ heading_font.style }};
+    --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+    --font-body-weight: {{ body_font.weight }};
+    --font-body-medium: {% if body_font_medium %}500{% else %}{{ body_font.weight }}{% endif %};
+    --font-body-semibold: {% if body_font_semibold %}600{% else %}{{ body_font.weight }}{% endif %};
+
+    --heading-scale: {{ settings.heading_scale | divided_by: 100.0 }};
+    --body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+
+    --page-width: {{ settings.page_width }}px;
+    --button-min-width: {{ settings.button_min_width }}px;
+    --radius: {% if settings.button_style == 'soft' %}4px{% else %}0px{% endif %};
+  }
+</style>

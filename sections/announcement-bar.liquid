@@ -1,0 +1,84 @@
+{%- liquid
+  assign slide_count = section.blocks.size
+  assign fs_shown = false
+  if section.settings.show_free_shipping and settings.free_shipping_enabled and settings.free_shipping_threshold > 0
+    assign fs_shown = true
+    assign slide_count = slide_count | plus: 1
+  endif
+-%}
+{%- if slide_count > 0 -%}
+  <div class="announcement-bar scheme-{{ section.settings.color_scheme }}" role="region" aria-label="{{ 'sections.announcement.label' | t }}" {{ section.shopify_attributes }}>
+    <div class="page-width announcement-bar__inner">
+      <div class="announcement-bar__slides" data-announcement data-interval="{{ section.settings.interval | times: 1000 }}">
+        {%- if fs_shown -%}
+          <div class="announcement-bar__slide is-active">
+            {% render 'free-shipping-bar', show_track: false %}
+          </div>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          <p class="announcement-bar__slide{% if forloop.first and fs_shown == false %} is-active{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+            {%- else -%}
+              {{ block.settings.text }}
+            {%- endif -%}
+          </p>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "class": "section-announcement",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Colors",
+      "options": [
+        { "value": "navy", "label": "Navy" },
+        { "value": "white", "label": "White" },
+        { "value": "light", "label": "Light" }
+      ],
+      "default": "navy"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_free_shipping",
+      "label": "Show free-shipping progress",
+      "info": "Updates live as the cart changes. The amount is set in Theme settings > Cart and shipping.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "interval",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Time per message",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Each piece is made for you after you order." },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [{ "type": "message" }]
+    }
+  ]
+}
+{% endschema %}

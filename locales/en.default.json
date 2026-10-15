@@ -1,0 +1,50 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "free_shipping": {
+      "intro": "Free shipping on orders over {{ amount }}",
+      "away": "You're {{ amount }} away from free shipping",
+      "unlocked": "You've unlocked free shipping",
+      "progress_label": "Progress toward free shipping"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close": "Close"
+  },
+  "sections": {
+    "announcement": {
+      "label": "Announcements"
+    },
+    "header": {
+      "menu": "Menu",
+      "main_nav": "Main",
+      "shop_all": "Shop all {{ title }}",
+      "search": "Search",
+      "search_placeholder": "Search the collection",
+      "account": "Account",
+      "log_in": "Log in",
+      "wishlist": "Wishlist",
+      "cart": "Cart"
+    },
+    "footer": {
+      "email": "Email address"
+    },
+    "cart": {
+      "title": "Your cart",
+      "empty": "Your cart is empty",
+      "continue": "Continue shopping",
+      "decrease": "Decrease quantity of {{ product }}",
+      "increase": "Increase quantity of {{ product }}",
+      "quantity": "Quantity of {{ product }}",
+      "remove": "Remove",
+      "subtotal": "Subtotal",
+      "taxes_shipping": "Taxes and shipping calculated at checkout.",
+      "checkout": "Checkout",
+      "view_cart": "View cart"
+    }
+  }
+}

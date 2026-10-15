@@ -1,0 +1,239 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "His Glory Forever",
+    "theme_version": "1.0.0",
+    "theme_author": "Adellan Media",
+    "theme_documentation_url": "https://hisgloryforever.com",
+    "theme_support_url": "https://hisgloryforever.com"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Crest or logo image",
+        "info": "SVG or transparent PNG. Until you upload one, a placeholder shows."
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_white",
+        "label": "Logo for navy backgrounds",
+        "info": "Optional white version, used in the footer and on navy sections."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 32,
+        "max": 160,
+        "step": 2,
+        "unit": "px",
+        "label": "Logo width",
+        "default": 56
+      },
+      {
+        "type": "checkbox",
+        "id": "logo_show_name",
+        "label": "Show \"His Glory Forever\" under the crest",
+        "info": "Turn off if your uploaded logo file already includes the name.",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "logo_name",
+        "label": "Name text",
+        "default": "His Glory Forever"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "Square image, at least 64 × 64px."
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "HGF palette: navy and white. Each section lets you choose White, Light, or Navy."
+      },
+      {
+        "type": "color",
+        "id": "color_navy",
+        "label": "Navy",
+        "default": "#13233F"
+      },
+      {
+        "type": "color",
+        "id": "color_white",
+        "label": "White",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_light",
+        "label": "Light background",
+        "info": "A barely-there cool white for alternating sections.",
+        "default": "#F5F6F8"
+      },
+      {
+        "type": "color",
+        "id": "color_muted",
+        "label": "Secondary text",
+        "default": "#5B6577"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Lines and borders",
+        "default": "#E2E5EA"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "Sale price",
+        "default": "#13233F"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "label": "Heading font",
+        "default": "playfair_display_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "min": 80,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "label": "Heading size",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Body"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Body font",
+        "default": "work_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "body_scale",
+        "min": 90,
+        "max": 120,
+        "step": 5,
+        "unit": "%",
+        "label": "Body size",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1000,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "label": "Page width",
+        "default": 1360
+      },
+      {
+        "type": "range",
+        "id": "button_min_width",
+        "min": 140,
+        "max": 280,
+        "step": 10,
+        "unit": "px",
+        "label": "Button width",
+        "info": "Buttons share one width so labels never wrap.",
+        "default": 200
+      },
+      {
+        "type": "select",
+        "id": "button_style",
+        "label": "Button corners",
+        "options": [
+          { "value": "square", "label": "Square" },
+          { "value": "soft", "label": "Slightly rounded" }
+        ],
+        "default": "square"
+      }
+    ]
+  },
+  {
+    "name": "Cart and shipping",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "When someone adds to cart",
+        "options": [
+          { "value": "drawer", "label": "Open the slide-out cart" },
+          { "value": "page", "label": "Go to the cart page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "free_shipping_enabled",
+        "label": "Show free-shipping progress",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping minimum (in dollars)",
+        "info": "Match this to your shipping rates in Settings > Shipping.",
+        "default": 75
+      },
+      {
+        "type": "richtext",
+        "id": "made_for_you_note",
+        "label": "\"Made for you\" note",
+        "info": "Shown in the cart and on product pages.",
+        "default": "<p>Each piece is made for you after you order.</p>"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "text", "id": "social_instagram_link", "label": "Instagram", "info": "https://instagram.com/HGFOriginal" },
+      { "type": "text", "id": "social_facebook_link", "label": "Facebook" },
+      { "type": "text", "id": "social_tiktok_link", "label": "TikTok" },
+      { "type": "text", "id": "social_youtube_link", "label": "YouTube" },
+      { "type": "text", "id": "social_pinterest_link", "label": "Pinterest" }
+    ]
+  },
+  {
+    "name": "Share image",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Default share image",
+        "info": "Shown when your store is shared on social media or in messages. 1200 × 628px recommended."
+      }
+    ]
+  }
+]

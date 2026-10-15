@@ -1,0 +1,69 @@
+<div class="rich-text scheme-{{ section.settings.color_scheme }} section-spacing" style="--pad-top: {{ section.settings.padding_top }}px; --pad-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width">
+    <div class="rich-text__inner text-{{ section.settings.alignment }}" style="max-width: 72rem; margin: {% if section.settings.alignment == 'center' %}0 auto{% else %}0{% endif %};">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="{{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="rte text-muted">{{ section.settings.text }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <div class="button-group{% if section.settings.alignment == 'center' %} button-group--center{% endif %}" style="margin-top: 3.2rem;">
+          <a href="{{ section.settings.button_link }}" class="button">{{ section.settings.button_label }}</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "class": "section-rich-text",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Colors",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "light", "label": "Light" },
+        { "value": "navy", "label": "Navy" }
+      ],
+      "default": "white"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "center"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Small label above heading" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Not for us. For His glory." },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "h1", "label": "Large" },
+        { "value": "h2", "label": "Medium" },
+        { "value": "h3", "label": "Small" }
+      ],
+      "default": "h2"
+    },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Top spacing", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Bottom spacing", "default": 80 }
+  ],
+  "presets": [{ "name": "Rich text" }]
+}
+{% endschema %}

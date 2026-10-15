@@ -1,0 +1,42 @@
+{%- comment -%}
+  The HGF launch lockup: crest + "His Glory Forever" in small type.
+  "HGF" text is never placed next to the crest.
+  Params:
+    - inverse: true when sitting on navy (uses the white logo if uploaded)
+    - heading: true to wrap in an h1 (homepage header)
+{%- endcomment -%}
+{%- liquid
+  assign logo_image = settings.logo
+  if inverse and settings.logo_white != blank
+    assign logo_image = settings.logo_white
+  endif
+-%}
+<a href="{{ routes.root_url }}" class="logo" style="--logo-width: {{ settings.logo_width }}px;">
+  {%- if heading -%}<h1 class="visually-hidden">{{ shop.name }}</h1>{%- endif -%}
+  {%- if logo_image != blank -%}
+    {%- liquid
+      assign logo_width_2x = settings.logo_width | times: 2
+      assign logo_height = settings.logo_width | divided_by: logo_image.aspect_ratio | round
+    -%}
+    {{
+      logo_image
+      | image_url: width: logo_width_2x
+      | image_tag:
+        class: 'logo__image',
+        alt: shop.name,
+        width: settings.logo_width,
+        height: logo_height,
+        loading: 'eager'
+    }}
+  {%- else -%}
+    {%- comment -%} Neutral placeholder shield until the crest file is uploaded {%- endcomment -%}
+    <svg class="logo__placeholder" viewBox="0 0 48 56" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
+      <path d="M24 3 6 9v15c0 13 8 22.5 18 28 10-5.5 18-15 18-28V9L24 3Z"/>
+      <path d="M24 16v20M17 23h14" stroke-width="1.2"/>
+    </svg>
+    {%- unless settings.logo_show_name -%}<span class="visually-hidden">{{ shop.name }}</span>{%- endunless -%}
+  {%- endif -%}
+  {%- if settings.logo_show_name and settings.logo_name != blank -%}
+    <span class="logo__name">{{ settings.logo_name }}</span>
+  {%- endif -%}
+</a>
