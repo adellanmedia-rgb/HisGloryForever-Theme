@@ -10,6 +10,9 @@
           <div class="footer__signup-text rte">{{ section.settings.signup_text }}</div>
         {%- endif -%}
 
+        {%- if section.settings.brevo_form != blank -%}
+          <div class="brevo-embed brevo-embed--left">{{ section.settings.brevo_form }}</div>
+        {%- else -%}
         {%- form 'customer', id: 'FooterSignup', class: 'newsletter-form' -%}
           <input type="hidden" name="contact[tags]" value="newsletter,weekly-verse">
           {%- if section.settings.show_perk and section.settings.perk_text != blank -%}
@@ -40,6 +43,7 @@
             <p class="footer__privacy">{{ section.settings.signup_privacy }}</p>
           {%- endif -%}
         {%- endform -%}
+        {%- endif -%}
       </div>
     {%- endif -%}
 
@@ -123,6 +127,12 @@
       "id": "signup_text",
       "label": "Text",
       "default": "<p>A scripture in your inbox every week, plus early access to new drops and occasional offers.</p>"
+    },
+    {
+      "type": "html",
+      "id": "brevo_form",
+      "label": "Brevo form embed code",
+      "info": "Optional. Paste a Brevo form's embed code to use it instead of the built-in signup form."
     },
     {
       "type": "text",

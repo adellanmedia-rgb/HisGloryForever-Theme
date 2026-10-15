@@ -2375,3 +2375,14 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
 .crest-teaser__form { width: 100%; margin-top: 1.2rem; }
 
 .crest-teaser__success { font-family: var(--font-heading); font-size: 2.2rem; }
+
+/* Brevo embedded forms: keep them on-brand and inside the layout */
+.brevo-embed { width: 100%; max-width: 54rem; margin: 1.6rem auto 0; text-align: left; }
+.brevo-embed--left { margin-left: 0; }
+.brevo-embed .sib-form,
+.brevo-embed #sib-container { background: transparent !important; border: 0 !important; padding: 0 !important; max-width: none !important; font-family: var(--font-body) !important; }
+.brevo-embed input[type="text"],
+.brevo-embed input[type="email"],
+.brevo-embed input[type="tel"] { min-height: 4.8rem; border-radius: var(--radius) !important; font-family: var(--font-body) !important; }
+.brevo-embed button[type="submit"],
+.brevo-embed .sib-form-block__button { min-height: 4.8rem; border-radius: var(--radius) !important; font-family: var(--font-body) !important; letter-spacing: 0.14em; text-transform: uppercase; font-size: 1.3rem !important; }
