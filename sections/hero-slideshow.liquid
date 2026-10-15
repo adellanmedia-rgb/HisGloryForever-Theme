@@ -87,7 +87,7 @@
       <button type="button" class="slideshow__arrow" data-slide-prev aria-label="{{ 'sections.slideshow.previous' | t }}">
         {% render 'icon', icon: 'arrow-right', class: 'icon--flip' %}
       </button>
-      <div class="slideshow__dots" role="tablist">
+      <div class="slideshow__dots">
         {%- for block in section.blocks -%}
           <button type="button" class="slideshow__dot{% if forloop.first %} is-active{% endif %}" data-slide-dot="{{ forloop.index0 }}" aria-label="{{ 'sections.slideshow.go_to' | t: number: forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}></button>
         {%- endfor -%}

@@ -1469,6 +1469,7 @@ textarea.field__input { resize: vertical; min-height: 14rem; }
 .product__gallery { position: relative; }
 
 .product__media-list { list-style: none; margin: 0; padding: 0; }
+.product__media-list:focus-visible { outline: 2px solid var(--color-navy); outline-offset: -2px; }
 
 .product__media { aspect-ratio: 4 / 5; }
 
@@ -1767,7 +1768,7 @@ input:checked + .swatch { border-color: var(--color-navy); }
 @media (max-width: 749px) {
   .facets-toolbar { flex-wrap: wrap; }
   .facets-toolbar__count { order: 3; width: 100%; }
-  .facets-toolbar__sort-label { display: none; }
+  .facets-toolbar__sort-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
 
 .select { position: relative; display: inline-flex; align-items: center; }
@@ -2336,3 +2337,15 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
 .password__admin-form .field { gap: 0.8rem; }
 .password__admin-form .button { min-width: 0; --_bg: var(--color-white); --_fg: var(--color-navy); }
 .account__layout > * { min-width: 0; }
+
+/* Closed drawers are hidden from keyboard and screen readers */
+.menu-drawer,
+.cart-drawer,
+.facets-drawer {
+  visibility: hidden;
+  transition: transform 0.35s ease, visibility 0.35s;
+}
+
+.menu-drawer.is-open,
+.cart-drawer.is-open,
+.facets-drawer.is-open { visibility: visible; }

@@ -90,7 +90,8 @@
     "description": "Details",
     "fit_care": "Fit & care",
     "shipping": "Shipping & returns",
-    "shop_design": "Shop this design"
+    "shop_design": "Shop this design",
+    "gallery": "Product images"
   },
   "collections": {
     "filter": "Filter",

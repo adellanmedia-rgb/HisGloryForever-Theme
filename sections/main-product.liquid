@@ -20,7 +20,7 @@
 <section class="product page-width" data-product data-section-id="{{ section.id }}" data-product-url="{{ product.url }}">
   {%- comment -%} ---------- Gallery ---------- {%- endcomment -%}
   <div class="product__gallery" data-gallery>
-    <ul class="product__media-list" role="list" data-media-list>
+    <ul class="product__media-list" role="list" data-media-list tabindex="0" aria-label="{{ 'products.gallery' | t }}">
       {%- for media in product.media -%}
         <li class="product__media-item{% if forloop.first %} is-first{% endif %}" data-media-id="{{ media.id }}">
           {%- case media.media_type -%}
