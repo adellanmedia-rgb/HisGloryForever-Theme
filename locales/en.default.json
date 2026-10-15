@@ -89,7 +89,8 @@
     "meaning": "The meaning behind this design",
     "description": "Details",
     "fit_care": "Fit & care",
-    "shipping": "Shipping & returns"
+    "shipping": "Shipping & returns",
+    "shop_design": "Shop this design"
   },
   "collections": {
     "filter": "Filter",
@@ -113,5 +114,16 @@
     "title": "Search",
     "no_results": "No results for \"{{ terms }}\".",
     "shop_all": "Shop all"
+  },
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "order": "Order number",
+    "optional": "Optional",
+    "message": "Message",
+    "send": "Send message"
+  },
+  "wishlist": {
+    "empty": "Nothing saved yet."
   }
 }

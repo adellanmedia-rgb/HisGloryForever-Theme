@@ -1,0 +1,104 @@
+{
+  "sections": {
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "g1": {
+          "type": "group",
+          "settings": {
+            "title": "Orders & shipping"
+          }
+        },
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Why does my order take a few extra days?",
+            "answer": "<p>Each piece is made for you after you order. That's how we keep quality high and waste low.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "How long until my order arrives?",
+            "answer": "<p>[Add your production time and shipping time.]</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer free shipping?",
+            "answer": "<p>Yes, on orders over $100 within the U.S.</p>"
+          }
+        },
+        "g2": {
+          "type": "group",
+          "settings": {
+            "title": "Sizing & fit"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "How do your tees fit?",
+            "answer": "<p>A relaxed, classic fit. See the <a href=\"/pages/fit-guide\">Fit Guide</a> for measurements.</p>"
+          }
+        },
+        "g3": {
+          "type": "group",
+          "settings": {
+            "title": "Returns"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>[Add your return and exchange policy.]</p>"
+          }
+        },
+        "g4": {
+          "type": "group",
+          "settings": {
+            "title": "About HGF"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "What does HGF stand for?",
+            "answer": "<p>His Glory Forever.</p>"
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "question": "Where is the verse on Scripture Editorial pieces?",
+            "answer": "<p>The verse reference is embroidered on the left sleeve. The front carries the message on its own, by design.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "q1",
+        "q2",
+        "q3",
+        "g2",
+        "q4",
+        "g3",
+        "q5",
+        "g4",
+        "q6",
+        "q7"
+      ],
+      "settings": {
+        "color_scheme": "white",
+        "heading": "Frequently asked questions",
+        "padding_top": 64,
+        "padding_bottom": 96
+      }
+    }
+  },
+  "order": [
+    "faq"
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "sections": {
+    "meanings": {
+      "type": "design-meanings",
+      "blocks": {
+        "d1": {
+          "type": "design",
+          "settings": {
+            "title": "The King Returns",
+            "verse": "",
+            "text": ""
+          }
+        },
+        "d2": {
+          "type": "design",
+          "settings": {
+            "title": "Stay Awake",
+            "verse": "",
+            "text": ""
+          }
+        },
+        "d3": {
+          "type": "design",
+          "settings": {
+            "title": "The Trumpet Will Sound",
+            "verse": "",
+            "text": ""
+          }
+        },
+        "d4": {
+          "type": "design",
+          "settings": {
+            "title": "Design name",
+            "verse": "",
+            "text": ""
+          }
+        },
+        "d5": {
+          "type": "design",
+          "settings": {
+            "title": "Design name",
+            "verse": "",
+            "text": ""
+          }
+        },
+        "d6": {
+          "type": "design",
+          "settings": {
+            "title": "Design name",
+            "verse": "",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5",
+        "d6"
+      ],
+      "settings": {
+        "color_scheme": "white",
+        "eyebrow": "Scripture Editorial",
+        "heading": "The meaning behind the designs",
+        "text": "<p>No verse on the front, by design. Here is the scripture behind each piece.</p>",
+        "padding_top": 80,
+        "padding_bottom": 96
+      }
+    }
+  },
+  "order": [
+    "meanings"
+  ]
+}

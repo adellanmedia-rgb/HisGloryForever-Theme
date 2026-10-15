@@ -670,6 +670,41 @@
     });
   };
 
+  /* ---------- Wishlist page ---------- */
+
+  const initWishlistPage = () => {
+    const page = $('[data-wishlist-page]');
+    if (!page) return;
+    const grid = $('[data-wishlist-grid]', page);
+    const empty = $('[data-wishlist-empty]', page);
+    const handles = Wishlist.get();
+    if (!handles.length) { empty.hidden = false; return; }
+    const esc = (str) => String(str).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const fmt = (c) => formatMoney(c).replace(/[.,]00(?=\D*$)/, '');
+    Promise.all(handles.map((h) => fetch(`${theme.routes.root.replace(/\/$/, '')}/products/${encodeURIComponent(h)}.js`).then((r) => (r.ok ? r.json() : null)).catch(() => null)))
+      .then((products) => {
+        const found = products.filter(Boolean);
+        if (!found.length) { empty.hidden = false; return; }
+        grid.innerHTML = found.map((p) => {
+          const img = p.featured_image ? `<img src="${p.featured_image}${p.featured_image.includes('?') ? '&' : '?'}width=720" alt="${esc(p.title)}" loading="lazy">` : '';
+          return `<li class="product-grid__item"><div class="card">
+            <a href="${p.url}" class="card__media media">${img}</a>
+            <div class="card__info">
+              <h3 class="card__title"><a href="${p.url}">${esc(p.title)}</a></h3>
+              <p class="card__meta"><span class="card__price">${fmt(p.price)}</span></p>
+              <button type="button" class="link-inline" data-wishlist-remove="${esc(p.handle)}">Remove</button>
+            </div></div></li>`;
+        }).join('');
+      });
+    page.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-wishlist-remove]');
+      if (!btn) return;
+      Wishlist.toggle(btn.dataset.wishlistRemove);
+      btn.closest('li').remove();
+      if (!grid.children.length) empty.hidden = false;
+    });
+  };
+
   /* ---------- Boot ---------- */
 
   const boot = () => {
@@ -683,6 +718,7 @@
     Wishlist.init();
     initRecommendations();
     initFacets();
+    initWishlistPage();
   };
 
   // Re-run section scripts when edited in the theme editor

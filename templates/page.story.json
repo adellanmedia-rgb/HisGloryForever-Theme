@@ -1,0 +1,100 @@
+{
+  "sections": {
+    "intro": {
+      "type": "rich-text",
+      "settings": {
+        "color_scheme": "white",
+        "alignment": "center",
+        "eyebrow": "Our Story",
+        "heading": "His glory, forever.",
+        "heading_size": "h1",
+        "text": "<p>Why His Glory Forever exists, and who it's for.</p>",
+        "padding_top": 96,
+        "padding_bottom": 64
+      }
+    },
+    "why": {
+      "type": "editorial-split",
+      "settings": {
+        "image_side": "left",
+        "color_scheme": "navy",
+        "eyebrow": "Our Why",
+        "heading": "More than clothing.",
+        "text": "<p>His Glory Forever began with one purpose: to carry the gospel into everyday life and gather a community of believers who shine where they are.</p>",
+        "verse": "Romans 11:36",
+        "button_label": "",
+        "button_style": "solid"
+      }
+    },
+    "content": {
+      "type": "main-page",
+      "settings": {
+        "show_title": false,
+        "width": "narrow",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "values": {
+      "type": "text-columns",
+      "blocks": {
+        "v1": {
+          "type": "column",
+          "settings": {
+            "icon": "cross",
+            "title": "Scripture first",
+            "text": "<p>Every design starts with the Word.</p>"
+          }
+        },
+        "v2": {
+          "type": "column",
+          "settings": {
+            "icon": "made",
+            "title": "Made for you",
+            "text": "<p>Each piece is made after you order, not mass-produced.</p>"
+          }
+        },
+        "v3": {
+          "type": "column",
+          "settings": {
+            "icon": "heart",
+            "title": "Community",
+            "text": "<p>A place for believers to pray for and encourage one another.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "settings": {
+        "color_scheme": "light",
+        "heading": "What we stand on",
+        "numbered": false,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "cta": {
+      "type": "rich-text",
+      "settings": {
+        "color_scheme": "white",
+        "alignment": "center",
+        "heading": "Wear it as a witness.",
+        "heading_size": "h2",
+        "button_label": "Shop the collections",
+        "button_link": "",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "why",
+    "content",
+    "values",
+    "cta"
+  ]
+}

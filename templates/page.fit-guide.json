@@ -1,0 +1,157 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_title": true,
+        "width": "narrow",
+        "padding_top": 64,
+        "padding_bottom": 24
+      }
+    },
+    "tee": {
+      "type": "size-table",
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "label": "Body width",
+            "values": ""
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "label": "Body length",
+            "values": ""
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2"
+      ],
+      "settings": {
+        "heading": "Classic Tee",
+        "text": "<p>Relaxed, classic fit. Measured flat across the garment.</p>",
+        "first_column": "Measurement",
+        "sizes": "S, M, L, XL, 2XL",
+        "footnote": "Measurements in inches. Between sizes? Size up for a roomier fit.",
+        "padding_top": 32,
+        "padding_bottom": 32
+      }
+    },
+    "crew": {
+      "type": "size-table",
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "label": "Body width",
+            "values": ""
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "label": "Body length",
+            "values": ""
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2"
+      ],
+      "settings": {
+        "heading": "Crewneck Sweatshirt",
+        "text": "",
+        "first_column": "Measurement",
+        "sizes": "S, M, L, XL, 2XL",
+        "footnote": "Measurements in inches.",
+        "padding_top": 32,
+        "padding_bottom": 32
+      }
+    },
+    "hood": {
+      "type": "size-table",
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "label": "Body width",
+            "values": ""
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "label": "Body length",
+            "values": ""
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2"
+      ],
+      "settings": {
+        "heading": "Hoodie",
+        "text": "",
+        "first_column": "Measurement",
+        "sizes": "S, M, L, XL, 2XL",
+        "footnote": "Measurements in inches.",
+        "padding_top": 32,
+        "padding_bottom": 32
+      }
+    },
+    "measure": {
+      "type": "text-columns",
+      "blocks": {
+        "m1": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Body width",
+            "text": "<p>Lay the shirt flat and measure straight across, 1 inch below the armpits.</p>"
+          }
+        },
+        "m2": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Body length",
+            "text": "<p>Measure from the highest point of the shoulder down to the bottom hem.</p>"
+          }
+        },
+        "m3": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Compare",
+            "text": "<p>Measure a shirt you already love and match it to the chart.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "settings": {
+        "color_scheme": "light",
+        "heading": "How to measure",
+        "numbered": true,
+        "padding_top": 80,
+        "padding_bottom": 96
+      }
+    }
+  },
+  "order": [
+    "main",
+    "tee",
+    "crew",
+    "hood",
+    "measure"
+  ]
+}

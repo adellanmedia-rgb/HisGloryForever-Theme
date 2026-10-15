@@ -1,0 +1,63 @@
+{%- assign s = section.settings -%}
+<section class="contact section-spacing" style="--pad-top: {{ s.padding_top }}px; --pad-bottom: {{ s.padding_bottom }}px;">
+  <div class="page-width contact__inner">
+    <div class="contact__intro">
+      {%- if s.heading != blank -%}<h1 class="h1">{{ s.heading }}</h1>{%- endif -%}
+      {%- if s.text != blank -%}<div class="rte text-muted">{{ s.text }}</div>{%- endif -%}
+      {%- if s.email != blank -%}
+        <p class="contact__detail">
+          {% render 'icon', icon: 'mail', class: 'icon--small' %}
+          <a href="mailto:{{ s.email }}">{{ s.email }}</a>
+        </p>
+      {%- endif -%}
+      {% render 'social-links' %}
+    </div>
+
+    <div class="contact__form">
+      {%- form 'contact', id: 'ContactForm' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="prayer-teaser__success" role="status">{{ s.success_message }}</p>
+        {%- else -%}
+          {%- if form.errors -%}
+            <p class="form-message" role="alert">{{ form.errors | default_errors }}</p>
+          {%- endif -%}
+          <div class="form-grid">
+            <div>
+              <label class="form-label" for="ContactName">{{ 'contact.name' | t }}</label>
+              <input class="field__input" id="ContactName" type="text" name="contact[Name]" autocomplete="name" value="{{ form.name }}">
+            </div>
+            <div>
+              <label class="form-label" for="ContactEmail">{{ 'contact.email' | t }}</label>
+              <input class="field__input" id="ContactEmail" type="email" name="contact[email]" autocomplete="email" required value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+            </div>
+            <div class="form-grid__full">
+              <label class="form-label" for="ContactOrder">{{ 'contact.order' | t }}</label>
+              <input class="field__input" id="ContactOrder" type="text" name="contact[Order number]" placeholder="{{ 'contact.optional' | t }}">
+            </div>
+            <div class="form-grid__full">
+              <label class="form-label" for="ContactBody">{{ 'contact.message' | t }}</label>
+              <textarea class="field__input" id="ContactBody" name="contact[body]" rows="6" required>{{ form.body }}</textarea>
+            </div>
+          </div>
+          <div style="margin-top: 2.4rem;"><button type="submit" class="button">{{ 'contact.send' | t }}</button></div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "class": "section-contact",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Contact us" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Questions about an order, sizing or a design? Send us a note and we'll get back to you.</p>" },
+    { "type": "text", "id": "email", "label": "Email address to show" },
+    { "type": "text", "id": "success_message", "label": "Thank-you message", "default": "Thank you. We'll be in touch soon." },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Top spacing", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Bottom spacing", "default": 96 }
+  ],
+  "presets": [{ "name": "Contact form" }]
+}
+{% endschema %}

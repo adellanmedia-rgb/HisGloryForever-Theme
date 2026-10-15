@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "contact": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Contact us",
+        "text": "<p>Questions about an order, sizing or a design? Send us a note and we'll get back to you.</p>",
+        "email": "",
+        "success_message": "Thank you. We'll be in touch soon.",
+        "padding_top": 64,
+        "padding_bottom": 96
+      }
+    }
+  },
+  "order": [
+    "contact"
+  ]
+}

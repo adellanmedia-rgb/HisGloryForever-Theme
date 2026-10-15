@@ -1,0 +1,90 @@
+{
+  "sections": {
+    "intro": {
+      "type": "rich-text",
+      "settings": {
+        "color_scheme": "white",
+        "alignment": "center",
+        "eyebrow": "New to HGF?",
+        "heading": "Start here.",
+        "heading_size": "h1",
+        "text": "<p>Everything you need to know before your first piece.</p>",
+        "padding_top": 96,
+        "padding_bottom": 48
+      }
+    },
+    "steps": {
+      "type": "text-columns",
+      "blocks": {
+        "s1": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Find your fit",
+            "text": "<p>Our tees have a relaxed, classic fit. Check the Fit Guide before you order.</p>",
+            "link_label": "Fit Guide",
+            "link": "/pages/fit-guide"
+          }
+        },
+        "s2": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Read the meaning",
+            "text": "<p>Every design carries scripture. Read the story behind each one.</p>",
+            "link_label": "The meaning behind the designs",
+            "link": "/pages/meaning"
+          }
+        },
+        "s3": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Made for you",
+            "text": "<p>Each piece is made after you order, so allow a little extra time.</p>",
+            "link_label": "Shipping & Returns",
+            "link": "/pages/shipping-returns"
+          }
+        },
+        "s4": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Join the Weekly Verse",
+            "text": "<p>A scripture in your inbox every week, plus early access to new drops.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "color_scheme": "white",
+        "numbered": true,
+        "padding_top": 48,
+        "padding_bottom": 80
+      }
+    },
+    "best": {
+      "type": "featured-collection",
+      "settings": {
+        "color_scheme": "light",
+        "eyebrow": "Most loved",
+        "heading": "A good place to begin",
+        "limit": 4,
+        "columns": "4",
+        "show_view_all": true,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "steps",
+    "best"
+  ]
+}

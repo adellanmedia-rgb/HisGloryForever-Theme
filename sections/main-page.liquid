@@ -1,0 +1,33 @@
+{%- assign s = section.settings -%}
+<div class="page-width page-content section-spacing" style="--pad-top: {{ s.padding_top }}px; --pad-bottom: {{ s.padding_bottom }}px;">
+  <div class="page-content__inner page-content__inner--{{ s.width }}">
+    {%- if s.show_title -%}<h1 class="h1 page-content__title">{{ page.title | escape }}</h1>{%- endif -%}
+    {%- if page.content != blank -%}
+      <div class="rte page-content__body">{{ page.content }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page content",
+  "class": "section-main-page",
+  "settings": [
+    { "type": "paragraph", "content": "Shows the title and text you write for this page in Shopify admin > Online Store > Pages." },
+    { "type": "checkbox", "id": "show_title", "label": "Show page title", "default": true },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Text width",
+      "options": [
+        { "value": "narrow", "label": "Narrow" },
+        { "value": "wide", "label": "Wide" }
+      ],
+      "default": "narrow"
+    },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Top spacing", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Bottom spacing", "default": 96 }
+  ],
+  "presets": [{ "name": "Page content" }]
+}
+{% endschema %}
