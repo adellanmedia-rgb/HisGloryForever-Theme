@@ -1,0 +1,80 @@
+{%- assign s = section.settings -%}
+<div class="page-width cart-page" data-cart-page data-section-id="{{ section.id }}">
+  <div class="cart-page__header">
+    <h1 class="h1">{{ 'sections.cart.title' | t }}</h1>
+    {%- if cart.item_count > 0 -%}
+      <a href="{{ routes.all_products_collection_url }}" class="link-underline">{{ 'sections.cart.continue' | t }}</a>
+    {%- endif -%}
+  </div>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="cart-page__empty">
+      <p class="h3">{{ 'sections.cart.empty' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="button">{{ 'sections.cart.continue' | t }}</a>
+      {%- if shop.customer_accounts_enabled and customer == nil -%}
+        <p class="text-muted text-small">{{ 'sections.cart.login_prompt_html' | t: url: routes.account_login_url }}</p>
+      {%- endif -%}
+    </div>
+  {%- else -%}
+    <form action="{{ routes.cart_url }}" method="post" class="cart-page__layout" id="CartPageForm">
+      <div class="cart-page__items">
+        <ul class="cart-items" role="list">
+          {%- for item in cart.items -%}
+            {% render 'cart-item', item: item, index: forloop.index %}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <aside class="cart-page__summary scheme-light">
+        {%- if settings.free_shipping_enabled and settings.free_shipping_threshold > 0 -%}
+          <div class="cart-page__shipping">{% render 'free-shipping-bar', show_track: true %}</div>
+        {%- endif -%}
+
+        {%- for discount in cart.cart_level_discount_applications -%}
+          <div class="cart-drawer__subtotal text-small">
+            <span>{{ discount.title }}</span>
+            <span>-{{ discount.total_allocated_amount | money }}</span>
+          </div>
+        {%- endfor -%}
+
+        <div class="cart-drawer__subtotal">
+          <span>{{ 'sections.cart.subtotal' | t }}</span>
+          <span>{{ cart.total_price | money_with_currency }}</span>
+        </div>
+        <p class="cart-drawer__note">{{ 'sections.cart.taxes_shipping' | t }}</p>
+
+        {%- if s.show_note -%}
+          <div class="cart-page__note">
+            <label class="form-label" for="CartNote">{{ s.note_label }}</label>
+            <textarea class="field__input" id="CartNote" name="note" rows="3" data-cart-note>{{ cart.note }}</textarea>
+          </div>
+        {%- endif -%}
+
+        {%- if settings.made_for_you_note != blank -%}
+          <div class="made-for-you-note">
+            {% render 'icon', icon: 'made' %}
+            <div class="rte">{{ settings.made_for_you_note }}</div>
+          </div>
+        {%- endif -%}
+
+        <button type="submit" name="checkout" class="button button--full">{{ 'sections.cart.checkout' | t }}</button>
+
+        {%- if additional_checkout_buttons and s.show_express -%}
+          <div class="cart-page__express">{{ content_for_additional_checkout_buttons }}</div>
+        {%- endif -%}
+      </aside>
+    </form>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Cart",
+  "class": "section-main-cart",
+  "settings": [
+    { "type": "checkbox", "id": "show_express", "label": "Show express checkout buttons", "info": "Shop Pay, Apple Pay and others, when enabled in Shopify payments.", "default": true },
+    { "type": "checkbox", "id": "show_note", "label": "Show order note", "default": false },
+    { "type": "text", "id": "note_label", "label": "Order note label", "default": "Add a note to your order" }
+  ]
+}
+{% endschema %}

@@ -196,6 +196,13 @@
 
       this.bindDrawer();
 
+      // Save the order note as it's typed
+      document.addEventListener('input', (e) => {
+        if (!e.target.matches('[data-cart-note]')) return;
+        clearTimeout(this.noteTimer);
+        this.noteTimer = setTimeout(() => this.request(`${theme.routes.cart}/update.js`, { note: e.target.value }).catch(() => {}), 500);
+      });
+
       // Any add-to-cart form on the site
       document.addEventListener('submit', (e) => {
         const form = e.target;
@@ -211,23 +218,34 @@
     close() { closeDrawer(this.drawer, this.overlay); },
 
     bindDrawer() {
-      if (!this.drawer) return;
-      this.drawer.addEventListener('click', (e) => {
+      if (this.drawer) this.bindItems(this.drawer);
+      this.page = $('[data-cart-page]');
+      if (this.page) this.bindItems(this.page);
+    },
+
+    bindItems(container) {
+      container.addEventListener('click', (e) => {
         const item = e.target.closest('.cart-item');
         if (!item) return;
         const line = Number(item.dataset.line);
         const input = $('[data-qty-input]', item);
         if (e.target.closest('[data-qty-change]')) {
           const delta = Number(e.target.closest('[data-qty-change]').dataset.qtyChange);
-          this.change(line, Math.max(0, Number(input.value) + delta), item);
+          this.change(line, Math.max(0, Number(input.value) + delta), item, container);
         }
-        if (e.target.closest('[data-remove]')) this.change(line, 0, item);
+        if (e.target.closest('[data-remove]')) this.change(line, 0, item, container);
       });
-      this.drawer.addEventListener('change', (e) => {
+      container.addEventListener('change', (e) => {
         if (!e.target.matches('[data-qty-input]')) return;
         const item = e.target.closest('.cart-item');
-        this.change(Number(item.dataset.line), Math.max(0, Number(e.target.value) || 0), item);
+        this.change(Number(item.dataset.line), Math.max(0, Number(e.target.value) || 0), item, container);
       });
+    },
+
+    sectionIds() {
+      const ids = ['cart-drawer'];
+      if (this.page && this.page.dataset.sectionId) ids.push(this.page.dataset.sectionId);
+      return ids;
     },
 
     async request(url, body) {
@@ -241,16 +259,16 @@
       return data;
     },
 
-    async change(line, quantity, item) {
-      this.drawer.classList.add('is-updating');
+    async change(line, quantity, item, container = this.drawer) {
+      container && container.classList.add('is-updating');
       const error = item && $('[data-line-error]', item);
       try {
-        const cart = await this.request(`${theme.routes.cartChange}.js`, { line, quantity, sections: ['cart-drawer'] });
+        const cart = await this.request(`${theme.routes.cartChange}.js`, { line, quantity, sections: this.sectionIds() });
         this.render(cart);
       } catch (err) {
         if (error) { error.textContent = err.description || err.message || 'Something went wrong. Please try again.'; error.hidden = false; }
       } finally {
-        this.drawer.classList.remove('is-updating');
+        container && container.classList.remove('is-updating');
       }
     },
 
@@ -261,7 +279,7 @@
       if (errorEl) errorEl.hidden = true;
       try {
         const formData = new FormData(form);
-        formData.append('sections', 'cart-drawer');
+        formData.append('sections', this.sectionIds().join(','));
         const res = await fetch(`${theme.routes.cartAdd}.js`, { method: 'POST', headers: { Accept: 'application/json' }, body: formData });
         const data = await res.json();
         if (!res.ok) throw data;
@@ -283,6 +301,11 @@
         const doc = new DOMParser().parseFromString(cart.sections['cart-drawer'], 'text/html');
         const fresh = doc.querySelector('[data-cart-drawer]');
         if (fresh) this.drawer.innerHTML = fresh.innerHTML;
+      }
+      if (this.page && cart.sections && cart.sections[this.page.dataset.sectionId]) {
+        const doc = new DOMParser().parseFromString(cart.sections[this.page.dataset.sectionId], 'text/html');
+        const fresh = doc.querySelector('[data-cart-page]');
+        if (fresh) this.page.innerHTML = fresh.innerHTML;
       }
       $$('[data-cart-count]').forEach((el) => {
         el.textContent = cart.item_count;

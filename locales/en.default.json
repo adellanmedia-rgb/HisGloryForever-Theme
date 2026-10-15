@@ -50,7 +50,8 @@
       "subtotal": "Subtotal",
       "taxes_shipping": "Taxes and shipping calculated at checkout.",
       "checkout": "Checkout",
-      "view_cart": "View cart"
+      "view_cart": "View cart",
+      "login_prompt_html": "Have an account? <a href=\"{{ url }}\">Log in</a> to check out faster."
     },
     "featured_collection": {
       "view_all": "View all"

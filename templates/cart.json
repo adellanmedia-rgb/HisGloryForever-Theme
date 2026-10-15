@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "main-cart", "settings": { "show_express": true, "show_note": false, "note_label": "Add a note to your order" } }
+  },
+  "order": ["main"]
+}
