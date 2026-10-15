@@ -241,6 +241,21 @@
         "padding_top": 96,
         "padding_bottom": 96
       }
+    },
+    "crest": {
+      "type": "crest-teaser",
+      "settings": {
+        "color_scheme": "light",
+        "eyebrow": "The Signature Collection",
+        "heading": "The crest. Coming soon.",
+        "text": "<p>Crown, shield and the H-G-F monogram, embroidered on the chest. A collection that lets the mark speak for itself.</p>",
+        "show_signup": true,
+        "button_label": "Notify me",
+        "privacy_text": "We'll email you when the Signature Collection drops.",
+        "success_message": "You're on the list. We'll let you know first.",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
     }
   },
   "order": [
@@ -253,6 +268,7 @@
     "walk",
     "spotlight",
     "our_why",
+    "crest",
     "prayer"
   ]
 }

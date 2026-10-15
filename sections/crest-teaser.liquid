@@ -1,0 +1,75 @@
+{%- comment -%}
+  Signature Collection teaser: a close-up of the embroidered crest, not a product for sale.
+  Optional "Notify me" signup tagged signature-waitlist.
+{%- endcomment -%}
+{%- assign s = section.settings -%}
+<section class="crest-teaser scheme-{{ s.color_scheme }} section-spacing" style="--pad-top: {{ s.padding_top }}px; --pad-bottom: {{ s.padding_bottom }}px;">
+  <div class="page-width">
+    <div class="crest-teaser__frame">
+      <div class="crest-teaser__media media">
+        {%- if s.image != blank -%}
+          {{ s.image | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '(min-width: 1200px) 1200px, 100vw', widths: '750, 1100, 1500, 2000, 2400', alt: s.image.alt | default: s.heading }}
+        {%- else -%}
+          {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="crest-teaser__content text-center">
+      {%- if s.eyebrow != blank -%}<span class="eyebrow">{{ s.eyebrow }}</span>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="h1 crest-teaser__heading">{{ s.heading }}</h2>{%- endif -%}
+      {%- if s.text != blank -%}<div class="rte crest-teaser__text">{{ s.text }}</div>{%- endif -%}
+
+      {%- if s.show_signup -%}
+        {%- form 'customer', id: 'CrestNotify', class: 'newsletter-form newsletter-form--center crest-teaser__form' -%}
+          <input type="hidden" name="contact[tags]" value="signature-waitlist">
+          {%- if form.posted_successfully? -%}
+            <p class="crest-teaser__success" role="status">{{ s.success_message }}</p>
+          {%- else -%}
+            <div class="field">
+              <label class="visually-hidden" for="CrestNotifyEmail">{{ 'sections.footer.email' | t }}</label>
+              <input id="CrestNotifyEmail" class="field__input" type="email" name="contact[email]" autocomplete="email" placeholder="{{ 'sections.footer.email' | t }}" required>
+              <button type="submit" class="button">{{ s.button_label }}</button>
+            </div>
+            {%- if form.errors -%}
+              <p class="form-message" role="alert">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+            {%- endif -%}
+            {%- if s.privacy_text != blank -%}<p class="footer__privacy">{{ s.privacy_text }}</p>{%- endif -%}
+          {%- endif -%}
+        {%- endform -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Crest close-up teaser",
+  "class": "section-crest-teaser",
+  "settings": [
+    { "type": "paragraph", "content": "A close-up of the embroidered crest to build interest before the Signature Collection drop. Use a detail photo of real stitching." },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Colors",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "white", "label": "White" },
+        { "value": "navy", "label": "Navy" }
+      ],
+      "default": "light"
+    },
+    { "type": "image_picker", "id": "image", "label": "Crest close-up photo", "info": "Wide image works best, at least 2000px across." },
+    { "type": "text", "id": "eyebrow", "label": "Small label above heading", "default": "The Signature Collection" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The crest. Coming soon." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Crown, shield and the H-G-F monogram, embroidered on the chest. A collection that lets the mark speak for itself.</p>" },
+    { "type": "checkbox", "id": "show_signup", "label": "Show \"Notify me\" signup", "default": true },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Notify me" },
+    { "type": "text", "id": "privacy_text", "label": "Small print", "default": "We'll email you when the Signature Collection drops." },
+    { "type": "text", "id": "success_message", "label": "Thank-you message", "default": "You're on the list. We'll let you know first." },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Top spacing", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Bottom spacing", "default": 96 }
+  ],
+  "presets": [{ "name": "Crest close-up teaser" }]
+}
+{% endschema %}
