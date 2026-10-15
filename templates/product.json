@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_collection": true,
+        "show_wishlist": true,
+        "open_meaning": true,
+        "shipping_text": "<p>Each piece is made for you after you order. Free shipping on orders over $100. See Shipping & Returns for timing and our return policy.</p>"
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "color_scheme": "white",
+        "heading": "Complete the look",
+        "limit": 4,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": ["main", "recommendations"]
+}

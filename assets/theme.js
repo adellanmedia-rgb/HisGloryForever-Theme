@@ -386,6 +386,161 @@
     });
   };
 
+  /* ---------- Product page ---------- */
+
+  const initProducts = (root = document) => {
+    $$('[data-product]', root).forEach((section) => {
+      if (section.dataset.ready) return;
+      section.dataset.ready = 'true';
+      const dataEl = $('[data-product-json]', section);
+      if (!dataEl) return;
+      const data = JSON.parse(dataEl.textContent);
+      const idInput = $('[data-variant-id]', section);
+      const fieldsets = $$('[data-option-index]', section);
+
+      const selectedOptions = () => fieldsets.map((fs) => {
+        const checked = $('input[data-option-input]:checked', fs);
+        return checked ? checked.value : null;
+      });
+
+      const findVariant = (opts) => data.variants.find((v) => v.options.every((o, i) => o === opts[i]));
+
+      const update = () => {
+        const opts = selectedOptions();
+        fieldsets.forEach((fs, i) => { const out = $('[data-selected-value]', fs); if (out) out.textContent = opts[i] || ''; });
+        const variant = findVariant(opts);
+        const buttons = $$('[data-add-button]', section);
+        const labels = $$('[data-add-label]', section);
+
+        if (!variant) {
+          buttons.forEach((b) => (b.disabled = true));
+          labels.forEach((l) => (l.textContent = data.strings.unavailable));
+          return;
+        }
+
+        idInput.value = variant.id;
+        buttons.forEach((b) => (b.disabled = !variant.available));
+        labels.forEach((l) => (l.textContent = variant.available ? data.strings.add : data.strings.soldOut));
+
+        const fmt = (c) => formatMoney(c, data.moneyFormat).replace(/[.,]00(?=\D*$)/, '');
+        const priceEl = $('[data-price]', section);
+        if (priceEl) {
+          const badge = $('.product__badge', priceEl);
+          let html = variant.compare_at_price > variant.price
+            ? `<s class="product__compare">${fmt(variant.compare_at_price)}</s><span class="product__price-current product__price-current--sale">${fmt(variant.price)}</span>`
+            : `<span class="product__price-current">${fmt(variant.price)}</span>`;
+          priceEl.innerHTML = html;
+          if (badge) priceEl.appendChild(badge);
+        }
+        const sticky = $('[data-sticky-price]', section);
+        if (sticky) sticky.textContent = fmt(variant.price);
+
+        // Show the variant's photo first
+        if (variant.featured_media) {
+          const item = $(`[data-media-id="${variant.featured_media.id}"]`, section);
+          const list = $('[data-media-list]', section);
+          if (item && list) {
+            if (window.matchMedia('(min-width: 990px)').matches) {
+              list.prepend(item);
+              $$('.product__media-item', list).forEach((li, i) => li.classList.toggle('is-first', i === 0));
+            } else {
+              list.scrollTo({ left: item.offsetLeft, behavior: 'smooth' });
+            }
+          }
+        }
+
+        // Keep the URL shareable for the chosen variant
+        const url = new URL(window.location.href);
+        url.searchParams.set('variant', variant.id);
+        window.history.replaceState({}, '', url.toString());
+      };
+
+      section.addEventListener('change', (e) => { if (e.target.matches('[data-option-input]')) update(); });
+
+      // Gallery dots on phones
+      const list = $('[data-media-list]', section);
+      const dots = $$('.product__media-dot', section);
+      if (list && dots.length) {
+        list.addEventListener('scroll', () => {
+          const i = Math.round(list.scrollLeft / list.clientWidth);
+          dots.forEach((d, n) => d.classList.toggle('is-active', n === i));
+        }, { passive: true });
+      }
+
+      // Sticky add to cart appears once the main button scrolls away
+      const sticky = $('[data-sticky-atc]', section);
+      const mainBtn = $('.product__add', section);
+      if (sticky && mainBtn && 'IntersectionObserver' in window) {
+        new IntersectionObserver(([entry]) => {
+          const show = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+          sticky.classList.toggle('is-visible', show);
+          sticky.setAttribute('aria-hidden', String(!show));
+          $$('button', sticky).forEach((b) => (show ? b.removeAttribute('tabindex') : b.setAttribute('tabindex', '-1')));
+        }).observe(mainBtn);
+      }
+    });
+  };
+
+  /* ---------- Modals (size guide) ---------- */
+
+  const initModals = () => {
+    document.addEventListener('click', (e) => {
+      const opener = e.target.closest('[data-modal-open]');
+      if (opener) {
+        const modal = document.getElementById(opener.dataset.modalOpen);
+        if (modal) { modal.hidden = false; document.body.classList.add('is-locked'); trapFocus(modal); }
+      }
+      if (e.target.closest('[data-modal-close]')) {
+        const modal = e.target.closest('[data-modal]');
+        if (modal) { modal.hidden = true; document.body.classList.remove('is-locked'); releaseFocus(); }
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      $$('[data-modal]:not([hidden])').forEach((m) => { m.hidden = true; document.body.classList.remove('is-locked'); releaseFocus(); });
+    });
+  };
+
+  /* ---------- Wishlist (saved in this browser) ---------- */
+
+  const Wishlist = {
+    key: 'hgf-wishlist',
+    get() { try { return JSON.parse(localStorage.getItem(this.key)) || []; } catch (e) { return []; } },
+    set(list) { try { localStorage.setItem(this.key, JSON.stringify(list)); } catch (e) { /* storage unavailable */ } },
+    has(handle) { return this.get().includes(handle); },
+    toggle(handle) {
+      const list = this.get();
+      const i = list.indexOf(handle);
+      if (i > -1) list.splice(i, 1); else list.push(handle);
+      this.set(list);
+      return i === -1;
+    },
+    init() {
+      $$('[data-wishlist-toggle]').forEach((btn) => btn.setAttribute('aria-pressed', String(this.has(btn.dataset.handle))));
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-wishlist-toggle]');
+        if (!btn) return;
+        btn.setAttribute('aria-pressed', String(this.toggle(btn.dataset.handle)));
+      });
+    }
+  };
+
+  window.HGFWishlist = Wishlist;
+
+  /* ---------- Product recommendations ---------- */
+
+  const initRecommendations = (root = document) => {
+    $$('[data-recommendations]', root).forEach(async (el) => {
+      if (el.dataset.loaded || !el.dataset.url || el.dataset.url.includes('product_id=&')) return;
+      el.dataset.loaded = 'true';
+      try {
+        const html = await (await fetch(el.dataset.url)).text();
+        const fresh = new DOMParser().parseFromString(html, 'text/html').querySelector('[data-recommendations]');
+        if (fresh && fresh.innerHTML.trim()) el.innerHTML = fresh.innerHTML;
+      } catch (e) { /* leave section empty */ }
+    });
+  };
+
   /* ---------- Boot ---------- */
 
   const boot = () => {
@@ -394,6 +549,10 @@
     Cart.init();
     initCategoryTiles();
     initSlideshows();
+    initProducts();
+    initModals();
+    Wishlist.init();
+    initRecommendations();
   };
 
   // Re-run section scripts when edited in the theme editor
@@ -401,6 +560,8 @@
     initCategoryTiles(e.target);
     initAnnouncements(e.target);
     initSlideshows(e.target);
+    initProducts(e.target);
+    initRecommendations(e.target);
   });
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

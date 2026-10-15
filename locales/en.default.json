@@ -74,6 +74,14 @@
     "from": "From {{ price }}",
     "sold_out": "Sold out",
     "colors_available": "{{ count }} colors available",
-    "placeholder_title": "Product name"
+    "placeholder_title": "Product name",
+    "size_guide": "Size guide",
+    "add_to_cart": "Add to cart",
+    "unavailable": "Unavailable",
+    "save_to_wishlist": "Save to wishlist",
+    "meaning": "The meaning behind this design",
+    "description": "Details",
+    "fit_care": "Fit & care",
+    "shipping": "Shipping & returns"
   }
 }
