@@ -1,0 +1,92 @@
+{%- liquid
+  assign s = section.settings
+  assign banner_image = collection.image
+  if s.show_image == false
+    assign banner_image = nil
+  endif
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+-%}
+
+<div class="collection-banner{% if banner_image %} collection-banner--image{% endif %} scheme-{% if banner_image %}navy{% else %}white{% endif %}">
+  {%- if banner_image -%}
+    <div class="collection-banner__media media">
+      {{ banner_image | image_url: width: 2000 | image_tag: loading: 'eager', sizes: '100vw', widths: '750, 1100, 1500, 2000', alt: banner_image.alt | default: collection.title }}
+    </div>
+  {%- endif -%}
+  <div class="page-width collection-banner__content">
+    <h1 class="h1 collection-banner__title">{{ collection.title | escape }}</h1>
+    {%- if s.show_description and collection.description != blank -%}
+      <div class="collection-banner__description rte">{{ collection.description }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- paginate collection.products by s.products_per_page -%}
+  <div class="page-width collection" data-facets-section data-section-id="{{ section.id }}">
+    <div data-facets-container>
+      {% render 'facets',
+        results: collection,
+        section_id: section.id,
+        clear_url: collection.url,
+        sort_options: collection.sort_options,
+        sort_by: sort_by,
+        is_search: false
+      %}
+    </div>
+
+    <div class="collection__results" data-facets-results>
+      {%- if collection.products.size == 0 -%}
+        <div class="collection__empty">
+          {%- if collection.filters.size > 0 and collection.products_count == 0 -%}
+            <p class="h3">{{ 'collections.no_matches' | t }}</p>
+            <a href="{{ collection.url }}" class="button button--secondary" data-facet-link>{{ 'collections.clear_all' | t }}</a>
+          {%- else -%}
+            <p class="h3">{{ 'collections.empty' | t }}</p>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        <ul class="product-grid product-grid--{{ s.columns }}" role="list">
+          {%- for product in collection.products -%}
+            {%- liquid
+              assign lazy = true
+              if forloop.index <= 4
+                assign lazy = false
+              endif
+            -%}
+            <li class="product-grid__item">{% render 'product-card', product: product, lazy: lazy %}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if paginate.pages > 1 -%}
+        {% render 'pagination', paginate: paginate %}
+      {%- endif -%}
+    </div>
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection products",
+  "class": "section-main-collection",
+  "settings": [
+    { "type": "checkbox", "id": "show_image", "label": "Show collection image as a banner", "default": true },
+    { "type": "checkbox", "id": "show_description", "label": "Show collection description", "default": true },
+    { "type": "range", "id": "products_per_page", "min": 8, "max": 48, "step": 4, "label": "Products per page", "default": 24 },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Products per row on desktop",
+      "options": [
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "paragraph",
+      "content": "Choose which filters appear (size, color, price and more) in the free Shopify Search & Discovery app."
+    }
+  ]
+}
+{% endschema %}

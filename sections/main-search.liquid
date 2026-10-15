@@ -1,0 +1,76 @@
+{%- liquid
+  assign s = section.settings
+  assign sort_by = search.sort_by | default: search.default_sort_by
+  assign terms_encoded = search.terms | url_encode
+  assign clear_url = routes.search_url | append: '?q=' | append: terms_encoded
+-%}
+
+<div class="collection-banner scheme-white">
+  <div class="page-width collection-banner__content">
+    <h1 class="h1 collection-banner__title">{{ 'search.title' | t }}</h1>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-page__form">
+      <label class="visually-hidden" for="SearchPageInput">{{ 'sections.header.search' | t }}</label>
+      <div class="field">
+        <input class="field__input" id="SearchPageInput" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'sections.header.search_placeholder' | t }}" autocomplete="off">
+      </div>
+      <input type="hidden" name="options[prefix]" value="last">
+      <button type="submit" class="button">{{ 'sections.header.search' | t }}</button>
+    </form>
+  </div>
+</div>
+
+{%- if search.performed -%}
+  {%- paginate search.results by s.results_per_page -%}
+    <div class="page-width collection" data-facets-section data-section-id="{{ section.id }}">
+      <div data-facets-container>
+        {% render 'facets',
+          results: search,
+          section_id: section.id,
+          clear_url: clear_url,
+          sort_options: search.sort_options,
+          sort_by: sort_by,
+          is_search: true
+        %}
+      </div>
+
+      <div class="collection__results" data-facets-results>
+        {%- if search.results_count == 0 -%}
+          <div class="collection__empty">
+            <p class="h3">{{ 'search.no_results' | t: terms: search.terms }}</p>
+            <a href="{{ routes.all_products_collection_url }}" class="button button--secondary">{{ 'search.shop_all' | t }}</a>
+          </div>
+        {%- else -%}
+          <ul class="product-grid product-grid--4" role="list">
+            {%- for item in search.results -%}
+              <li class="product-grid__item">
+                {%- if item.object_type == 'product' -%}
+                  {% render 'product-card', product: item %}
+                {%- else -%}
+                  <a href="{{ item.url }}" class="search-result-text">
+                    <span class="eyebrow">{{ item.object_type | capitalize }}</span>
+                    <span class="h3">{{ item.title | escape }}</span>
+                    <span class="text-muted text-small">{{ item.content | strip_html | truncatewords: 20 }}</span>
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if paginate.pages > 1 -%}
+          {% render 'pagination', paginate: paginate %}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endpaginate -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Search results",
+  "class": "section-main-search",
+  "settings": [
+    { "type": "range", "id": "results_per_page", "min": 8, "max": 48, "step": 4, "label": "Results per page", "default": 24 }
+  ]
+}
+{% endschema %}

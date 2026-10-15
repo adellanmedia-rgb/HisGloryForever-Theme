@@ -541,6 +541,112 @@
     });
   };
 
+  /* ---------- Collection & search filters ---------- */
+
+  const initFacets = (root = document) => {
+    $$('[data-facets-section]', root).forEach((section) => {
+      if (section.dataset.ready) return;
+      section.dataset.ready = 'true';
+      const sectionId = section.dataset.sectionId;
+      let controller = null;
+      let timer = null;
+
+      const drawer = () => $('[data-facets-drawer]', section);
+      const overlay = () => $('[data-facets-overlay]', section);
+      const opener = () => $('[data-facets-open]', section);
+
+      const render = async (url, push = true) => {
+        const results = $('[data-facets-results]', section);
+        results && results.classList.add('is-loading');
+        drawer() && drawer().classList.add('is-loading');
+        controller && controller.abort();
+        controller = new AbortController();
+        try {
+          const u = new URL(url, window.location.origin);
+          u.searchParams.set('section_id', sectionId);
+          const html = await (await fetch(u.toString(), { signal: controller.signal })).text();
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const fresh = doc.querySelector('[data-facets-section]');
+          if (!fresh) { window.location.href = url; return; }
+
+          // Results, toolbar and chips
+          $('[data-facets-results]', section).innerHTML = $('[data-facets-results]', fresh).innerHTML;
+          const oldToolbar = $('[data-facets-toolbar]', section);
+          const newToolbar = $('[data-facets-toolbar]', fresh);
+          if (oldToolbar && newToolbar) oldToolbar.innerHTML = newToolbar.innerHTML;
+          const oldChips = $('.active-facets', section);
+          const newChips = $('.active-facets', fresh);
+          if (oldChips) oldChips.remove();
+          if (newChips && oldToolbar) oldToolbar.after(newChips);
+
+          // Filter drawer content, keeping open groups open
+          const d = drawer();
+          if (d) {
+            const openGroups = $$('.facet', d).map((f) => f.open);
+            const body = $('.facets-drawer__body', d);
+            const newBody = $('.facets-drawer__body', fresh);
+            if (body && newBody) {
+              body.innerHTML = newBody.innerHTML;
+              $$('.facet', body).forEach((f, i) => { if (openGroups[i] !== undefined) f.open = openGroups[i]; });
+            }
+            const footer = $('.facets-drawer__footer', d);
+            const newFooter = $('.facets-drawer__footer', fresh);
+            if (footer && newFooter) footer.innerHTML = newFooter.innerHTML;
+          }
+
+          if (push) {
+            const clean = new URL(url, window.location.origin);
+            clean.searchParams.delete('section_id');
+            window.history.pushState({ facets: true }, '', clean.pathname + clean.search);
+          }
+        } catch (e) {
+          if (e.name !== 'AbortError') window.location.href = url;
+        } finally {
+          const r = $('[data-facets-results]', section);
+          r && r.classList.remove('is-loading');
+          drawer() && drawer().classList.remove('is-loading');
+        }
+      };
+
+      const urlFromForm = () => {
+        const form = $('[data-facets-form]', section);
+        const params = new URLSearchParams();
+        new FormData(form).forEach((value, key) => { if (value !== '') params.append(key, value); });
+        const sort = $('[data-sort]', section);
+        if (sort && !params.has('sort_by')) params.set('sort_by', sort.value);
+        return `${window.location.pathname}?${params.toString()}`;
+      };
+
+      section.addEventListener('change', (e) => {
+        if (!e.target.closest('[data-facets-form]') && !e.target.matches('[data-sort]')) return;
+        const delay = e.target.type === 'number' ? 600 : 0;
+        clearTimeout(timer);
+        timer = setTimeout(() => render(urlFromForm()), delay);
+      });
+
+      section.addEventListener('submit', (e) => {
+        if (!e.target.matches('[data-facets-form]')) return;
+        e.preventDefault();
+        render(urlFromForm());
+      });
+
+      section.addEventListener('click', (e) => {
+        const link = e.target.closest('[data-facet-link]');
+        if (link) {
+          e.preventDefault();
+          render(link.href);
+          if (link.closest('.pagination')) section.scrollIntoView({ behavior: 'smooth' });
+          return;
+        }
+        if (e.target.closest('[data-facets-open]')) openDrawer(drawer(), overlay(), opener());
+        if (e.target.closest('[data-facets-close]') || e.target.closest('[data-facets-overlay]')) closeDrawer(drawer(), overlay(), opener());
+      });
+
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(drawer(), overlay(), opener()); });
+      window.addEventListener('popstate', () => render(window.location.href, false));
+    });
+  };
+
   /* ---------- Boot ---------- */
 
   const boot = () => {
@@ -553,6 +659,7 @@
     initModals();
     Wishlist.init();
     initRecommendations();
+    initFacets();
   };
 
   // Re-run section scripts when edited in the theme editor
@@ -562,6 +669,7 @@
     initSlideshows(e.target);
     initProducts(e.target);
     initRecommendations(e.target);
+    initFacets(e.target);
   });
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

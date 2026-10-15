@@ -1,0 +1,38 @@
+{%- assign s = section.settings -%}
+<div class="collection-banner scheme-white">
+  <div class="page-width collection-banner__content">
+    <h1 class="h1 collection-banner__title">{{ s.heading | default: page_title }}</h1>
+  </div>
+</div>
+
+<div class="page-width section-spacing" style="--pad-top: 0px; --pad-bottom: 96px;">
+  <ul class="tiles-grid tiles-grid--3" role="list">
+    {%- for collection in collections -%}
+      {%- unless collection.handle == 'frontpage' -%}
+        <li class="tile">
+          <a href="{{ collection.url }}" class="tile__link">
+            <div class="tile__media media">
+              {%- if collection.featured_image -%}
+                {{ collection.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 33vw, 50vw', widths: '360, 540, 720, 900', alt: collection.title }}
+              {%- else -%}
+                {%- assign ph = forloop.index | modulo: 6 | plus: 1 -%}
+                {{ 'collection-' | append: ph | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <span class="tile__title">{{ collection.title | escape }}</span>
+          </a>
+        </li>
+      {%- endunless -%}
+    {%- endfor -%}
+  </ul>
+</div>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "class": "section-list-collections",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop the collections" }
+  ]
+}
+{% endschema %}

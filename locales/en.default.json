@@ -9,6 +9,12 @@
       "away": "You're {{ amount }} away from free shipping",
       "unlocked": "You've unlocked free shipping",
       "progress_label": "Progress toward free shipping"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous page",
+      "next": "Next page",
+      "page": "Page {{ number }}"
     }
   },
   "accessibility": {
@@ -83,5 +89,28 @@
     "description": "Details",
     "fit_care": "Fit & care",
     "shipping": "Shipping & returns"
+  },
+  "collections": {
+    "filter": "Filter",
+    "sort_by": "Sort",
+    "product_count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    },
+    "remove_filter": "Remove filter",
+    "clear_all": "Clear all",
+    "view_results": {
+      "one": "View {{ count }} result",
+      "other": "View {{ count }} results"
+    },
+    "price_from": "From",
+    "price_to": "To",
+    "no_matches": "No products match those filters.",
+    "empty": "New pieces are coming soon."
+  },
+  "search": {
+    "title": "Search",
+    "no_results": "No results for \"{{ terms }}\".",
+    "shop_all": "Shop all"
   }
 }
