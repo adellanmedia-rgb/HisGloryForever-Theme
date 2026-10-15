@@ -312,6 +312,80 @@
     });
   };
 
+  /* ---------- Hero slideshow ---------- */
+
+  const initSlideshows = (root = document) => {
+    $$('[data-slideshow]', root).forEach((show) => {
+      if (show.dataset.ready) return;
+      show.dataset.ready = 'true';
+      const slides = $$('[data-slide]', show);
+      const dots = $$('[data-slide-dot]', show);
+      if (slides.length < 2) return;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let autoplay = show.dataset.autoplay === 'true' && !reduce;
+      const interval = Number(show.dataset.interval) || 7000;
+      let index = 0;
+      let timer = null;
+      let hovering = false;
+
+      const go = (n) => {
+        index = (n + slides.length) % slides.length;
+        slides.forEach((sl, i) => {
+          const on = i === index;
+          sl.classList.toggle('is-active', on);
+          sl.setAttribute('aria-hidden', String(!on));
+          $$('a, button', sl).forEach((el) => (on ? el.removeAttribute('tabindex') : el.setAttribute('tabindex', '-1')));
+        });
+        dots.forEach((d, i) => {
+          d.classList.toggle('is-active', i === index);
+          if (i === index) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+        });
+      };
+
+      const stop = () => { clearInterval(timer); timer = null; };
+      const start = () => { stop(); if (autoplay) timer = setInterval(() => { if (!hovering && !document.hidden) go(index + 1); }, interval); };
+
+      const prev = $('[data-slide-prev]', show);
+      const next = $('[data-slide-next]', show);
+      prev && prev.addEventListener('click', () => { go(index - 1); start(); });
+      next && next.addEventListener('click', () => { go(index + 1); start(); });
+      dots.forEach((d) => d.addEventListener('click', () => { go(Number(d.dataset.slideDot)); start(); }));
+
+      const pause = $('[data-slide-pause]', show);
+      if (pause) {
+        if (!autoplay) show.classList.add('is-paused');
+        pause.addEventListener('click', () => {
+          autoplay = !autoplay;
+          show.classList.toggle('is-paused', !autoplay);
+          pause.setAttribute('aria-label', autoplay ? pause.dataset.labelPause : pause.dataset.labelPlay);
+          start();
+        });
+      }
+
+      show.addEventListener('mouseenter', () => (hovering = true));
+      show.addEventListener('mouseleave', () => (hovering = false));
+      show.addEventListener('focusin', () => (hovering = true));
+      show.addEventListener('focusout', () => (hovering = false));
+
+      // Swipe on touch screens
+      let x0 = null;
+      show.addEventListener('touchstart', (e) => (x0 = e.touches[0].clientX), { passive: true });
+      show.addEventListener('touchend', (e) => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) { go(index + (dx < 0 ? 1 : -1)); start(); }
+        x0 = null;
+      });
+
+      // Theme editor: show the slide being edited
+      show.addEventListener('shopify:block:select', (e) => { const i = slides.indexOf(e.target); if (i > -1) { go(i); stop(); } });
+      show.addEventListener('shopify:block:deselect', start);
+
+      go(0);
+      start();
+    });
+  };
+
   /* ---------- Boot ---------- */
 
   const boot = () => {
@@ -319,12 +393,14 @@
     initAnnouncements();
     Cart.init();
     initCategoryTiles();
+    initSlideshows();
   };
 
   // Re-run section scripts when edited in the theme editor
   document.addEventListener('shopify:section:load', (e) => {
     initCategoryTiles(e.target);
     initAnnouncements(e.target);
+    initSlideshows(e.target);
   });
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

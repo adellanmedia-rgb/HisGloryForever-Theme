@@ -60,6 +60,14 @@
       "email": "Email",
       "testimony": "Your testimony",
       "testimony_placeholder": "Share what God has done…"
+    },
+    "slideshow": {
+      "label": "Featured",
+      "previous": "Previous slide",
+      "next": "Next slide",
+      "go_to": "Go to slide {{ number }}",
+      "pause": "Pause slideshow",
+      "play": "Play slideshow"
     }
   },
   "products": {

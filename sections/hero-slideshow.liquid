@@ -1,0 +1,187 @@
+{%- liquid
+  assign s = section.settings
+  assign slide_count = section.blocks.size
+-%}
+<section
+  class="slideshow hero--{{ s.height }}"
+  style="--hero-overlay: {{ s.overlay | divided_by: 100.0 }};"
+  data-slideshow
+  data-autoplay="{{ s.autoplay }}"
+  data-interval="{{ s.interval | times: 1000 }}"
+  aria-roledescription="carousel"
+  aria-label="{{ 'sections.slideshow.label' | t }}"
+>
+  <div class="slideshow__track">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign b = block.settings
+        assign loading = 'lazy'
+        if forloop.first and section.index0 == 0
+          assign loading = 'eager'
+        endif
+        assign ph_a = forloop.index | modulo: 3 | plus: 1
+        assign ph_b = forloop.index | plus: 1 | modulo: 3 | plus: 1
+      -%}
+      <div
+        class="slide slide--{{ b.layout }} slide--text-{{ b.text_position }}{% if forloop.first %} is-active{% endif %}"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="{{ forloop.index }} / {{ slide_count }}"
+        {% unless forloop.first %}aria-hidden="true"{% endunless %}
+        data-slide
+        {{ block.shopify_attributes }}
+      >
+        {%- comment -%} Images {%- endcomment -%}
+        <div class="slide__media">
+          <div class="slide__image media">
+            {%- if b.image_1 != blank -%}
+              {{ b.image_1 | image_url: width: 2000 | image_tag: loading: loading, sizes: '(min-width: 750px) 50vw, 100vw', widths: '600, 900, 1200, 1600, 2000', alt: b.image_1.alt }}
+            {%- else -%}
+              {{ 'hero-apparel-' | append: ph_a | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+          {%- if b.layout != 'full' -%}
+            <div class="slide__image slide__image--second media">
+              {%- if b.image_2 != blank -%}
+                {{ b.image_2 | image_url: width: 1600 | image_tag: loading: loading, sizes: '(min-width: 750px) 50vw, 100vw', widths: '600, 900, 1200, 1600', alt: b.image_2.alt }}
+              {%- else -%}
+                {{ 'hero-apparel-' | append: ph_b | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Text {%- endcomment -%}
+        {%- if b.layout == 'split_panels' -%}
+          <div class="slide__panels">
+            <div class="slide__panel">
+              {%- if b.heading != blank -%}<h2 class="slide__heading h1">{{ b.heading }}</h2>{%- endif -%}
+              {%- if b.button_1_label != blank -%}<a href="{{ b.button_1_link }}" class="button button--light">{{ b.button_1_label }}</a>{%- endif -%}
+            </div>
+            <div class="slide__panel">
+              {%- if b.heading_2 != blank -%}<h2 class="slide__heading h1">{{ b.heading_2 }}</h2>{%- endif -%}
+              {%- if b.button_2_label != blank -%}<a href="{{ b.button_2_link }}" class="button button--light">{{ b.button_2_label }}</a>{%- endif -%}
+            </div>
+          </div>
+        {%- else -%}
+          <div class="slide__content">
+            <div class="slide__box">
+              {%- if b.eyebrow != blank -%}<span class="eyebrow">{{ b.eyebrow }}</span>{%- endif -%}
+              {%- if b.heading != blank -%}<h2 class="slide__heading h0">{{ b.heading }}</h2>{%- endif -%}
+              {%- if b.text != blank -%}<p class="slide__text">{{ b.text }}</p>{%- endif -%}
+              {%- if b.button_1_label != blank or b.button_2_label != blank -%}
+                <div class="button-group button-group--center">
+                  {%- if b.button_1_label != blank -%}<a href="{{ b.button_1_link }}" class="button button--light">{{ b.button_1_label }}</a>{%- endif -%}
+                  {%- if b.button_2_label != blank -%}<a href="{{ b.button_2_link }}" class="button button--light">{{ b.button_2_label }}</a>{%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if slide_count > 1 -%}
+    <div class="slideshow__controls">
+      <button type="button" class="slideshow__arrow" data-slide-prev aria-label="{{ 'sections.slideshow.previous' | t }}">
+        {% render 'icon', icon: 'arrow-right', class: 'icon--flip' %}
+      </button>
+      <div class="slideshow__dots" role="tablist">
+        {%- for block in section.blocks -%}
+          <button type="button" class="slideshow__dot{% if forloop.first %} is-active{% endif %}" data-slide-dot="{{ forloop.index0 }}" aria-label="{{ 'sections.slideshow.go_to' | t: number: forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}></button>
+        {%- endfor -%}
+      </div>
+      <button type="button" class="slideshow__arrow" data-slide-next aria-label="{{ 'sections.slideshow.next' | t }}">
+        {% render 'icon', icon: 'arrow-right' %}
+      </button>
+      {%- if s.autoplay -%}
+        <button type="button" class="slideshow__pause" data-slide-pause aria-label="{{ 'sections.slideshow.pause' | t }}" data-label-play="{{ 'sections.slideshow.play' | t }}" data-label-pause="{{ 'sections.slideshow.pause' | t }}">
+          <span class="slideshow__pause-icon" aria-hidden="true"></span>
+        </button>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Hero slideshow",
+  "class": "section-hero",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "options": [
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "full", "label": "Full screen" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "%",
+      "label": "Image shading",
+      "info": "Darkens the photos so white text stays readable.",
+      "default": 25
+    },
+    { "type": "checkbox", "id": "autoplay", "label": "Change slides automatically", "default": true },
+    { "type": "range", "id": "interval", "min": 4, "max": 12, "step": 1, "unit": "s", "label": "Time per slide", "default": 7 }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Layout",
+          "options": [
+            { "value": "split_center", "label": "Split: one headline, buttons centered" },
+            { "value": "split_panels", "label": "Split: each side has its own heading and button" },
+            { "value": "full", "label": "Full width: one image" }
+          ],
+          "default": "split_center"
+        },
+        { "type": "image_picker", "id": "image_1", "label": "Left image (or the full-width image)" },
+        { "type": "image_picker", "id": "image_2", "label": "Right image", "info": "Split layouts only." },
+        {
+          "type": "select",
+          "id": "text_position",
+          "label": "Text position",
+          "options": [
+            { "value": "center", "label": "Center" },
+            { "value": "bottom", "label": "Bottom" }
+          ],
+          "default": "center"
+        },
+        { "type": "text", "id": "eyebrow", "label": "Small label above heading", "info": "Not used in the two-panel layout." },
+        { "type": "text", "id": "heading", "label": "Heading (left side in two-panel layout)", "default": "Not for us. For His glory." },
+        { "type": "text", "id": "heading_2", "label": "Right side heading", "info": "Two-panel layout only." },
+        { "type": "text", "id": "text", "label": "Text", "info": "Not used in the two-panel layout.", "default": "Clothing made to carry the Word into everyday life." },
+        { "type": "text", "id": "button_1_label", "label": "First button label (left side in two-panel layout)", "default": "Shop Men" },
+        { "type": "url", "id": "button_1_link", "label": "First button link" },
+        { "type": "text", "id": "button_2_label", "label": "Second button label (right side in two-panel layout)", "default": "Shop Women" },
+        { "type": "url", "id": "button_2_link", "label": "Second button link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero slideshow",
+      "blocks": [
+        { "type": "slide", "settings": { "layout": "split_center" } },
+        { "type": "slide", "settings": { "layout": "split_panels", "heading": "Made for her walk", "heading_2": "Made for his walk", "button_1_label": "Shop Women", "button_2_label": "Shop Men" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

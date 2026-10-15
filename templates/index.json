@@ -1,17 +1,45 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-split",
+      "type": "hero-slideshow",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "layout": "split_center",
+            "text_position": "center",
+            "heading": "Not for us. For His glory.",
+            "text": "Clothing made to carry the Word into everyday life.",
+            "button_1_label": "Shop Men",
+            "button_1_link": "",
+            "button_2_label": "Shop Women",
+            "button_2_link": ""
+          }
+        },
+        "slide-2": {
+          "type": "slide",
+          "settings": {
+            "layout": "split_panels",
+            "text_position": "bottom",
+            "heading": "The Statement Collection",
+            "heading_2": "Periodic Element Series",
+            "text": "",
+            "button_1_label": "Shop Statement",
+            "button_1_link": "",
+            "button_2_label": "Shop Periodic",
+            "button_2_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide-1",
+        "slide-2"
+      ],
       "settings": {
-        "heading": "Not for us. For His glory.",
-        "text": "Clothing made to carry the Word into everyday life.",
-        "button_1_label": "Shop Men",
-        "button_1_link": "",
-        "button_2_label": "Shop Women",
-        "button_2_link": "",
         "height": "large",
-        "text_position": "center",
-        "overlay": 25
+        "overlay": 25,
+        "autoplay": true,
+        "interval": 7
       }
     },
     "statement": {

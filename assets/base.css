@@ -1268,3 +1268,179 @@ textarea.field__input { resize: vertical; min-height: 14rem; }
 .newsletter__inner { max-width: 60rem; margin: 0 auto; }
 
 .newsletter-form--center { margin-left: auto; margin-right: auto; }
+
+/* ==========================================================================
+   Hero slideshow
+   ========================================================================== */
+
+.slideshow {
+  position: relative;
+  color: var(--color-white);
+  background: var(--color-navy);
+  overflow: hidden;
+}
+
+.slideshow.hero--medium { --slide-h: 52rem; }
+.slideshow.hero--large { --slide-h: min(78rem, 88vh); }
+.slideshow.hero--full { --slide-h: calc(100vh - 11rem); }
+
+.slideshow__track { display: grid; }
+
+.slide {
+  grid-area: 1 / 1;
+  position: relative;
+  min-height: var(--slide-h);
+  display: grid;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.9s ease, visibility 0.9s;
+}
+
+.slide.is-active { opacity: 1; visibility: visible; }
+
+.slide__media {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.slide__image { position: relative; height: 100%; }
+
+.slide--split_center .slide__image--second { display: none; }
+
+@media (max-width: 749px) {
+  .slide--split_panels .slide__media { grid-template-rows: 1fr 1fr; }
+}
+
+@media (min-width: 750px) {
+  .slide--split_center .slide__media,
+  .slide--split_panels .slide__media { grid-template-columns: 1fr 1fr; }
+  .slide--split_center .slide__image--second { display: block; }
+}
+
+.slide__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(var(--color-navy-rgb), var(--hero-overlay, 0.25));
+  pointer-events: none;
+}
+
+.slide__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6.4rem 1.6rem 9.6rem;
+  text-align: center;
+}
+
+.slide--text-bottom .slide__content { align-items: flex-end; }
+
+.slide__box { max-width: 72rem; }
+
+.slide__heading { margin-bottom: 1.6rem; text-wrap: balance; }
+
+.slide__text { font-size: 1.7rem; margin: 0 auto 3.2rem; max-width: 52rem; opacity: 0.92; }
+
+.slide .eyebrow { color: var(--color-white); }
+
+/* Two panels: each half carries its own heading and button */
+.slide__panels {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+@media (min-width: 750px) {
+  .slide__panels { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
+}
+
+.slide__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4rem;
+  padding: 4rem 1.6rem;
+  text-align: center;
+}
+
+.slide--text-bottom .slide__panel { justify-content: flex-end; padding-bottom: 9.6rem; }
+
+.slide__panel .slide__heading { margin: 0; }
+
+@media (max-width: 749px) {
+  .slide__panel .button { min-width: 0; }
+}
+
+/* Controls */
+.slideshow__controls {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 2.4rem;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.slideshow__arrow,
+.slideshow__pause {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  border: 0;
+  background: none;
+  color: var(--color-white);
+}
+
+.icon--flip { transform: scaleX(-1); }
+
+.slideshow__dots { display: flex; gap: 0.8rem; }
+
+.slideshow__dot {
+  width: 2.8rem;
+  height: 2.4rem;
+  border: 0;
+  padding: 0;
+  background: none;
+  position: relative;
+}
+
+.slideshow__dot::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.slideshow__dot.is-active::after { background: var(--color-white); }
+
+.slideshow__pause-icon {
+  width: 1rem;
+  height: 1.2rem;
+  border-left: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+}
+
+.slideshow.is-paused .slideshow__pause-icon {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 0 6px 10px;
+  border-color: transparent transparent transparent currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide { transition: none; }
+}
