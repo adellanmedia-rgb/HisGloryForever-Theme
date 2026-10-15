@@ -204,7 +204,7 @@
         "id": "free_shipping_threshold",
         "label": "Free shipping minimum (in dollars)",
         "info": "Match this to your shipping rates in Settings > Shipping.",
-        "default": 75
+        "default": 100
       },
       {
         "type": "richtext",
