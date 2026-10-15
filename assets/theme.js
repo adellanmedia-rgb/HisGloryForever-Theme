@@ -133,8 +133,8 @@
 
   /* ---------- Announcement rotator ---------- */
 
-  const initAnnouncements = () => {
-    $$('[data-announcement]').forEach((wrap) => {
+  const initAnnouncements = (root = document) => {
+    $$('[data-announcement]', root).forEach((wrap) => {
       const slides = $$('.announcement-bar__slide', wrap);
       if (!slides.length) return;
       if (!slides.some((s) => s.classList.contains('is-active'))) slides[0].classList.add('is-active');
@@ -295,13 +295,37 @@
 
   window.HGFCart = Cart;
 
+  /* ---------- Category tiles: Women's / Men's toggle ---------- */
+
+  const initCategoryTiles = (root = document) => {
+    $$('[data-category-tiles]', root).forEach((section) => {
+      const tabs = $$('[data-audience-tab]', section);
+      if (!tabs.length) return;
+      const show = (audience) => {
+        tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.audienceTab === audience)));
+        $$('[data-audience]', section).forEach((tile) => {
+          const a = tile.dataset.audience;
+          tile.hidden = !(a === 'all' || a === audience);
+        });
+      };
+      tabs.forEach((tab) => tab.addEventListener('click', () => show(tab.dataset.audienceTab)));
+    });
+  };
+
   /* ---------- Boot ---------- */
 
   const boot = () => {
     initHeader();
     initAnnouncements();
     Cart.init();
+    initCategoryTiles();
   };
+
+  // Re-run section scripts when edited in the theme editor
+  document.addEventListener('shopify:section:load', (e) => {
+    initCategoryTiles(e.target);
+    initAnnouncements(e.target);
+  });
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();

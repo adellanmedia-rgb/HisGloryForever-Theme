@@ -45,6 +45,27 @@
       "taxes_shipping": "Taxes and shipping calculated at checkout.",
       "checkout": "Checkout",
       "view_cart": "View cart"
+    },
+    "featured_collection": {
+      "view_all": "View all"
+    },
+    "category_tiles": {
+      "toggle_label": "Shop women's or men's",
+      "women": "Women's",
+      "men": "Men's"
+    },
+    "prayer": {
+      "name": "First name",
+      "name_placeholder": "Or leave blank for Anonymous",
+      "email": "Email",
+      "testimony": "Your testimony",
+      "testimony_placeholder": "Share what God has done…"
     }
+  },
+  "products": {
+    "from": "From {{ price }}",
+    "sold_out": "Sold out",
+    "colors_available": "{{ count }} colors available",
+    "placeholder_title": "Product name"
   }
 }

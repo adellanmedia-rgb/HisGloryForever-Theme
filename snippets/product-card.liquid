@@ -1,0 +1,107 @@
+{%- comment -%}
+  Clean product card: nothing sits on top of the photo.
+  Badge and swatches sit below the image as quiet text.
+  Params:
+    - product: product object (omit for a placeholder card)
+    - placeholder_index: 1–6 when showing a placeholder
+    - sizes: image sizes attribute
+    - lazy: true to lazy-load (default true)
+{%- endcomment -%}
+{%- liquid
+  assign img_sizes = sizes | default: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw'
+  assign img_loading = 'lazy'
+  if lazy == false
+    assign img_loading = 'eager'
+  endif
+-%}
+
+{%- if product != blank -%}
+  {%- liquid
+    assign badge = product.metafields.custom.badge.value
+    if badge == blank
+      for tag in product.tags
+        assign tag_lower = tag | downcase
+        if tag_lower contains 'badge:'
+          assign badge = tag | split: ':' | last | strip
+          break
+        endif
+      endfor
+    endif
+
+    assign color_option = nil
+    for option in product.options_with_values
+      assign option_name = option.name | downcase
+      if option_name == 'color' or option_name == 'colour'
+        assign color_option = option
+        break
+      endif
+    endfor
+
+    assign second_image = nil
+    if product.media.size > 1
+      assign second_image = product.media[1]
+    endif
+  -%}
+  <div class="card">
+    <a href="{{ product.url }}" class="card__media media{% if second_image %} card__media--hover{% endif %}" tabindex="-1" aria-hidden="true">
+      {%- if product.featured_media -%}
+        {{ product.featured_media | image_url: width: 900 | image_tag: loading: img_loading, sizes: img_sizes, widths: '360, 540, 720, 900', class: 'card__image', alt: product.featured_media.alt | default: product.title }}
+        {%- if second_image -%}
+          {{ second_image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: img_sizes, widths: '360, 540, 720, 900', class: 'card__image card__image--second', alt: '' }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </a>
+    <div class="card__info">
+      <h3 class="card__title"><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>
+      <p class="card__meta">
+        {%- if product.compare_at_price > product.price -%}
+          <s class="card__compare">{{ product.compare_at_price | money_without_trailing_zeros }}</s>
+          <span class="card__price card__price--sale">{{ product.price | money_without_trailing_zeros }}</span>
+        {%- else -%}
+          <span class="card__price">
+            {%- if product.price_varies -%}{%- assign price_min_money = product.price_min | money_without_trailing_zeros -%}{{ 'products.from' | t: price: price_min_money }}{%- else -%}{{ product.price | money_without_trailing_zeros }}{%- endif -%}
+          </span>
+        {%- endif -%}
+        {%- if product.available == false -%}
+          <span class="card__badge">· {{ 'products.sold_out' | t }}</span>
+        {%- elsif badge != blank -%}
+          <span class="card__badge">· {{ badge | escape }}</span>
+        {%- endif -%}
+      </p>
+      {%- if color_option and color_option.values.size > 1 -%}
+        <ul class="card__swatches" role="list" aria-label="{{ 'products.colors_available' | t: count: color_option.values.size }}">
+          {%- for value in color_option.values limit: 5 -%}
+            {%- liquid
+              assign swatch_style = ''
+              if value.swatch.image
+                assign swatch_img = value.swatch.image | image_url: width: 40
+                assign swatch_style = 'background-image: url(' | append: swatch_img | append: ');'
+              elsif value.swatch.color
+                assign swatch_style = 'background-color: ' | append: value.swatch.color | append: ';'
+              else
+                assign swatch_style = 'background-color: ' | append: value.name | handleize | append: ';'
+              endif
+            -%}
+            <li class="card__swatch" style="{{ swatch_style }}" title="{{ value.name | escape }}"></li>
+          {%- endfor -%}
+          {%- if color_option.values.size > 5 -%}
+            <li class="card__swatch-more">+{{ color_option.values.size | minus: 5 }}</li>
+          {%- endif -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+{%- else -%}
+  {%- assign ph = placeholder_index | default: 1 -%}
+  <div class="card">
+    <div class="card__media media">
+      {{ 'product-' | append: ph | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+    <div class="card__info">
+      <h3 class="card__title">{{ 'products.placeholder_title' | t }}</h3>
+      <p class="card__meta"><span class="card__price">$50</span><span class="card__badge">· New</span></p>
+    </div>
+  </div>
+{%- endif -%}

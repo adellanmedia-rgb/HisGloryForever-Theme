@@ -1,0 +1,78 @@
+{%- liquid
+  assign s = section.settings
+  assign collection = s.collection
+-%}
+<section class="mixed-grid scheme-{{ s.color_scheme }} section-spacing" style="--pad-top: {{ s.padding_top }}px; --pad-bottom: {{ s.padding_bottom }}px;">
+  <div class="page-width">
+    {%- if s.heading != blank -%}
+      <div class="section-header-row"><h2 class="h2">{{ s.heading }}</h2></div>
+    {%- endif -%}
+    <div class="mixed-grid__layout mixed-grid__layout--image-{{ s.image_side }}">
+      <a href="{{ s.link | default: collection.url }}" class="mixed-grid__feature">
+        <div class="media mixed-grid__media">
+          {%- if s.image != blank -%}
+            {{ s.image | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 50vw, 100vw', widths: '600, 900, 1200, 1400', alt: s.image.alt }}
+          {%- else -%}
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+        {%- if s.caption != blank -%}
+          <div class="mixed-grid__caption">
+            <p class="h3">{{ s.caption }}</p>
+            {%- if s.link_label != blank -%}<span class="link-underline">{{ s.link_label }}</span>{%- endif -%}
+          </div>
+        {%- endif -%}
+      </a>
+      <ul class="mixed-grid__products" role="list">
+        {%- if collection != blank and collection.products_count > 0 -%}
+          {%- for product in collection.products limit: 4 -%}
+            <li>{% render 'product-card', product: product, sizes: '(min-width: 990px) 25vw, 50vw' %}</li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..4) -%}
+            <li>{% render 'product-card', placeholder_index: forloop.index %}</li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Story + products grid",
+  "class": "section-mixed-grid",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Colors",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "light", "label": "Light" },
+        { "value": "navy", "label": "Navy" }
+      ],
+      "default": "white"
+    },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "image_picker", "id": "image", "label": "Story image" },
+    {
+      "type": "select",
+      "id": "image_side",
+      "label": "Image side",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    { "type": "text", "id": "caption", "label": "Image caption", "default": "Layered for the season" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Shop the look" },
+    { "type": "url", "id": "link", "label": "Link", "info": "Defaults to the collection." },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Shows its first four products." },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Top spacing", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Bottom spacing", "default": 80 }
+  ],
+  "presets": [{ "name": "Story + products grid" }]
+}
+{% endschema %}

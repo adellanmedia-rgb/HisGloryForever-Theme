@@ -1,13 +1,230 @@
 {
   "sections": {
-    "welcome": {
+    "hero": {
+      "type": "hero-split",
+      "settings": {
+        "heading": "Not for us. For His glory.",
+        "text": "Clothing made to carry the Word into everyday life.",
+        "button_1_label": "Shop Men",
+        "button_1_link": "",
+        "button_2_label": "Shop Women",
+        "button_2_link": "",
+        "height": "large",
+        "text_position": "center",
+        "overlay": 25
+      }
+    },
+    "statement": {
       "type": "rich-text",
       "settings": {
-        "heading": "His Glory Forever",
-        "text": "<p>The homepage sections arrive in the next build step.</p>",
-        "color_scheme": "white"
+        "color_scheme": "white",
+        "alignment": "center",
+        "heading": "Every piece points back to Him.",
+        "heading_size": "h2",
+        "text": "<p>Premium essentials with scripture at the heart of every design. Made for you, worn as a witness.</p>",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "categories": {
+      "type": "category-tiles",
+      "blocks": {
+        "w1": {
+          "type": "tile",
+          "settings": {
+            "title": "Tees",
+            "audience": "women"
+          }
+        },
+        "w2": {
+          "type": "tile",
+          "settings": {
+            "title": "Sweatshirts",
+            "audience": "women"
+          }
+        },
+        "w3": {
+          "type": "tile",
+          "settings": {
+            "title": "Hoodies",
+            "audience": "women"
+          }
+        },
+        "a1": {
+          "type": "tile",
+          "settings": {
+            "title": "Caps",
+            "audience": "all"
+          }
+        },
+        "m1": {
+          "type": "tile",
+          "settings": {
+            "title": "Tees",
+            "audience": "men"
+          }
+        },
+        "m2": {
+          "type": "tile",
+          "settings": {
+            "title": "Sweatshirts",
+            "audience": "men"
+          }
+        },
+        "m3": {
+          "type": "tile",
+          "settings": {
+            "title": "Hoodies",
+            "audience": "men"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "a1",
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "settings": {
+        "color_scheme": "white",
+        "heading": "Shop by category",
+        "default_tab": "women",
+        "padding_top": 0,
+        "padding_bottom": 80
+      }
+    },
+    "best_statement": {
+      "type": "featured-collection",
+      "settings": {
+        "color_scheme": "light",
+        "eyebrow": "The Statement Collection",
+        "heading": "Chosen, not chance.",
+        "limit": 4,
+        "columns": "4",
+        "show_view_all": true,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "best_periodic": {
+      "type": "featured-collection",
+      "settings": {
+        "color_scheme": "white",
+        "eyebrow": "Periodic Element Series",
+        "heading": "What you're made of.",
+        "limit": 4,
+        "columns": "4",
+        "show_view_all": true,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "scripture": {
+      "type": "editorial-split",
+      "settings": {
+        "image_side": "left",
+        "color_scheme": "navy",
+        "eyebrow": "Scripture Editorial",
+        "heading": "The King is coming. Be ready.",
+        "text": "<p>Six designs on the promise of His return. No verse on the front, by design. The reference is stitched on the sleeve, for the conversation it starts.</p>",
+        "verse": "Matthew 24:42",
+        "button_label": "Shop the collection",
+        "button_style": "solid"
+      }
+    },
+    "walk": {
+      "type": "editorial-duo",
+      "blocks": {
+        "her": {
+          "type": "image",
+          "settings": {
+            "title": "Made for her walk",
+            "button_label": "Shop women"
+          }
+        },
+        "his": {
+          "type": "image",
+          "settings": {
+            "title": "Made for his walk",
+            "button_label": "Shop men"
+          }
+        }
+      },
+      "block_order": [
+        "her",
+        "his"
+      ],
+      "settings": {
+        "color_scheme": "white",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "spotlight": {
+      "type": "product-spotlight",
+      "blocks": {
+        "p1": {
+          "type": "product",
+          "settings": {
+            "story": "Chosen, not chance. A reminder that you were known before you were born.",
+            "link_label": "Shop now"
+          }
+        },
+        "p2": {
+          "type": "product",
+          "settings": {
+            "story": "Redeemed, written like an element. What you are made of, by grace.",
+            "link_label": "Shop now"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2"
+      ],
+      "settings": {
+        "color_scheme": "light",
+        "heading": "The story behind the design",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "our_why": {
+      "type": "editorial-split",
+      "settings": {
+        "image_side": "right",
+        "color_scheme": "white",
+        "eyebrow": "Our Why",
+        "heading": "More than clothing.",
+        "text": "<p>His Glory Forever began with one purpose: to carry the gospel into everyday life and gather a community of believers who shine where they are.</p><p>Every design starts with scripture. Every sale helps the mission grow.</p>",
+        "verse": "Romans 11:36",
+        "button_label": "Read our story",
+        "button_link": "",
+        "button_style": "outline"
+      }
+    },
+    "prayer": {
+      "type": "prayer-praise-teaser",
+      "settings": {
+        "color_scheme": "navy",
+        "padding_top": 96,
+        "padding_bottom": 96
       }
     }
   },
-  "order": ["welcome"]
+  "order": [
+    "hero",
+    "statement",
+    "categories",
+    "best_statement",
+    "best_periodic",
+    "scripture",
+    "walk",
+    "spotlight",
+    "our_why",
+    "prayer"
+  ]
 }

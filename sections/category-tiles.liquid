@@ -1,0 +1,124 @@
+{%- liquid
+  assign s = section.settings
+  assign has_women = false
+  assign has_men = false
+  for block in section.blocks
+    if block.settings.audience == 'women'
+      assign has_women = true
+    elsif block.settings.audience == 'men'
+      assign has_men = true
+    endif
+  endfor
+  assign show_toggle = false
+  if has_women and has_men
+    assign show_toggle = true
+  endif
+-%}
+<section class="category-tiles scheme-{{ s.color_scheme }} section-spacing" style="--pad-top: {{ s.padding_top }}px; --pad-bottom: {{ s.padding_bottom }}px;" data-category-tiles data-default="{{ s.default_tab }}">
+  <div class="page-width">
+    <div class="section-header-row">
+      {%- if s.heading != blank -%}<h2 class="h2">{{ s.heading }}</h2>{%- endif -%}
+      {%- if show_toggle -%}
+        <div class="toggle" role="tablist" aria-label="{{ 'sections.category_tiles.toggle_label' | t }}">
+          <button type="button" class="toggle__button" role="tab" data-audience-tab="women" aria-selected="{% if s.default_tab == 'women' %}true{% else %}false{% endif %}">{{ 'sections.category_tiles.women' | t }}</button>
+          <button type="button" class="toggle__button" role="tab" data-audience-tab="men" aria-selected="{% if s.default_tab == 'men' %}true{% else %}false{% endif %}">{{ 'sections.category_tiles.men' | t }}</button>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <ul class="tiles-grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign hidden = false
+          if show_toggle and block.settings.audience != 'all' and block.settings.audience != s.default_tab
+            assign hidden = true
+          endif
+        -%}
+        <li class="tile" data-audience="{{ block.settings.audience }}" {% if hidden %}hidden{% endif %} {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.link }}" class="tile__link">
+            <div class="tile__media media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 25vw, 50vw', widths: '360, 540, 720, 900', alt: block.settings.image.alt | default: block.settings.title }}
+              {%- else -%}
+                {%- assign ph = forloop.index | modulo: 6 | plus: 1 -%}
+                {{ 'collection-' | append: ph | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <span class="tile__title">{{ block.settings.title }}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category tiles",
+  "class": "section-category-tiles",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Colors",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "light", "label": "Light" },
+        { "value": "navy", "label": "Navy" }
+      ],
+      "default": "white"
+    },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by category" },
+    {
+      "type": "select",
+      "id": "default_tab",
+      "label": "Show first",
+      "info": "The Women's/Men's toggle appears when tiles exist for both.",
+      "options": [
+        { "value": "women", "label": "Women's" },
+        { "value": "men", "label": "Men's" }
+      ],
+      "default": "women"
+    },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Top spacing", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Bottom spacing", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Tees" },
+        { "type": "url", "id": "link", "label": "Link" },
+        {
+          "type": "select",
+          "id": "audience",
+          "label": "Show under",
+          "options": [
+            { "value": "women", "label": "Women's" },
+            { "value": "men", "label": "Men's" },
+            { "value": "all", "label": "Both" }
+          ],
+          "default": "women"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category tiles",
+      "blocks": [
+        { "type": "tile", "settings": { "title": "Tees", "audience": "women" } },
+        { "type": "tile", "settings": { "title": "Sweatshirts", "audience": "women" } },
+        { "type": "tile", "settings": { "title": "Hoodies", "audience": "women" } },
+        { "type": "tile", "settings": { "title": "Caps", "audience": "all" } },
+        { "type": "tile", "settings": { "title": "Tees", "audience": "men" } },
+        { "type": "tile", "settings": { "title": "Sweatshirts", "audience": "men" } },
+        { "type": "tile", "settings": { "title": "Hoodies", "audience": "men" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

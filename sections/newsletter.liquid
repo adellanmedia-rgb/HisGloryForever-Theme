@@ -1,0 +1,53 @@
+{%- assign s = section.settings -%}
+<section class="newsletter scheme-{{ s.color_scheme }} section-spacing text-center" style="--pad-top: {{ s.padding_top }}px; --pad-bottom: {{ s.padding_bottom }}px;">
+  <div class="page-width">
+    <div class="newsletter__inner">
+      {%- if s.heading != blank -%}<h2 class="h2">{{ s.heading }}</h2>{%- endif -%}
+      {%- if s.text != blank -%}<div class="rte text-muted">{{ s.text }}</div>{%- endif -%}
+      {%- form 'customer', id: 'NewsletterSection', class: 'newsletter-form newsletter-form--center' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter,weekly-verse">
+        <div class="field">
+          <label class="visually-hidden" for="NewsletterSectionEmail">{{ 'sections.footer.email' | t }}</label>
+          <input id="NewsletterSectionEmail" class="field__input" type="email" name="contact[email]" autocomplete="email" placeholder="{{ 'sections.footer.email' | t }}" required>
+          <button type="submit" class="button">{{ s.button_label }}</button>
+        </div>
+        {%- if form.posted_successfully? -%}
+          <p class="form-message" role="status">{{ s.success_message }}</p>
+        {%- elsif form.errors -%}
+          <p class="form-message" role="alert">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Weekly Verse signup",
+  "class": "section-newsletter",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "The footer already has this signup. Use this section only on pages where you want a second, more prominent one."
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Colors",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "white", "label": "White" },
+        { "value": "navy", "label": "Navy" }
+      ],
+      "default": "light"
+    },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Weekly Verse" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>A scripture in your inbox every week, plus early access to new drops and occasional offers.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Welcome. Your first verse is on its way." },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Top spacing", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Bottom spacing", "default": 80 }
+  ],
+  "presets": [{ "name": "Weekly Verse signup" }]
+}
+{% endschema %}
