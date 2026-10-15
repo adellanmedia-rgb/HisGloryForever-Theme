@@ -1,0 +1,58 @@
+<div class="page-width account-auth">
+  <div class="account-auth__box" data-login>
+    <div data-login-panel>
+      <h1 class="h1">{{ 'customer.login.title' | t }}</h1>
+      {%- form 'customer_login', novalidate: 'novalidate' -%}
+        {%- if form.errors -%}<p class="form-message" role="alert">{{ form.errors | default_errors }}</p>{%- endif -%}
+        <div class="account-auth__fields">
+          <div>
+            <label class="form-label" for="LoginEmail">{{ 'customer.email' | t }}</label>
+            <input class="field__input" id="LoginEmail" type="email" name="customer[email]" autocomplete="email" autocapitalize="off" required>
+          </div>
+          {%- if form.password_needed -%}
+            <div>
+              <label class="form-label" for="LoginPassword">{{ 'customer.password' | t }}</label>
+              <input class="field__input" id="LoginPassword" type="password" name="customer[password]" autocomplete="current-password" required>
+            </div>
+          {%- endif -%}
+        </div>
+        <button type="submit" class="button button--full">{{ 'customer.login.submit' | t }}</button>
+        {%- if form.password_needed -%}
+          <button type="button" class="link-inline account-auth__link" data-show-recover>{{ 'customer.login.forgot' | t }}</button>
+        {%- endif -%}
+      {%- endform -%}
+      <p class="account-auth__alt">{{ 'customer.login.new' | t }} <a href="{{ routes.account_register_url }}" class="link-underline">{{ 'customer.register.title' | t }}</a></p>
+    </div>
+
+    <div data-recover-panel hidden>
+      <h1 class="h1">{{ 'customer.recover.title' | t }}</h1>
+      <p class="text-muted">{{ 'customer.recover.text' | t }}</p>
+      {%- form 'recover_customer_password' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="form-message" role="status" data-recover-success>{{ 'customer.recover.success' | t }}</p>
+        {%- endif -%}
+        {%- if form.errors -%}<p class="form-message" role="alert">{{ form.errors | default_errors }}</p>{%- endif -%}
+        <div class="account-auth__fields">
+          <div>
+            <label class="form-label" for="RecoverEmail">{{ 'customer.email' | t }}</label>
+            <input class="field__input" id="RecoverEmail" type="email" name="email" autocomplete="email" required>
+          </div>
+        </div>
+        <button type="submit" class="button button--full">{{ 'customer.recover.submit' | t }}</button>
+        <button type="button" class="link-inline account-auth__link" data-show-login>{{ 'customer.recover.cancel' | t }}</button>
+      {%- endform -%}
+    </div>
+
+    {%- if shop.checkout.guest_login -%}
+      <div class="account-auth__guest">
+        {%- form 'guest_login' -%}
+          <button type="submit" class="button button--secondary button--full">{{ 'customer.login.guest' | t }}</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Log in", "class": "section-main-login", "settings": [] }
+{% endschema %}

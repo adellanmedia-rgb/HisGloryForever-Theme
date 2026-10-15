@@ -1,0 +1,58 @@
+{%- layout none -%}
+{%- assign gift_value = gift_card.initial_value | money_without_trailing_zeros -%}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>{{ 'gift_card.title' | t: value: gift_value, shop: shop.name }}</title>
+    {% render 'css-variables' %}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+  </head>
+  <body class="gift-card-page scheme-navy">
+    <main class="gift-card">
+      <div class="gift-card__logo">{% render 'logo', inverse: true %}</div>
+      <h1 class="h2">{{ 'gift_card.heading' | t: value: gift_value }}</h1>
+      {%- if gift_card.expired or gift_card.enabled == false -%}
+        <p class="gift-card__status">{{ 'gift_card.expired' | t }}</p>
+      {%- elsif gift_card.balance != gift_card.initial_value -%}
+        {%- assign gift_balance = gift_card.balance | money -%}
+        <p class="gift-card__status">{{ 'gift_card.balance' | t: balance: gift_balance }}</p>
+      {%- endif -%}
+
+      <div class="gift-card__card scheme-white">
+        <p class="gift-card__label">{{ 'gift_card.code' | t }}</p>
+        <p class="gift-card__code" id="GiftCardCode">{{ gift_card.code | format_code }}</p>
+        <button type="button" class="link-inline" data-copy="{{ gift_card.code }}" data-copied="{{ 'gift_card.copied' | t }}">{{ 'gift_card.copy' | t }}</button>
+        <div class="gift-card__qr" id="GiftCardQR" data-identifier="{{ gift_card.qr_identifier }}"></div>
+        {%- if gift_card.expires_on -%}
+          {%- assign expiry = gift_card.expires_on | time_tag: format: 'date' -%}
+          <p class="text-muted text-small">{{ 'gift_card.expires' | t: date: expiry }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if gift_card.message != blank -%}
+        <blockquote class="gift-card__message">{{ gift_card.message }}</blockquote>
+      {%- endif -%}
+
+      <div class="button-group button-group--center">
+        <a href="{{ shop.url }}" class="button button--light">{{ 'gift_card.shop' | t }}</a>
+        {%- if gift_card.pass_url -%}
+          <a href="{{ gift_card.pass_url }}" class="button button--light button--secondary">{{ 'gift_card.wallet' | t }}</a>
+        {%- endif -%}
+      </div>
+    </main>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const qr = document.getElementById('GiftCardQR');
+        if (qr && window.QRCode) new QRCode(qr, { text: qr.dataset.identifier, width: 120, height: 120 });
+        const copy = document.querySelector('[data-copy]');
+        if (copy) copy.addEventListener('click', () => {
+          navigator.clipboard && navigator.clipboard.writeText(copy.dataset.copy).then(() => { copy.textContent = copy.dataset.copied; });
+        });
+      });
+    </script>
+  </body>
+</html>

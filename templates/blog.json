@@ -1,0 +1,4 @@
+{
+  "sections": { "main": { "type": "main-blog", "settings": { "eyebrow": "The Journal", "show_tags": true, "feature_first": true, "per_page": 9 } } },
+  "order": ["main"]
+}

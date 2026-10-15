@@ -1,0 +1,48 @@
+{%- assign s = section.settings -%}
+<div class="collection-banner scheme-white">
+  <div class="page-width collection-banner__content">
+    {%- if s.eyebrow != blank -%}<span class="eyebrow">{{ s.eyebrow }}</span>{%- endif -%}
+    <h1 class="h1 collection-banner__title">{{ blog.title | escape }}</h1>
+    {%- if s.text != blank -%}<div class="collection-banner__description rte">{{ s.text }}</div>{%- endif -%}
+  </div>
+</div>
+
+<div class="page-width blog">
+  {%- if blog.all_tags.size > 0 and s.show_tags -%}
+    <ul class="blog__tags" role="list">
+      <li><a href="{{ blog.url }}" class="blog__tag{% if current_tags == blank %} is-active{% endif %}">{{ 'blogs.all' | t }}</a></li>
+      {%- for tag in blog.all_tags -%}
+        <li><a href="{{ blog.url }}/tagged/{{ tag | handleize }}" class="blog__tag{% if current_tags contains tag %} is-active{% endif %}">{{ tag | escape }}</a></li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+
+  {%- paginate blog.articles by s.per_page -%}
+    {%- if blog.articles.size == 0 -%}
+      <div class="collection__empty"><p class="h3">{{ 'blogs.empty' | t }}</p></div>
+    {%- else -%}
+      <ul class="blog__grid" role="list">
+        {%- for article in blog.articles -%}
+          <li class="blog__item{% if forloop.first and paginate.current_page == 1 and s.feature_first %} blog__item--featured{% endif %}">
+            {% render 'article-card', article: article, show_excerpt: true %}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+    {%- if paginate.pages > 1 -%}{% render 'pagination', paginate: paginate %}{%- endif -%}
+  {%- endpaginate -%}
+</div>
+
+{% schema %}
+{
+  "name": "Journal",
+  "class": "section-main-blog",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small label above title", "default": "The Journal" },
+    { "type": "richtext", "id": "text", "label": "Intro", "default": "<p>Reflections, scripture and stories from the HGF community.</p>" },
+    { "type": "checkbox", "id": "show_tags", "label": "Show topic filters", "default": true },
+    { "type": "checkbox", "id": "feature_first", "label": "Feature the newest post", "default": true },
+    { "type": "range", "id": "per_page", "min": 6, "max": 24, "step": 3, "label": "Posts per page", "default": 9 }
+  ]
+}
+{% endschema %}

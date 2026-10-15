@@ -705,6 +705,36 @@
     });
   };
 
+  /* ---------- Account pages ---------- */
+
+  const initAccount = () => {
+    const login = $('[data-login]');
+    if (login) {
+      const loginPanel = $('[data-login-panel]', login);
+      const recoverPanel = $('[data-recover-panel]', login);
+      const show = (recover) => { loginPanel.hidden = recover; recoverPanel.hidden = !recover; };
+      login.addEventListener('click', (e) => {
+        if (e.target.closest('[data-show-recover]')) show(true);
+        if (e.target.closest('[data-show-login]')) show(false);
+      });
+      if (window.location.hash === '#recover' || $('[data-recover-success]', login) || $('[role="alert"]', recoverPanel)) show(true);
+    }
+
+    document.addEventListener('click', (e) => {
+      const toggle = e.target.closest('[data-address-toggle]');
+      if (!toggle) return;
+      const form = document.getElementById(toggle.dataset.addressToggle);
+      if (form) form.hidden = !form.hidden;
+    });
+
+    document.addEventListener('submit', (e) => {
+      const form = e.target.closest('[data-confirm]');
+      if (form && !window.confirm(form.dataset.confirm)) e.preventDefault();
+    });
+
+    $$('select[data-default]').forEach((sel) => { if (sel.dataset.default) sel.value = sel.dataset.default; });
+  };
+
   /* ---------- Boot ---------- */
 
   const boot = () => {
@@ -719,6 +749,7 @@
     initRecommendations();
     initFacets();
     initWishlistPage();
+    initAccount();
   };
 
   // Re-run section scripts when edited in the theme editor

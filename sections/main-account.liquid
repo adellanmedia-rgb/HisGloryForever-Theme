@@ -1,0 +1,59 @@
+{%- assign display_name = customer.first_name | default: customer.name -%}
+<div class="page-width account">
+  <div class="account__header">
+    <div>
+      <span class="eyebrow">{{ 'customer.account.title' | t }}</span>
+      <h1 class="h1">{{ 'customer.account.welcome' | t: name: display_name }}</h1>
+    </div>
+    <a href="{{ routes.account_logout_url }}" class="link-underline">{{ 'customer.account.log_out' | t }}</a>
+  </div>
+
+  <div class="account__layout">
+    <div class="account__orders">
+      <h2 class="h3">{{ 'customer.orders.title' | t }}</h2>
+      {%- paginate customer.orders by 10 -%}
+        {%- if customer.orders.size > 0 -%}
+          <div class="account-table__scroll">
+            <table class="account-table">
+              <thead>
+                <tr>
+                  <th scope="col">{{ 'customer.orders.order' | t }}</th>
+                  <th scope="col">{{ 'customer.orders.date' | t }}</th>
+                  <th scope="col">{{ 'customer.orders.status' | t }}</th>
+                  <th scope="col">{{ 'customer.orders.total' | t }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for order in customer.orders -%}
+                  <tr>
+                    <td><a href="{{ order.customer_url }}" class="link-underline">{{ order.name }}</a></td>
+                    <td>{{ order.created_at | time_tag: format: 'date' }}</td>
+                    <td>{{ order.fulfillment_status_label }}</td>
+                    <td>{{ order.total_net_amount | money }}</td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          </div>
+        {%- else -%}
+          <p class="text-muted">{{ 'customer.orders.none' | t }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="button">{{ 'sections.cart.continue' | t }}</a>
+        {%- endif -%}
+        {%- if paginate.pages > 1 -%}{% render 'pagination', paginate: paginate %}{%- endif -%}
+      {%- endpaginate -%}
+    </div>
+
+    <aside class="account__details scheme-light">
+      <h2 class="h3">{{ 'customer.account.details' | t }}</h2>
+      <p>{{ customer.name }}<br>{{ customer.email }}</p>
+      {%- if customer.default_address -%}
+        <div class="text-muted">{{ customer.default_address | format_address }}</div>
+      {%- endif -%}
+      <a href="{{ routes.account_addresses_url }}" class="link-underline">{{ 'customer.addresses.view' | t: count: customer.addresses_count }}</a>
+    </aside>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Account", "class": "section-main-account", "settings": [] }
+{% endschema %}

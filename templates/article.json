@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "main": { "type": "main-article", "settings": { "show_author": false, "show_share": true } },
+    "shop": {
+      "type": "featured-collection",
+      "settings": { "color_scheme": "light", "eyebrow": "Wear the Word", "heading": "From the collection", "limit": 4, "columns": "4", "show_view_all": true, "padding_top": 80, "padding_bottom": 80 }
+    }
+  },
+  "order": ["main", "shop"]
+}

@@ -1,0 +1,59 @@
+{%- assign s = section.settings -%}
+<article class="article" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="article__header page-width">
+    <a href="{{ blog.url }}" class="eyebrow article__back">{{ blog.title | escape }}</a>
+    <h1 class="h1 article__title" itemprop="headline">{{ article.title | escape }}</h1>
+    <p class="article__meta">
+      {{ article.published_at | time_tag: format: 'date' }}
+      {% if s.show_author and article.author != blank %} · {{ article.author }}{% endif %}
+    </p>
+  </header>
+
+  {%- if article.image -%}
+    <div class="article__hero page-width">
+      <div class="media article__image">
+        {{ article.image | image_url: width: 2000 | image_tag: loading: 'eager', sizes: '(min-width: 1200px) 1100px, 100vw', widths: '750, 1100, 1500, 2000', alt: article.image.alt | default: article.title }}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="page-width">
+    <div class="article__content rte" itemprop="articleBody">{{ article.content }}</div>
+
+    <footer class="article__footer">
+      {%- if article.tags.size > 0 -%}
+        <ul class="blog__tags blog__tags--left" role="list">
+          {%- for tag in article.tags -%}
+            <li><a href="{{ blog.url }}/tagged/{{ tag | handleize }}" class="blog__tag">{{ tag | escape }}</a></li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if s.show_share -%}
+        {%- liquid
+          assign share_url = shop.url | append: article.url | url_encode
+          assign share_title = article.title | url_encode
+        -%}
+        <div class="article__share">
+          <span class="article__share-label">{{ 'blogs.share' | t }}</span>
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" target="_blank" rel="noopener" class="icon-button">{% render 'icon', icon: 'facebook' %}<span class="visually-hidden">Facebook</span></a>
+          <a href="https://pinterest.com/pin/create/button/?url={{ share_url }}&description={{ share_title }}" target="_blank" rel="noopener" class="icon-button">{% render 'icon', icon: 'pinterest' %}<span class="visually-hidden">Pinterest</span></a>
+          <a href="mailto:?subject={{ share_title }}&body={{ share_url }}" class="icon-button">{% render 'icon', icon: 'mail' %}<span class="visually-hidden">{{ 'blogs.email' | t }}</span></a>
+        </div>
+      {%- endif -%}
+
+      <a href="{{ blog.url }}" class="link-underline">{{ 'blogs.back' | t: title: blog.title }}</a>
+    </footer>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Journal post",
+  "class": "section-main-article",
+  "settings": [
+    { "type": "checkbox", "id": "show_author", "label": "Show author", "default": false },
+    { "type": "checkbox", "id": "show_share", "label": "Show share links", "default": true }
+  ]
+}
+{% endschema %}
