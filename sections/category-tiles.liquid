@@ -14,8 +14,8 @@
     assign show_toggle = true
   endif
 -%}
-<section class="category-tiles scheme-{{ s.color_scheme }} section-spacing" style="--pad-top: {{ s.padding_top }}px; --pad-bottom: {{ s.padding_bottom }}px;" data-category-tiles data-default="{{ s.default_tab }}">
-  <div class="page-width">
+<section class="category-tiles category-tiles--rail scheme-{{ s.color_scheme }} section-spacing" style="--pad-top: {{ s.padding_top }}px; --pad-bottom: {{ s.padding_bottom }}px; --tile-width: {{ s.tile_width }}px;" data-category-tiles data-default="{{ s.default_tab }}">
+  <div class="tiles-rail__head">
     <div class="section-header-row">
       {%- if s.heading != blank -%}<h2 class="h2">{{ s.heading }}</h2>{%- endif -%}
       {%- if show_toggle -%}
@@ -25,8 +25,14 @@
         </div>
       {%- endif -%}
     </div>
+  </div>
 
-    <ul class="tiles-grid" role="list">
+  <div class="tiles-rail" data-tiles-rail>
+    <button type="button" class="tiles-rail__arrow tiles-rail__arrow--prev" data-rail-prev aria-label="Previous" hidden>
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+
+    <ul class="tiles-grid tiles-rail__track" role="list" data-rail-track>
       {%- for block in section.blocks -%}
         {%- liquid
           assign hidden = false
@@ -38,7 +44,7 @@
           <a href="{{ block.settings.link }}" class="tile__link">
             <div class="tile__media media">
               {%- if block.settings.image != blank -%}
-                {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 25vw, 50vw', widths: '360, 540, 720, 900', alt: block.settings.image.alt | default: block.settings.title }}
+                {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 280px, 45vw', widths: '360, 560, 720, 900', alt: block.settings.image.alt | default: block.settings.title }}
               {%- else -%}
                 {%- assign ph = forloop.index | modulo: 6 | plus: 1 -%}
                 {{ 'collection-' | append: ph | placeholder_svg_tag: 'placeholder-svg' }}
@@ -49,14 +55,152 @@
         </li>
       {%- endfor -%}
     </ul>
+
+    <button type="button" class="tiles-rail__arrow tiles-rail__arrow--next" data-rail-next aria-label="Next" hidden>
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
   </div>
 </section>
+
+<script>
+  (() => {
+    const init = (root) => {
+      root.querySelectorAll('[data-tiles-rail]').forEach((rail) => {
+        if (rail.dataset.ready) return;
+        rail.dataset.ready = 'true';
+        const track = rail.querySelector('[data-rail-track]');
+        const prev = rail.querySelector('[data-rail-prev]');
+        const next = rail.querySelector('[data-rail-next]');
+        if (!track || !prev || !next) return;
+
+        const step = () => {
+          const tile = [...track.children].find((li) => !li.hidden);
+          if (!tile) return track.clientWidth;
+          const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+          const perView = Math.max(1, Math.floor((track.clientWidth + gap) / (tile.offsetWidth + gap)) - 1);
+          return perView * (tile.offsetWidth + gap);
+        };
+
+        const update = () => {
+          const max = track.scrollWidth - track.clientWidth;
+          const scrollable = max > 2;
+          prev.hidden = !scrollable;
+          next.hidden = !scrollable;
+          prev.disabled = track.scrollLeft <= 2;
+          next.disabled = track.scrollLeft >= max - 2;
+        };
+
+        prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+        next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+        track.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+
+        // Women's / Men's toggle: go back to the start of the row
+        const section = rail.closest('[data-category-tiles]');
+        section && section.addEventListener('click', (e) => {
+          if (!e.target.closest('[data-audience-tab]')) return;
+          requestAnimationFrame(() => { track.scrollLeft = 0; update(); });
+        });
+
+        update();
+      });
+    };
+    init(document);
+    document.addEventListener('shopify:section:load', (e) => init(e.target));
+  })();
+</script>
+
+{% stylesheet %}
+/* ---------- Category tiles: full-width sliding rail ---------- */
+
+.category-tiles--rail { --rail-gutter: 1.6rem; --rail-gap: 12px; overflow: hidden; }
+
+@media (min-width: 750px) {
+  .category-tiles--rail { --rail-gutter: 60px; --rail-gap: 20px; }
+}
+
+.tiles-rail__head { padding: 0 var(--rail-gutter); }
+
+.tiles-rail { position: relative; }
+
+.category-tiles--rail .tiles-rail__track {
+  display: flex;
+  gap: var(--rail-gap);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--rail-gutter);
+  padding: 0 var(--rail-gutter);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  grid-template-columns: none;
+}
+
+.category-tiles--rail .tiles-rail__track::-webkit-scrollbar { display: none; }
+
+.category-tiles--rail .tile {
+  flex: 0 0 45vw;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 750px) {
+  .category-tiles--rail .tile { flex-basis: var(--tile-width, 280px); }
+}
+
+.category-tiles--rail .tile[hidden] { display: none; }
+
+.category-tiles--rail .tile__media { aspect-ratio: 10 / 13; }
+
+.category-tiles--rail .tile__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.19, 0.61, 0.15, 0.82);
+}
+
+.category-tiles--rail .tile__title { text-align: center; }
+
+.tiles-rail__arrow {
+  position: absolute;
+  top: calc((min(45vw, var(--tile-width, 280px)) * 13 / 10) / 2);
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-white, #fff);
+  color: var(--color-navy, #0b1f3a);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+@media (min-width: 750px) {
+  .tiles-rail__arrow { top: calc(var(--tile-width, 280px) * 13 / 10 / 2); }
+}
+
+.tiles-rail__arrow--prev { left: calc(var(--rail-gutter) + 12px); }
+.tiles-rail__arrow--next { right: 24px; }
+
+.tiles-rail:hover .tiles-rail__arrow,
+.tiles-rail__arrow:focus-visible { opacity: 1; }
+
+.tiles-rail__arrow:disabled { opacity: 0 !important; pointer-events: none; }
+
+@media (hover: none) {
+  .tiles-rail__arrow { display: none; }
+}
+{% endstylesheet %}
 
 {% schema %}
 {
   "name": "Category tiles",
   "class": "section-category-tiles",
-  "max_blocks": 12,
+  "max_blocks": 24,
   "settings": [
     {
       "type": "select",
@@ -81,6 +225,17 @@
       ],
       "default": "women"
     },
+    {
+      "type": "range",
+      "id": "tile_width",
+      "min": 200,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Tile width (desktop)",
+      "info": "280px matches the reference site. Tiles slide left/right when they don't all fit.",
+      "default": 280
+    },
     { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Top spacing", "default": 80 },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Bottom spacing", "default": 80 }
   ],
@@ -89,7 +244,7 @@
       "type": "tile",
       "name": "Tile",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Portrait works best (10:13, e.g. 1000 x 1300px)." },
         { "type": "text", "id": "title", "label": "Title", "default": "Tees" },
         { "type": "url", "id": "link", "label": "Link" },
         {
