@@ -35,6 +35,10 @@
               <textarea class="field__input" id="TestimonyBody" name="contact[body]" rows="5" required placeholder="{{ 'sections.prayer.testimony_placeholder' | t }}"></textarea>
             </div>
           </div>
+          <label class="prayer-teaser__consent" for="TestimonyConsent">
+            <input type="checkbox" id="TestimonyConsent" name="contact[Permission to share]" value="Yes" required>
+            <span>{{ 'sections.prayer.consent' | t }}</span>
+          </label>
           <p class="prayer-teaser__privacy">{{ s.privacy_text }}</p>
           <button type="submit" class="button">{{ s.button_label }}</button>
         {%- endif -%}
@@ -71,7 +75,7 @@
       "type": "text",
       "id": "privacy_text",
       "label": "Privacy note",
-      "default": "First name or Anonymous only. Nothing is posted until it's reviewed. Your testimony is never used for marketing."
+      "default": "Your email stays private and is never shown. Please leave out last names and other people's private details. Nothing is posted until it's reviewed, and your testimony is never used for marketing."
     },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Share my testimony" },
     { "type": "text", "id": "success_message", "label": "Thank-you message", "default": "Thank you for sharing. Praise God." },
