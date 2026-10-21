@@ -30,12 +30,12 @@
         "step": 2,
         "unit": "px",
         "label": "Logo width",
-        "default": 64
+        "default": 34
       },
       {
         "type": "checkbox",
         "id": "logo_show_name",
-        "label": "Show \"His Glory Forever\" under the crest",
+        "label": "Show \"His Glory Forever\" beside the crest",
         "info": "Turn off if your uploaded logo file already includes the name.",
         "default": true
       },
