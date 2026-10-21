@@ -14,7 +14,7 @@
         "type": "image_picker",
         "id": "logo",
         "label": "Crest or logo image",
-        "info": "SVG or transparent PNG. Until you upload one, a placeholder shows."
+        "info": "Optional. The HGF crest is built into the theme in brand navy and switches to white on navy sections automatically. Upload a file here only to override it."
       },
       {
         "type": "image_picker",

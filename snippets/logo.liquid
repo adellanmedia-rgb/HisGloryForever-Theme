@@ -2,7 +2,8 @@
   The HGF launch lockup: crest + "His Glory Forever" in small type.
   "HGF" text is never placed next to the crest.
   Params:
-    - inverse: true when sitting on navy (uses the white logo if uploaded)
+    - inverse: true when sitting on navy (uses the white logo if uploaded;
+      the built-in crest follows text color automatically)
     - heading: true to wrap in an h1 (homepage header)
 {%- endcomment -%}
 {%- liquid
@@ -29,11 +30,8 @@
         loading: 'eager'
     }}
   {%- else -%}
-    {%- comment -%} Neutral placeholder shield until the crest file is uploaded {%- endcomment -%}
-    <svg class="logo__placeholder" viewBox="0 0 48 56" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
-      <path d="M24 3 6 9v15c0 13 8 22.5 18 28 10-5.5 18-15 18-28V9L24 3Z"/>
-      <path d="M24 16v20M17 23h14" stroke-width="1.2"/>
-    </svg>
+    {%- comment -%} Built-in HGF crest; takes the surrounding text color (navy or white) {%- endcomment -%}
+    {% render 'crest', class: 'logo__crest' %}
     {%- unless settings.logo_show_name -%}<span class="visually-hidden">{{ shop.name }}</span>{%- endunless -%}
   {%- endif -%}
   {%- if settings.logo_show_name and settings.logo_name != blank -%}

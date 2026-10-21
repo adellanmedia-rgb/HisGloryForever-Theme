@@ -460,14 +460,14 @@ p:last-child { margin-bottom: 0; }
   white-space: nowrap;
 }
 
-.logo__placeholder {
+.logo__crest {
+  display: block;
   width: var(--logo-width, 56px);
   height: auto;
-  color: currentColor;
 }
 
 @media (max-width: 749px) {
-  .logo__image, .logo__placeholder { width: calc(var(--logo-width, 56px) * 0.75); }
+  .logo__image, .logo__crest { width: calc(var(--logo-width, 56px) * 0.75); }
   .logo__name { font-size: 1.1rem; }
 }
 
