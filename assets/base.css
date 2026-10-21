@@ -449,11 +449,11 @@ p:last-child { margin-bottom: 0; }
   text-align: center;
 }
 
-.logo__image { width: var(--logo-width, 56px); height: auto; }
+.logo__image { width: var(--logo-width, 64px); height: auto; }
 
 .logo__name {
   font-family: var(--font-heading);
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   line-height: 1.2;
@@ -462,13 +462,13 @@ p:last-child { margin-bottom: 0; }
 
 .logo__crest {
   display: block;
-  width: var(--logo-width, 56px);
+  width: var(--logo-width, 64px);
   height: auto;
 }
 
 @media (max-width: 749px) {
-  .logo__image, .logo__crest { width: calc(var(--logo-width, 56px) * 0.75); }
-  .logo__name { font-size: 1.1rem; }
+  .logo__image, .logo__crest { width: calc(var(--logo-width, 64px) * 0.75); }
+  .logo__name { font-size: 1.2rem; }
 }
 
 /* ---------- Desktop nav & mega menu ---------- */
