@@ -249,6 +249,12 @@
   "password": {
     "enter": "Store owner? Enter password",
     "label": "Password",
-    "submit": "Enter"
+    "submit": "Enter",
+    "countdown": {
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    }
   }
 }
