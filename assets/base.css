@@ -2506,3 +2506,5 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
 @media (max-width: 749px) {
   .password--paper .password__glimpse-media { --b: 8px; transform: rotate(-1deg); }
 }
+.password__note { margin: 0.4rem 0 0; font-size: 1.2rem; letter-spacing: 0.16em; text-transform: uppercase; color: #D8BE86; }
+@media (max-width: 749px) { .password__note { font-size: 1.1rem; letter-spacing: 0.12em; line-height: 1.6; } }
