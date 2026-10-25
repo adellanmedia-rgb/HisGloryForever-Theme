@@ -470,12 +470,17 @@ p:last-child { margin-bottom: 0; }
   white-space: nowrap;
 }
 
-/* Phones: name wraps to two lines (HIS GLORY / FOREVER) beside the crest */
+/* Phones: the brand name always stays on ONE line beside the crest (never wraps) */
 @media (max-width: 749px) {
+  .header__inner { grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.8rem; }
   .logo { gap: 0.8rem; }
   .logo__image, .logo__crest { width: calc(var(--logo-width, 34px) * 0.85); }
-  .logo__name { font-size: 1.2rem; line-height: 1.25; }
-  .logo__name-gap { display: block; height: 0; overflow: hidden; }
+  .logo__name { font-size: 1.2rem; letter-spacing: 0.1em; white-space: nowrap; }
+}
+@media (max-width: 374px) {
+  .logo { gap: 0.6rem; }
+  .logo__image, .logo__crest { width: 2.6rem; }
+  .logo__name { font-size: 1.05rem; letter-spacing: 0.06em; }
 }
 
 /* ---------- Desktop nav & mega menu ---------- */
