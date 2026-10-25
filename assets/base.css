@@ -459,10 +459,12 @@ p:last-child { margin-bottom: 0; }
   height: auto;
 }
 
+/* Brand name: locked to Cinzel SemiBold (600) everywhere the name is spelled out */
 .logo__name {
-  font-family: var(--font-heading);
+  font-family: var(--font-brand);
+  font-weight: 600;
   font-size: 1.5rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1.2;
   white-space: nowrap;

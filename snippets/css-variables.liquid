@@ -7,6 +7,13 @@
   assign heading_font_italic = heading_font | font_modify: 'style', 'italic'
 -%}
 <style>
+  @font-face {
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('{{ 'cinzel-600.woff2' | asset_url }}') format('woff2');
+  }
   {{ heading_font | font_face: font_display: 'swap' }}
   {{ body_font | font_face: font_display: 'swap' }}
   {{ body_font_medium | font_face: font_display: 'swap' }}
@@ -23,6 +30,7 @@
     --color-border: {{ settings.color_border }};
     --color-sale: {{ settings.color_sale }};
 
+    --font-brand: 'Cinzel', Georgia, 'Times New Roman', serif;
     --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
     --font-heading-weight: {{ heading_font.weight }};
     --font-heading-style: {{ heading_font.style }};
