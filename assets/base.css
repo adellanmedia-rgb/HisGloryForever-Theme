@@ -2457,11 +2457,11 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
 
 /* ---------- Coming soon: cardstock texture + winter scene ---------- */
 .hgf-paper {
-  position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background-size: 512px; background-repeat: repeat;
   mix-blend-mode: overlay; opacity: 0.8;
-  -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
-          mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 92%, transparent 99%);
+          mask-image: linear-gradient(to bottom, #000 92%, transparent 99%);
 }
 .password--winter {
   --winter-h: clamp(220px, 30vw, 460px);
@@ -2469,7 +2469,7 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
   background: radial-gradient(120% 60% at 50% 100%, #1D3356 0%, var(--color-navy) 55%, #101E36 100%);
 }
 .password--winter .password__inner { z-index: 3; padding-bottom: calc(var(--winter-h) * 0.82); }
-.winter__sceneWrap { position: absolute; left: 0; right: 0; bottom: 0; height: var(--winter-h); z-index: 0; pointer-events: none; }
+.winter__sceneWrap { position: absolute; left: 0; right: 0; bottom: -2px; height: var(--winter-h); z-index: 0; pointer-events: none; }
 .winter__scene { display: block; width: 100%; height: 100%; }
 .winter__layer { will-change: transform; }
 .winter__snow { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
