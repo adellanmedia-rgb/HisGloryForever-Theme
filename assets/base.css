@@ -2443,3 +2443,14 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
 /* Shopify Forms app block inside the coming-soon hero */
 .password__app-form { width: 100%; max-width: 48rem; margin: 2.4rem auto 0; text-align: left; }
 .password__app-form > * { width: 100%; }
+.password__app-form shopify-forms-embed {
+  --forms-body-font: normal 400 15px 'Work Sans', sans-serif;
+  --forms-heading-font: normal 600 20px 'Work Sans', sans-serif;
+  --form-background-color: transparent;
+  --form-text-color: #fff;
+  --form-placeholder-color: rgba(255, 255, 255, 0.72);
+  --form-field-border: 0 0 0 1px rgba(255, 255, 255, 0.35);
+  --form-field-border-focused: 0 0 0 1px #fff;
+  --form-field-border-radius: 0;
+  --button-border-radius: 0;
+}
