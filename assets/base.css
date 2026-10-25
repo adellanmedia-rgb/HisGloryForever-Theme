@@ -2454,3 +2454,33 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
   --form-field-border-radius: 0;
   --button-border-radius: 0;
 }
+
+/* ---------- Coming soon: cardstock texture + winter scene ---------- */
+.hgf-paper {
+  position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background-size: 512px; background-repeat: repeat;
+  mix-blend-mode: overlay; opacity: 0.8;
+  -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+}
+.password--winter {
+  --winter-h: clamp(220px, 30vw, 460px);
+  overflow: hidden; isolation: isolate;
+  background: radial-gradient(120% 60% at 50% 100%, #1D3356 0%, var(--color-navy) 55%, #101E36 100%);
+}
+.password--winter .password__inner { z-index: 3; padding-bottom: calc(var(--winter-h) * 0.82); }
+.winter__sceneWrap { position: absolute; left: 0; right: 0; bottom: 0; height: var(--winter-h); z-index: 0; pointer-events: none; }
+.winter__scene { display: block; width: 100%; height: 100%; }
+.winter__layer { will-change: transform; }
+.winter__snow { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+.winter__star { position: absolute; top: 13rem; right: 16%; width: 3.4rem; height: 3.4rem; z-index: 1; pointer-events: none; }
+.winter__star svg { display: block; width: 100%; height: 100%; transform-origin: center; animation: hgf-twinkle 7s ease-in-out infinite; }
+.winter__glow { position: absolute; inset: -6rem; border-radius: 50%; background: radial-gradient(circle, rgba(216, 190, 134, 0.35) 0%, rgba(216, 190, 134, 0.1) 35%, transparent 68%); animation: hgf-glow 7s ease-in-out infinite; }
+@keyframes hgf-twinkle { 0%, 100% { transform: scale(0.92) rotate(0deg); opacity: 0.85; } 50% { transform: scale(1.06) rotate(4deg); opacity: 1; } }
+@keyframes hgf-glow { 0%, 100% { opacity: 0.55; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.08); } }
+@media (max-width: 749px) {
+  .password--winter { --winter-h: 230px; }
+  .winter__star { top: 8rem; right: 10%; width: 2.4rem; height: 2.4rem; }
+  .winter__glow { inset: -4rem; }
+}
+@media (prefers-reduced-motion: reduce) { .winter__star svg, .winter__glow { animation: none; } }
