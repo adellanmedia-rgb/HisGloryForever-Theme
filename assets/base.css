@@ -2439,3 +2439,7 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
 .password-footer__crest .crest { width: 4.4rem; height: auto; color: var(--color-white); }
 .password-footer__heading { margin: 0; font-family: var(--font-heading); font-size: 2.2rem; }
 .password-footer__copy { margin: 0; font-size: 1.2rem; color: var(--fg-muted); letter-spacing: 0.08em; }
+
+/* Shopify Forms app block inside the coming-soon hero */
+.password__app-form { width: 100%; max-width: 48rem; margin: 2.4rem auto 0; text-align: left; }
+.password__app-form > * { width: 100%; }
