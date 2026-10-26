@@ -4,7 +4,7 @@
   Deliberately carries no products and does not subscribe anyone to marketing.
 {%- endcomment -%}
 {%- assign s = section.settings -%}
-<section class="prayer-teaser scheme-{{ s.color_scheme }} section-spacing" id="prayer-praise" style="--pad-top: {{ s.padding_top }}px; --pad-bottom: {{ s.padding_bottom }}px;">
+<section class="prayer-teaser{% unless s.show_form %} prayer-teaser--compact{% endunless %} scheme-{{ s.color_scheme }} section-spacing" id="prayer-praise" style="--pad-top: {{ s.padding_top }}px; --pad-bottom: {{ s.padding_bottom }}px;">
   <div class="page-width prayer-teaser__inner">
     <div class="prayer-teaser__intro">
       {%- if s.eyebrow != blank -%}<span class="eyebrow">{{ s.eyebrow }}</span>{%- endif -%}
@@ -12,6 +12,7 @@
       {%- if s.text != blank -%}<div class="rte prayer-teaser__text">{{ s.text }}</div>{%- endif -%}
     </div>
 
+    {%- if s.show_form -%}
     <div class="prayer-teaser__form">
       {%- form 'contact', id: 'TestimonyForm' -%}
         <input type="hidden" name="contact[Type]" value="Testimony">
@@ -44,6 +45,7 @@
         {%- endif -%}
       {%- endform -%}
     </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -63,6 +65,7 @@
       ],
       "default": "navy"
     },
+    { "type": "checkbox", "id": "show_form", "label": "Show testimony form", "info": "Turn off to show only the heading and text (a short teaser).", "default": true },
     { "type": "text", "id": "eyebrow", "label": "Small label above heading", "default": "Prayer & Praise · Coming in January" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "What has God done in your life?" },
     {

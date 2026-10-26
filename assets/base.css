@@ -1219,6 +1219,9 @@ textarea.field__input { resize: vertical; min-height: 14rem; }
 }
 
 .prayer-teaser__text { color: var(--fg-muted); max-width: 48rem; }
+.prayer-teaser--compact .prayer-teaser__inner { display: block; text-align: center; }
+.prayer-teaser--compact .prayer-teaser__text { margin-left: auto; margin-right: auto; }
+.prayer-teaser--compact .eyebrow { display: block; }
 
 .prayer-teaser__privacy { font-size: 1.3rem; color: var(--fg-muted); margin: 2rem 0; }
 .prayer-teaser__consent { display: flex; gap: 1.2rem; align-items: flex-start; margin-top: 2.4rem; font-size: 1.4rem; line-height: 1.5; cursor: pointer; }
