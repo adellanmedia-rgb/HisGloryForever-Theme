@@ -4,11 +4,14 @@
       "type": "contact-form",
       "settings": {
         "heading": "Contact us",
-        "text": "<p>Questions about an order, sizing or a design? Send us a note and we'll get back to you.</p>",
-        "email": "",
+        "text": "<p>Questions about sizing or a design? Send us a note and we'll get back to you within 1 to 2 business days. For help with an order you've already placed, email support and include your order number.</p>",
+        "email": "hello@hisgloryforever.com",
         "success_message": "Thank you. We'll be in touch soon.",
         "padding_top": 64,
-        "padding_bottom": 96
+        "padding_bottom": 96,
+        "email_label": "General:",
+        "support_email": "support@hisgloryforever.com",
+        "support_label": "Order help:"
       }
     }
   },

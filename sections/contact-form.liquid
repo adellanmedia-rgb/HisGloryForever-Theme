@@ -7,7 +7,13 @@
       {%- if s.email != blank -%}
         <p class="contact__detail">
           {% render 'icon', icon: 'mail', class: 'icon--small' %}
-          <a href="mailto:{{ s.email }}">{{ s.email }}</a>
+          <span>{%- if s.email_label != blank -%}<span class="contact__label">{{ s.email_label }}</span> {% endif -%}<a href="mailto:{{ s.email }}">{{ s.email }}</a></span>
+        </p>
+      {%- endif -%}
+      {%- if s.support_email != blank -%}
+        <p class="contact__detail">
+          {% render 'icon', icon: 'mail', class: 'icon--small' %}
+          <span>{%- if s.support_label != blank -%}<span class="contact__label">{{ s.support_label }}</span> {% endif -%}<a href="mailto:{{ s.support_email }}">{{ s.support_email }}</a></span>
         </p>
       {%- endif -%}
       {% render 'social-links' %}
@@ -53,7 +59,10 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Contact us" },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Questions about an order, sizing or a design? Send us a note and we'll get back to you.</p>" },
-    { "type": "text", "id": "email", "label": "Email address to show" },
+    { "type": "text", "id": "email", "label": "General email address" },
+    { "type": "text", "id": "email_label", "label": "General email label", "default": "General:" },
+    { "type": "text", "id": "support_email", "label": "Order support email address" },
+    { "type": "text", "id": "support_label", "label": "Order support label", "default": "Order help:" },
     { "type": "text", "id": "success_message", "label": "Thank-you message", "default": "Thank you. We'll be in touch soon." },
     { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Top spacing", "default": 64 },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Bottom spacing", "default": 96 }

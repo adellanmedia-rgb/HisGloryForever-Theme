@@ -5,29 +5,87 @@
     "trust-row": {
       "type": "trust-row",
       "blocks": {
-        "item-1": { "type": "item", "settings": { "icon": "made", "title": "Made for you", "text": "Each piece is made for you after you order." } },
-        "item-2": { "type": "item", "settings": { "icon": "truck", "title": "Free shipping", "text": "On orders over $100 within the U.S." } },
-        "item-3": { "type": "item", "settings": { "icon": "lock", "title": "Secure checkout", "text": "Protected by Shopify's secure checkout." } }
+        "item-1": {
+          "type": "item",
+          "settings": {
+            "icon": "made",
+            "title": "Made for you",
+            "text": "Each piece is made for you after you order."
+          }
+        },
+        "item-2": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Free shipping",
+            "text": "On orders over $100 within the U.S."
+          }
+        },
+        "item-3": {
+          "type": "item",
+          "settings": {
+            "icon": "lock",
+            "title": "Secure checkout",
+            "text": "Protected by Shopify's secure checkout."
+          }
+        }
       },
-      "block_order": ["item-1", "item-2", "item-3"],
-      "settings": { "color_scheme": "light", "padding_top": 56, "padding_bottom": 56 }
+      "block_order": [
+        "item-1",
+        "item-2",
+        "item-3"
+      ],
+      "settings": {
+        "color_scheme": "light",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
     },
     "footer": {
       "type": "footer",
       "blocks": {
-        "menu-1": { "type": "menu", "settings": { "heading": "Shop", "menu": "main-menu" } },
-        "menu-2": { "type": "menu", "settings": { "heading": "Help", "menu": "footer" } },
+        "menu-1": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": "main-menu"
+          }
+        },
+        "menu-2": {
+          "type": "menu",
+          "settings": {
+            "heading": "Help",
+            "menu": "footer"
+          }
+        },
         "text-1": {
           "type": "text",
           "settings": {
             "heading": "Our Why",
             "text": "<p>His Glory Forever exists to carry the gospel into everyday life. Every piece points back to Him.</p>"
           }
+        },
+        "text-2": {
+          "type": "text",
+          "settings": {
+            "heading": "Contact",
+            "text": "<p><a href=\"mailto:hello@hisgloryforever.com\">hello@hisgloryforever.com</a></p><p>Order help: <a href=\"mailto:support@hisgloryforever.com\">support@hisgloryforever.com</a></p>"
+          }
         }
       },
-      "block_order": ["menu-1", "menu-2", "text-1"],
-      "settings": { "color_scheme": "navy" }
+      "block_order": [
+        "menu-1",
+        "menu-2",
+        "text-2",
+        "text-1"
+      ],
+      "settings": {
+        "color_scheme": "navy"
+      }
     }
   },
-  "order": ["trust-row", "footer"]
+  "order": [
+    "trust-row",
+    "footer"
+  ]
 }
