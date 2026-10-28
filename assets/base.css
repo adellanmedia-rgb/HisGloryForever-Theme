@@ -470,17 +470,24 @@ p:last-child { margin-bottom: 0; }
   white-space: nowrap;
 }
 
-/* Phones: the brand name always stays on ONE line beside the crest (never wraps) */
+/* Phones: crest stacked above the brand name, centered. The name always stays on ONE line (never wraps). */
 @media (max-width: 749px) {
-  .header__inner { grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.8rem; }
-  .logo { gap: 0.8rem; }
-  .logo__image, .logo__crest { width: calc(var(--logo-width, 34px) * 0.95); }
-  .logo__name { font-size: 1.3rem; letter-spacing: 0.09em; white-space: nowrap; }
+  .header__inner { grid-template-columns: 1fr auto 1fr; gap: 0; min-height: 8rem; padding-top: 0.8rem; padding-bottom: 0.8rem; }
+  .header__icons { gap: 0; }
+  .header__inner .icon-button { width: 4rem; }
+  .header__menu-toggle { margin-left: -1.2rem; }
+  .logo { flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; }
+  .logo__image, .logo__crest { width: calc(var(--logo-width, 34px) * 1.05); }
+  .logo__name { font-size: 1.4rem; letter-spacing: 0.1em; white-space: nowrap; }
+  /* Coming-soon page has no menu or icons, so the lockup can be larger */
+  .password__logo .logo { gap: 0.9rem; }
+  .password__logo .logo__image, .password__logo .logo__crest { width: 5rem; }
+  .password__logo .logo__name { font-size: 1.9rem; letter-spacing: 0.12em; }
 }
 @media (max-width: 374px) {
-  .logo { gap: 0.6rem; }
-  .logo__image, .logo__crest { width: 2.8rem; }
-  .logo__name { font-size: 1.12rem; letter-spacing: 0.06em; }
+  .logo__image, .logo__crest { width: 3.2rem; }
+  .logo__name { font-size: 1.2rem; letter-spacing: 0.06em; }
+  .password__logo .logo__name { font-size: 1.6rem; letter-spacing: 0.08em; }
 }
 
 /* ---------- Desktop nav & mega menu ---------- */
