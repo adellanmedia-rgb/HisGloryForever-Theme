@@ -765,3 +765,37 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();
+
+/* Winter theme: gentle snowfall on any canvas marked [data-winter-snow]. Decorative only. */
+(function () {
+  var canvases = [].slice.call(document.querySelectorAll('canvas[data-winter-snow]'));
+  if (!canvases.length) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  canvases.forEach(function (c) {
+    var host = c.parentElement;
+    var x = c.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2), w = 0, h = 0, flakes = [], raf = 0, visible = true;
+    function mk(any) { var r = Math.random(); return { x: Math.random() * w, y: any ? Math.random() * h : -6, r: 0.6 + r * r * 1.6, v: 0.18 + r * 0.4, a: 0.2 + Math.random() * 0.45, p: Math.random() * 6.28, s: 0.004 + Math.random() * 0.008 }; }
+    function size() {
+      w = host.clientWidth; h = host.clientHeight;
+      c.width = w * dpr; c.height = h * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.round(Math.min(70, w / 24)); flakes = [];
+      for (var i = 0; i < n; i++) flakes.push(mk(true));
+    }
+    function draw() {
+      x.clearRect(0, 0, w, h);
+      for (var i = 0; i < flakes.length; i++) {
+        var f = flakes[i]; f.y += f.v; f.p += f.s; f.x += Math.sin(f.p) * 0.25;
+        if (f.y > h + 6) flakes[i] = mk(false);
+        x.globalAlpha = f.a; x.beginPath(); x.arc(f.x, f.y, f.r, 0, 6.283); x.fillStyle = '#F4EEE2'; x.fill();
+      }
+      x.globalAlpha = 1;
+    }
+    function loop() { if (visible && !document.hidden) draw(); raf = requestAnimationFrame(loop); }
+    size();
+    var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(size, 150); });
+    if (reduce) { draw(); return; }
+    if ('IntersectionObserver' in window) { new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }).observe(host); }
+    loop();
+  });
+})();

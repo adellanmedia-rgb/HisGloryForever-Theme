@@ -1,5 +1,8 @@
 {%- assign scheme = section.settings.color_scheme -%}
 <footer class="footer scheme-{{ scheme }}">
+  {%- if settings.winter_theme -%}
+    <div class="winter__footer" aria-hidden="true">{% render 'winter-scene' %}</div>
+  {%- endif -%}
   <div class="page-width footer__top">
     {%- if section.settings.show_signup -%}
       <div class="footer__signup">

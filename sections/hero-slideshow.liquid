@@ -11,6 +11,9 @@
   aria-roledescription="carousel"
   aria-label="{{ 'sections.slideshow.label' | t }}"
 >
+  {%- if settings.winter_theme and settings.winter_snow -%}
+    <canvas class="winter__snow" aria-hidden="true" data-winter-snow></canvas>
+  {%- endif -%}
   <div class="slideshow__track">
     {%- for block in section.blocks -%}
       {%- liquid

@@ -2525,3 +2525,41 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
 }
 .password__note { margin: 0.4rem 0 0; font-size: 1.2rem; letter-spacing: 0.16em; text-transform: uppercase; color: #D8BE86; }
 @media (max-width: 749px) { .password__note { font-size: 1.1rem; letter-spacing: 0.12em; line-height: 1.6; } }
+
+/* ==========================================================================
+   Winter theme (Settings > Seasonal). Turn off in the second week of January.
+   ========================================================================== */
+
+/* Navy cardstock: texture over every navy section, same as the coming-soon page */
+.theme-winter .scheme-navy:not(.announcement-bar) {
+  position: relative;
+  isolation: isolate;
+  background: radial-gradient(120% 70% at 50% 100%, #1D3356 0%, var(--color-navy) 55%, #101E36 100%);
+}
+.theme-winter .scheme-navy:not(.announcement-bar)::before {
+  content: '';
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: url('hgf-cardstock.jpg') repeat; background-size: 512px;
+  mix-blend-mode: overlay; opacity: 0.7;
+}
+.theme-winter .announcement-bar.scheme-navy {
+  background: var(--color-navy) url('hgf-cardstock.jpg') repeat;
+  background-size: 512px; background-blend-mode: overlay;
+}
+
+/* Hero snowfall */
+.slideshow > .winter__snow { z-index: 3; }
+
+/* Footer treeline: dusk silhouettes that dissolve into the navy footer */
+.theme-winter .footer { position: relative; overflow: hidden; }
+.winter__footer {
+  position: absolute; left: 0; right: 0; top: 0;
+  height: clamp(90px, 13vw, 190px);
+  z-index: -1; pointer-events: none; opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 100%);
+}
+.winter__footer .winter__scene { width: 100%; height: 100%; }
+.winter__footer .winter__layer { transform: none !important; }
+.theme-winter .footer .footer__top { padding-top: calc(7.2rem + clamp(30px, 6vw, 90px)); }
+@media (prefers-reduced-motion: reduce) { .slideshow > .winter__snow { display: none; } }

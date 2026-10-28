@@ -100,6 +100,25 @@
     ]
   },
   {
+    "name": "Seasonal",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "winter_theme",
+        "label": "Winter theme",
+        "info": "Navy cardstock texture on navy sections, a winter treeline across the top of the footer, and gentle snowfall on the homepage hero. Turn this off in the second week of January.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "winter_snow",
+        "label": "Snowfall on the homepage hero",
+        "info": "Only applies while the winter theme is on. Respects visitors who prefer reduced motion.",
+        "default": true
+      }
+    ]
+  },
+  {
     "name": "Typography",
     "settings": [
       {
