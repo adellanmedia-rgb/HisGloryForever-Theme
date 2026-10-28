@@ -678,7 +678,7 @@ p:last-child { margin-bottom: 0; }
 }
 
 @media (min-width: 990px) {
-  .footer__top { grid-template-columns: minmax(30rem, 1fr) 2.2fr; gap: 6.4rem; }
+  .footer__top { grid-template-columns: minmax(26rem, 0.8fr) 2.4fr; gap: 5.6rem; }
 }
 
 .footer__signup-heading { margin-bottom: 1.2rem; }
@@ -714,7 +714,8 @@ p:last-child { margin-bottom: 0; }
   gap: 3.2rem;
 }
 .footer__column { min-width: 0; }
-.footer__text a { overflow-wrap: anywhere; font-size: 1.4rem; }
+.footer__text a { overflow-wrap: anywhere; font-size: 1.3rem; }
+@media (min-width: 990px) { .footer__columns { gap: 2.4rem; } }
 
 .footer__heading {
   font-family: var(--font-body);
