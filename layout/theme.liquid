@@ -29,6 +29,7 @@
     {% render 'css-variables' %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'hgf-refresh.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
 
     <script>

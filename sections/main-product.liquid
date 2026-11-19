@@ -76,6 +76,10 @@
         {%- if badge != blank -%}<span class="product__badge">· {{ badge | escape }}</span>{%- endif -%}
       </p>
 
+      {%- if product.metafields.custom.model_note != blank -%}
+        <p class="product__model-note">{{ product.metafields.custom.model_note.value | escape }}</p>
+      {%- endif -%}
+
       {%- form 'product', product, id: form_id, class: 'product-form', novalidate: 'novalidate' -%}
         <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
 

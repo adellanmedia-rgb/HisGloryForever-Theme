@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -10,10 +19,10 @@
             "text_position": "center",
             "heading": "Not for us. For His glory.",
             "text": "Clothing made to carry the Word into everyday life.",
-            "button_1_label": "Shop Men",
-            "button_1_link": "",
-            "button_2_label": "Shop Women",
-            "button_2_link": ""
+            "button_1_label": "Shop the Collection",
+            "button_1_link": "/collections/all",
+            "button_2_label": "New Arrivals",
+            "button_2_link": "/collections/all?sort_by=created-descending"
           }
         },
         "slide-2": {
@@ -57,71 +66,61 @@
     "categories": {
       "type": "category-tiles",
       "blocks": {
-        "w1": {
-          "type": "tile",
-          "settings": {
-            "title": "Tees",
-            "audience": "women"
-          }
-        },
-        "w2": {
-          "type": "tile",
-          "settings": {
-            "title": "Sweatshirts",
-            "audience": "women"
-          }
-        },
-        "w3": {
+        "c1": {
           "type": "tile",
           "settings": {
             "title": "Hoodies",
-            "audience": "women"
-          }
-        },
-        "a1": {
-          "type": "tile",
-          "settings": {
-            "title": "Caps",
+            "link": "shopify://collections/hoodies",
             "audience": "all"
           }
         },
-        "m1": {
+        "c2": {
+          "type": "tile",
+          "settings": {
+            "title": "Crewnecks",
+            "link": "shopify://collections/crewnecks",
+            "audience": "all"
+          }
+        },
+        "c3": {
           "type": "tile",
           "settings": {
             "title": "Tees",
-            "audience": "men"
+            "link": "shopify://collections/tees",
+            "audience": "all"
           }
         },
-        "m2": {
+        "c4": {
           "type": "tile",
           "settings": {
-            "title": "Sweatshirts",
-            "audience": "men"
+            "title": "Caps & Beanies",
+            "link": "shopify://collections/caps-beanies",
+            "audience": "all"
           }
         },
-        "m3": {
+        "c5": {
           "type": "tile",
           "settings": {
-            "title": "Hoodies",
-            "audience": "men"
+            "title": "For Her",
+            "link": "shopify://collections/for-her",
+            "audience": "all"
           }
         }
       },
       "block_order": [
-        "w1",
-        "w2",
-        "w3",
-        "a1",
-        "m1",
-        "m2",
-        "m3"
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
       ],
       "settings": {
         "color_scheme": "white",
         "heading": "Shop by category",
         "default_tab": "women",
         "padding_top": 0,
-        "padding_bottom": 80
+        "padding_bottom": 80,
+        "tile_width": 240
       }
     },
     "best_statement": {
@@ -169,15 +168,17 @@
         "her": {
           "type": "image",
           "settings": {
-            "title": "Made for her walk",
-            "button_label": "Shop women"
+            "title": "I Am a Child of God",
+            "button_label": "Shop",
+            "link": "shopify://collections/i-am-a-child-of-god"
           }
         },
         "his": {
           "type": "image",
           "settings": {
-            "title": "Made for his walk",
-            "button_label": "Shop men"
+            "title": "The King Is Coming",
+            "button_label": "Shop",
+            "link": "shopify://collections/scripture-editorial"
           }
         }
       },

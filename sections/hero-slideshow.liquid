@@ -22,11 +22,19 @@
         if forloop.first and section.index0 == 0
           assign loading = 'eager'
         endif
+        assign fetch = 'auto'
+        if loading == 'eager'
+          assign fetch = 'high'
+        endif
+        assign img_sizes = '100vw'
+        if b.layout != 'full'
+          assign img_sizes = '(min-width: 750px) 50vw, 100vw'
+        endif
         assign ph_a = forloop.index | modulo: 3 | plus: 1
         assign ph_b = forloop.index | plus: 1 | modulo: 3 | plus: 1
       -%}
       <div
-        class="slide slide--{{ b.layout }} slide--text-{{ b.text_position }}{% if forloop.first %} is-active{% endif %}"
+        class="slide slide--{{ b.layout }} slide--text-{{ b.text_position }}{% if b.image_mobile != blank %} slide--has-mobile{% endif %}{% if forloop.first %} is-active{% endif %}"
         role="group"
         aria-roledescription="slide"
         aria-label="{{ forloop.index }} / {{ slide_count }}"
@@ -35,10 +43,31 @@
         {{ block.shopify_attributes }}
       >
         {%- comment -%} Images {%- endcomment -%}
+        {%- liquid
+          assign fp1 = '50% 50%'
+          if b.image_1 != blank
+            assign fp1 = b.image_1.presentation.focal_point | default: '50% 50%'
+          endif
+          assign fpm = fp1
+          if b.image_mobile != blank
+            assign fpm = b.image_mobile.presentation.focal_point | default: '50% 50%'
+          endif
+        -%}
         <div class="slide__media">
           <div class="slide__image media">
-            {%- if b.image_1 != blank -%}
-              {{ b.image_1 | image_url: width: 2000 | image_tag: loading: loading, sizes: '(min-width: 750px) 50vw, 100vw', widths: '600, 900, 1200, 1600, 2000', alt: b.image_1.alt }}
+            {%- if b.image_1 != blank or b.image_mobile != blank -%}
+              {%- assign img_main = b.image_1 | default: b.image_mobile -%}
+              <picture>
+                {%- if b.image_mobile != blank -%}
+                  <source
+                    media="(max-width: 749px)"
+                    srcset="{{ b.image_mobile | image_url: width: 750 }} 750w, {{ b.image_mobile | image_url: width: 1080 }} 1080w, {{ b.image_mobile | image_url: width: 1500 }} 1500w"
+                    sizes="100vw"
+                  >
+                {%- endif -%}
+                {%- assign img_style = '--fp: ' | append: fp1 | append: '; --fp-m: ' | append: fpm | append: ';' -%}
+                {{ img_main | image_url: width: 2400 | image_tag: loading: loading, fetchpriority: fetch, sizes: img_sizes, widths: '750, 1080, 1500, 2000, 2400', alt: img_main.alt, style: img_style }}
+              </picture>
             {%- else -%}
               {{ 'hero-apparel-' | append: ph_a | placeholder_svg_tag: 'placeholder-svg' }}
             {%- endif -%}
@@ -46,7 +75,9 @@
           {%- if b.layout != 'full' -%}
             <div class="slide__image slide__image--second media">
               {%- if b.image_2 != blank -%}
-                {{ b.image_2 | image_url: width: 1600 | image_tag: loading: loading, sizes: '(min-width: 750px) 50vw, 100vw', widths: '600, 900, 1200, 1600', alt: b.image_2.alt }}
+                {%- assign fp2 = b.image_2.presentation.focal_point | default: '50% 50%' -%}
+                {%- assign img2_style = '--fp: ' | append: fp2 | append: ';' -%}
+                {{ b.image_2 | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '750, 1080, 1600', alt: b.image_2.alt, style: img2_style }}
               {%- else -%}
                 {{ 'hero-apparel-' | append: ph_b | placeholder_svg_tag: 'placeholder-svg' }}
               {%- endif -%}
@@ -156,6 +187,7 @@
         },
         { "type": "image_picker", "id": "image_1", "label": "Left image (or the full-width image)" },
         { "type": "image_picker", "id": "image_2", "label": "Right image", "info": "Split layouts only." },
+        { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Shown on phones instead of the desktop image(s). Use a tall photo, 1080 × 1440 px (3:4) or taller. Set a focal point so faces stay in frame." },
         {
           "type": "select",
           "id": "text_position",

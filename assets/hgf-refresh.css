@@ -1,0 +1,41 @@
+/* Hero: picture element, focal points, mobile image */
+.slide__image picture { position: absolute; inset: 0; display: block; }
+.slide__image picture img,
+.slide__image > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--fp, 50% 50%);
+}
+@media (max-width: 749px) {
+  .slide__image picture img { object-position: var(--fp-m, var(--fp, 50% 50%)); }
+  /* With a dedicated mobile photo, it fills the whole slide on phones */
+  .slide--has-mobile .slide__media { grid-template-rows: 1fr; grid-template-columns: 1fr; }
+  .slide--has-mobile .slide__image--second { display: none; }
+  .slideshow.hero--large { --slide-h: min(72rem, 82svh); }
+  .slide__content { padding: 4.8rem 2rem 9.6rem; }
+  .slide__text { font-size: 1.6rem; margin-bottom: 2.4rem; }
+}
+/* The slideshow reuses .hero--* classes; keep its height tied to the slides so no band shows under the photo */
+.slideshow.hero--medium, .slideshow.hero--large, .slideshow.hero--full { min-height: var(--slide-h); }
+
+/* ===== Mobile-first + unisex refresh ===== */
+/* Product photos: 10:13 everywhere (matches category tiles) */
+.card__media, .product__media { aspect-ratio: 10 / 13; }
+.product__model-note { margin: -0.4rem 0 1.6rem; font-size: 1.3rem; color: var(--color-text-subtle, #5b6577); }
+
+@media (max-width: 749px) {
+  /* Product rows: ~2 cards on screen with the next one peeking */
+  .product-grid--scroll-mobile { grid-auto-columns: 44%; column-gap: 1.2rem; }
+
+  /* Hero: headline + buttons sit low so faces stay clear */
+  .slide__content { align-items: flex-end; padding-bottom: 8.8rem; }
+
+  /* Editorial pair: side by side on phones */
+  .editorial-duo__grid { grid-template-columns: 1fr 1fr; gap: 2.4rem 1.2rem; }
+  .editorial-duo__item { gap: 1.2rem; }
+  .editorial-duo__caption { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+  .editorial-duo__caption .h3 { font-size: 1.7rem; line-height: 1.25; }
+}
