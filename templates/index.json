@@ -21,8 +21,11 @@
             "text": "Clothing made to carry the Word into everyday life.",
             "button_1_label": "Shop the Collection",
             "button_1_link": "/collections/all",
-            "button_2_label": "New Arrivals",
-            "button_2_link": "/collections/all?sort_by=created-descending"
+            "button_2_label": "Shop Hoodies",
+            "button_2_link": "shopify://collections/hoodies",
+            "image_1": "shopify://shop_images/HGF-KingHoodie-Lifestyle-1.jpg",
+            "image_2": "shopify://shop_images/HGF-King-Lifestyle-Friends.jpg",
+            "image_mobile": "shopify://shop_images/HGF-KingHoodie-Lifestyle-1.jpg"
           }
         },
         "slide-2": {
@@ -30,13 +33,16 @@
           "settings": {
             "layout": "split_panels",
             "text_position": "bottom",
-            "heading": "The Statement Collection",
-            "heading_2": "Periodic Element Series",
+            "heading": "King Jesus",
+            "heading_2": "Forever King",
             "text": "",
-            "button_1_label": "Shop Statement",
-            "button_1_link": "",
-            "button_2_label": "Shop Periodic",
-            "button_2_link": ""
+            "button_1_label": "Shop the hoodie",
+            "button_1_link": "shopify://products/king-jesus-hoodie",
+            "button_2_label": "Shop the crewneck",
+            "button_2_link": "shopify://products/forever-king-crewneck",
+            "image_1": "shopify://shop_images/HGF-KingJesusHoodie-TeamRoyal-Front.jpg",
+            "image_2": "shopify://shop_images/HGF-ForeverKingCrewneck-SkyBlue-Front.jpg",
+            "image_mobile": "shopify://shop_images/HGF-KingJesusHoodie-TeamRoyal-Front.jpg"
           }
         }
       },
@@ -71,7 +77,8 @@
           "settings": {
             "title": "Hoodies",
             "link": "shopify://collections/hoodies",
-            "audience": "all"
+            "audience": "all",
+            "image": "shopify://shop_images/HGF-KingHoodie-Maroon-Front.jpg"
           }
         },
         "c2": {
@@ -79,7 +86,8 @@
           "settings": {
             "title": "Crewnecks",
             "link": "shopify://collections/crewnecks",
-            "audience": "all"
+            "audience": "all",
+            "image": "shopify://shop_images/HGF-King-Bone-Maroon-Front.jpg"
           }
         },
         "c3": {
@@ -95,7 +103,8 @@
           "settings": {
             "title": "Caps & Beanies",
             "link": "shopify://collections/caps-beanies",
-            "audience": "all"
+            "audience": "all",
+            "image": "shopify://shop_images/HGF-CrestBeanie-OxfordNavy-Front.jpg"
           }
         },
         "c5": {
@@ -110,9 +119,7 @@
       "block_order": [
         "c1",
         "c2",
-        "c3",
-        "c4",
-        "c5"
+        "c4"
       ],
       "settings": {
         "color_scheme": "white",
@@ -127,13 +134,14 @@
       "type": "featured-collection",
       "settings": {
         "color_scheme": "light",
-        "eyebrow": "The Statement Collection",
-        "heading": "Chosen, not chance.",
+        "eyebrow": "The First Collection",
+        "heading": "Worn to carry His Word.",
         "limit": 4,
         "columns": "4",
         "show_view_all": true,
         "padding_top": 80,
-        "padding_bottom": 80
+        "padding_bottom": 80,
+        "collection": "frontpage"
       }
     },
     "best_periodic": {
@@ -147,7 +155,8 @@
         "show_view_all": true,
         "padding_top": 80,
         "padding_bottom": 80
-      }
+      },
+      "disabled": true
     },
     "scripture": {
       "type": "editorial-split",
@@ -156,10 +165,12 @@
         "color_scheme": "navy",
         "eyebrow": "Scripture Editorial",
         "heading": "The King is coming. Be ready.",
-        "text": "<p>Six designs on the promise of His return. No verse on the front, by design. The reference is stitched on the sleeve, for the conversation it starts.</p>",
-        "verse": "Matthew 24:42",
-        "button_label": "Shop the collection",
-        "button_style": "solid"
+        "text": "<p>A crewneck and a hoodie on the promise of His return. The reference is stitched at the left wrist, for the conversation it starts.</p>",
+        "verse": "Revelation 22:12",
+        "button_label": "Shop the hoodie",
+        "button_style": "solid",
+        "image": "shopify://shop_images/HGF-KingHoodie-Lifestyle-2.jpg",
+        "button_link": "shopify://products/the-king-is-coming-soon-hoodie"
       }
     },
     "walk": {
@@ -170,7 +181,8 @@
           "settings": {
             "title": "I Am a Child of God",
             "button_label": "Shop",
-            "link": "shopify://collections/i-am-a-child-of-god"
+            "link": "shopify://collections/i-am-a-child-of-god",
+            "image": "shopify://shop_images/HGF-ChildOfGodHoodie-Lavender-Front.jpg"
           }
         },
         "his": {
@@ -178,7 +190,8 @@
           "settings": {
             "title": "The King Is Coming",
             "button_label": "Shop",
-            "link": "shopify://collections/scripture-editorial"
+            "link": "shopify://products/the-king-is-coming-soon-crewneck",
+            "image": "shopify://shop_images/HGF-King-TeamRoyal-OldGold-Front.jpg"
           }
         }
       },
@@ -198,15 +211,17 @@
         "p1": {
           "type": "product",
           "settings": {
-            "story": "Chosen, not chance. A reminder that you were known before you were born.",
-            "link_label": "Shop now"
+            "story": "The crest in gold thread on organic cotton. A quiet reminder of who it is all for.",
+            "link_label": "Shop now",
+            "product": "his-glory-forever-crest-beanie"
           }
         },
         "p2": {
           "type": "product",
           "settings": {
-            "story": "Redeemed, written like an element. What you are made of, by grace.",
-            "link_label": "Shop now"
+            "story": "King Jesus. The name above every name, worn close.",
+            "link_label": "Shop now",
+            "product": "king-jesus-hoodie"
           }
         }
       },
@@ -231,8 +246,9 @@
         "text": "<p>His Glory Forever began with one purpose: to carry the gospel into everyday life and gather a community of believers who shine where they are.</p><p>Every design starts with scripture. Every sale helps the mission grow.</p>",
         "verse": "Romans 11:36",
         "button_label": "Read our story",
-        "button_link": "",
-        "button_style": "outline"
+        "button_link": "shopify://pages/about",
+        "button_style": "outline",
+        "image": "shopify://shop_images/HGF-King-Lifestyle-Fishing.jpg"
       }
     },
     "prayer": {
@@ -256,7 +272,8 @@
         "success_message": "You're on the list. We'll let you know first.",
         "padding_top": 96,
         "padding_bottom": 96
-      }
+      },
+      "disabled": true
     }
   },
   "order": [
