@@ -172,7 +172,11 @@
                               elsif value.swatch.color
                                 assign swatch_style = 'background-color: ' | append: value.swatch.color | append: ';'
                               else
-                                assign swatch_style = 'background-color: ' | append: value.label | handleize | append: ';'
+                                capture swatch_hex
+                                  render 'swatch-hex', name: value.label
+                                endcapture
+                                assign swatch_hex = swatch_hex | strip
+                                assign swatch_style = 'background-color: ' | append: swatch_hex | append: ';'
                               endif
                             -%}
                             <span class="facet__swatch" style="{{ swatch_style }}"></span>

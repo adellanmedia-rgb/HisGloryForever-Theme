@@ -81,7 +81,11 @@
               elsif value.swatch.color
                 assign swatch_style = 'background-color: ' | append: value.swatch.color | append: ';'
               else
-                assign swatch_style = 'background-color: ' | append: value.name | handleize | append: ';'
+                capture swatch_hex
+                  render 'swatch-hex', name: value.name
+                endcapture
+                assign swatch_hex = swatch_hex | strip
+                assign swatch_style = 'background-color: ' | append: swatch_hex | append: ';'
               endif
             -%}
             <li class="card__swatch" style="{{ swatch_style }}" title="{{ value.name | escape }}"></li>

@@ -1,0 +1,22 @@
+{%- comment -%}
+  HGF colour-name → swatch hex. Printful sends colour names but no swatch data.
+  Used when a colour value has no Shopify swatch set. Add a line for each new garment colour.
+  Hexes sampled from the garment in HGF product photos.
+{%- endcomment -%}
+{%- liquid
+  assign key = name | handleize
+  case key
+    when 'bone', 'bone-maroon', 'bone-navy'
+      echo '#E3D9CD'
+    when 'dusty-rose', 'dusty-rose-maroon'
+      echo '#EE9A8D'
+    when 'agave', 'agave-kelly-green'
+      echo '#BFCCC7'
+    when 'sky-blue', 'sky-blue-navy'
+      echo '#D7E9F3'
+    when 'team-royal', 'royal', 'team-royal-old-gold'
+      echo '#344781'
+    else
+      echo key
+  endcase
+-%}
