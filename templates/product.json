@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -6,7 +15,7 @@
         "show_collection": true,
         "show_wishlist": true,
         "open_meaning": true,
-        "shipping_text": "<p>Each piece is made for you after you order. Free shipping on orders over $100. See Shipping & Returns for timing and our return policy.</p>"
+        "shipping_text": "<p>Each piece is made for you after you order.</p><p><strong>Made:</strong> 5–10 business days<br><strong>Delivery:</strong> 3–7 business days after it ships (U.S. only)</p><p>Free shipping on orders over $100.</p><p>See our <a href=\"/policies/shipping-policy\">Shipping Policy</a> and <a href=\"/policies/refund-policy\">Refund Policy</a>.</p>"
       }
     },
     "recommendations": {
