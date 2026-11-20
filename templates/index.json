@@ -46,8 +46,16 @@
           }
         }
       },
-      "block_order": ["slide-1", "slide-2"],
-      "settings": {"height": "large", "overlay": 25, "autoplay": true, "interval": 7}
+      "block_order": [
+        "slide-1",
+        "slide-2"
+      ],
+      "settings": {
+        "height": "large",
+        "overlay": 25,
+        "autoplay": true,
+        "interval": 7
+      }
     },
     "statement": {
       "type": "rich-text",
@@ -64,22 +72,90 @@
     "categories": {
       "type": "category-tiles",
       "blocks": {
-        "c1": {"type": "tile", "settings": {"title": "Hoodies", "link": "shopify://collections/hoodies", "audience": "all", "image": "shopify://shop_images/HGF-KingHoodie-Maroon-Front.jpg"}},
-        "c2": {"type": "tile", "settings": {"title": "Crewnecks", "link": "shopify://collections/crewnecks", "audience": "all", "image": "shopify://shop_images/HGF-King-Bone-Maroon-Front.jpg"}},
-        "c3": {"type": "tile", "settings": {"title": "Tees", "link": "shopify://collections/tees", "audience": "all"}},
-        "c4": {"type": "tile", "settings": {"title": "Caps & Beanies", "link": "shopify://collections/caps-beanies", "audience": "all", "image": "shopify://shop_images/HGF-CrestBeanie-Burgundy-Front-v2.jpg"}},
-        "c5": {"type": "tile", "settings": {"title": "For Her", "link": "shopify://collections/for-her", "audience": "all"}}
+        "c1": {
+          "type": "tile",
+          "settings": {
+            "title": "Hoodies",
+            "link": "shopify://collections/hoodies",
+            "audience": "all",
+            "image": "shopify://shop_images/HGF-KingHoodie-Maroon-Front.jpg"
+          }
+        },
+        "c2": {
+          "type": "tile",
+          "settings": {
+            "title": "Crewnecks",
+            "link": "shopify://collections/crewnecks",
+            "audience": "all",
+            "image": "shopify://shop_images/HGF-King-Bone-Maroon-Front.jpg"
+          }
+        },
+        "c3": {
+          "type": "tile",
+          "settings": {
+            "title": "Tees",
+            "link": "shopify://collections/tees",
+            "audience": "all"
+          }
+        },
+        "c4": {
+          "type": "tile",
+          "settings": {
+            "title": "Caps & Beanies",
+            "link": "shopify://collections/caps-beanies",
+            "audience": "all",
+            "image": "shopify://shop_images/HGF-CrestBeanie-Burgundy-Front-v2.jpg"
+          }
+        },
+        "c5": {
+          "type": "tile",
+          "settings": {
+            "title": "For Her",
+            "link": "shopify://collections/for-her",
+            "audience": "all"
+          }
+        }
       },
-      "block_order": ["c1", "c2", "c4"],
-      "settings": {"color_scheme": "white", "heading": "Shop by category", "default_tab": "women", "padding_top": 0, "padding_bottom": 80, "tile_width": 240}
+      "block_order": [
+        "c1",
+        "c2",
+        "c4"
+      ],
+      "settings": {
+        "color_scheme": "white",
+        "heading": "Shop by category",
+        "default_tab": "women",
+        "padding_top": 0,
+        "padding_bottom": 80,
+        "tile_width": 240
+      }
     },
     "best_statement": {
       "type": "featured-collection",
-      "settings": {"color_scheme": "light", "eyebrow": "The First Collection", "heading": "Worn to carry His Word.", "limit": 8, "columns": "4", "show_view_all": true, "padding_top": 80, "padding_bottom": 80, "collection": "frontpage"}
+      "settings": {
+        "color_scheme": "light",
+        "eyebrow": "The First Collection",
+        "heading": "Worn to carry His Word.",
+        "limit": 8,
+        "columns": "4",
+        "show_view_all": true,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "collection": "frontpage"
+      }
     },
     "best_periodic": {
       "type": "featured-collection",
-      "settings": {"color_scheme": "white", "eyebrow": "Periodic Element Series", "heading": "What you're made of.", "limit": 4, "columns": "4", "show_view_all": true, "padding_top": 80, "padding_bottom": 80},
+      "settings": {
+        "color_scheme": "white",
+        "eyebrow": "Periodic Element Series",
+        "heading": "What you're made of.",
+        "limit": 4,
+        "columns": "4",
+        "show_view_all": true,
+        "padding_top": 80,
+        "padding_bottom": 80
+      },
       "disabled": true
     },
     "scripture": {
@@ -100,20 +176,65 @@
     "walk": {
       "type": "editorial-duo",
       "blocks": {
-        "her": {"type": "image", "settings": {"title": "I Am a Child of God", "button_label": "Shop", "link": "shopify://collections/i-am-a-child-of-god", "image": "shopify://shop_images/HGF-ChildOfGodHoodie-Lavender-Front.jpg"}},
-        "his": {"type": "image", "settings": {"title": "The King Collection", "button_label": "Shop", "link": "shopify://collections/the-king-collection", "image": "shopify://shop_images/HGF-King-TeamRoyal-OldGold-Front.jpg"}}
+        "her": {
+          "type": "image",
+          "settings": {
+            "title": "I Am a Child of God",
+            "button_label": "Shop",
+            "link": "shopify://collections/i-am-a-child-of-god",
+            "image": "shopify://shop_images/HGF-ChildOfGodHoodie-Lavender-Front.jpg"
+          }
+        },
+        "his": {
+          "type": "image",
+          "settings": {
+            "title": "The King Collection",
+            "button_label": "Shop",
+            "link": "shopify://collections/the-king-collection",
+            "image": "shopify://shop_images/HGF-King-TeamRoyal-OldGold-Front.jpg"
+          }
+        }
       },
-      "block_order": ["her", "his"],
-      "settings": {"color_scheme": "white", "padding_top": 96, "padding_bottom": 96}
+      "block_order": [
+        "her",
+        "his"
+      ],
+      "settings": {
+        "color_scheme": "white",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
     },
     "spotlight": {
       "type": "product-spotlight",
       "blocks": {
-        "p1": {"type": "product", "settings": {"story": "The crest in gold thread on organic cotton. A quiet reminder of who it is all for.", "link_label": "Shop now", "product": "his-glory-forever-crest-beanie"}},
-        "p2": {"type": "product", "settings": {"story": "King Jesus. The name above every name, worn close.", "link_label": "Shop now", "product": "king-jesus-hoodie"}}
+        "p1": {
+          "type": "product",
+          "settings": {
+            "story": "The crest in gold thread on organic cotton. A quiet reminder of who it is all for.",
+            "link_label": "Shop now",
+            "product": "his-glory-forever-crest-beanie"
+          }
+        },
+        "p2": {
+          "type": "product",
+          "settings": {
+            "story": "King Jesus. The name above every name, worn close.",
+            "link_label": "Shop now",
+            "product": "king-jesus-hoodie"
+          }
+        }
       },
-      "block_order": ["p1", "p2"],
-      "settings": {"color_scheme": "light", "heading": "The story behind the design", "padding_top": 80, "padding_bottom": 80}
+      "block_order": [
+        "p1",
+        "p2"
+      ],
+      "settings": {
+        "color_scheme": "light",
+        "heading": "The story behind the design",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     },
     "our_why": {
       "type": "editorial-split",
@@ -130,7 +251,14 @@
         "image": "shopify://shop_images/HGF-King-Lifestyle-Fishing.jpg"
       }
     },
-    "prayer": {"type": "prayer-praise-teaser", "settings": {"color_scheme": "navy", "padding_top": 96, "padding_bottom": 96}},
+    "prayer": {
+      "type": "prayer-praise-teaser",
+      "settings": {
+        "color_scheme": "navy",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
     "crest": {
       "type": "crest-teaser",
       "settings": {
@@ -148,5 +276,17 @@
       "disabled": true
     }
   },
-  "order": ["hero", "statement", "categories", "best_statement", "best_periodic", "scripture", "walk", "spotlight", "our_why", "crest", "prayer"]
+  "order": [
+    "hero",
+    "statement",
+    "categories",
+    "best_statement",
+    "best_periodic",
+    "scripture",
+    "walk",
+    "spotlight",
+    "our_why",
+    "crest",
+    "prayer"
+  ]
 }
