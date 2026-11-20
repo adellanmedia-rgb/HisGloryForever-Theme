@@ -2573,3 +2573,15 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
 .winter__footer .winter__layer { transform: none !important; }
 .theme-winter .footer .footer__top { padding-top: calc(7.2rem + clamp(30px, 6vw, 90px)); }
 @media (prefers-reduced-motion: reduce) { .slideshow > .winter__snow { display: none; } }
+
+/* Product story: hook + verse shown above the buy form */
+.product__story { margin: 0 0 2.8rem; font-size: 1.6rem; line-height: 1.65; color: var(--color-text, #3D4A5C); }
+.product__story blockquote {
+  margin: 1.6rem 0;
+  padding: 0.2rem 0 0.2rem 1.6rem;
+  border-left: 2px solid var(--color-navy);
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  line-height: 1.45;
+}
+.product__story blockquote p { margin: 0; }

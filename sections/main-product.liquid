@@ -80,6 +80,21 @@
         <p class="product__model-note">{{ product.metafields.custom.model_note.value | escape }}</p>
       {%- endif -%}
 
+      {%- liquid
+        assign story_intro = ''
+        assign story_rest = product.description
+        if product.description contains '</blockquote>'
+          assign story_parts = product.description | split: '</blockquote>'
+          assign story_after = product.description | remove_first: story_parts[0] | remove_first: '</blockquote>'
+          assign story_after_parts = story_after | split: '</p>'
+          assign story_intro = story_parts[0] | append: '</blockquote>' | append: story_after_parts[0] | append: '</p>' | append: story_after_parts[1] | append: '</p>'
+          assign story_rest = story_after | remove_first: story_after_parts[0] | remove_first: '</p>' | remove_first: story_after_parts[1] | remove_first: '</p>'
+        endif
+      -%}
+      {%- if story_intro != blank -%}
+        <div class="product__story rte">{{ story_intro }}</div>
+      {%- endif -%}
+
       {%- form 'product', product, id: form_id, class: 'product-form', novalidate: 'novalidate' -%}
         <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
 
@@ -192,7 +207,7 @@
         {%- if product.description != blank -%}
           <details class="accordion__item"{% if s.open_meaning == false %} open{% endif %}>
             <summary>{{ 'products.description' | t }} {% render 'icon', icon: 'plus', class: 'icon--small icon-plus' %}</summary>
-            <div class="accordion__content rte">{{ product.description }}</div>
+            <div class="accordion__content rte">{{ story_rest }}</div>
           </details>
         {%- endif -%}
 
