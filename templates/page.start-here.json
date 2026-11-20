@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "intro": {
@@ -21,7 +30,7 @@
           "settings": {
             "icon": "none",
             "title": "Find your fit",
-            "text": "<p>Our tees have a relaxed, classic fit. Check the Fit Guide before you order.</p>",
+            "text": "<p>Our hoodies and crewnecks run small, so we recommend ordering one size up. Each product has its own size guide.</p>",
             "link_label": "Fit Guide",
             "link": "/pages/fit-guide"
           }
@@ -30,10 +39,10 @@
           "type": "column",
           "settings": {
             "icon": "none",
-            "title": "Read the meaning",
-            "text": "<p>Every design carries scripture. Read the story behind each one.</p>",
-            "link_label": "The meaning behind the designs",
-            "link": "/pages/meaning"
+            "title": "Read our story",
+            "text": "<p>Every design starts with scripture. Read why His Glory Forever exists.</p>",
+            "link_label": "Our story",
+            "link": "/pages/about"
           }
         },
         "s3": {
@@ -41,9 +50,9 @@
           "settings": {
             "icon": "none",
             "title": "Made for you",
-            "text": "<p>Each piece is made after you order, so allow a little extra time.</p>",
-            "link_label": "Shipping & Returns",
-            "link": "/pages/shipping-returns"
+            "text": "<p>Each piece is made after you order: made in 5 to 8 business days, delivered 3 to 5 business days after it ships.</p>",
+            "link_label": "Shipping policy",
+            "link": "/policies/shipping-policy"
           }
         },
         "s4": {
@@ -78,7 +87,8 @@
         "columns": "4",
         "show_view_all": true,
         "padding_top": 80,
-        "padding_bottom": 80
+        "padding_bottom": 80,
+        "collection": "frontpage"
       }
     }
   },

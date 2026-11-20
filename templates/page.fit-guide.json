@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -39,7 +48,8 @@
         "footnote": "Measurements in inches. Between sizes? Size up for a roomier fit.",
         "padding_top": 32,
         "padding_bottom": 32
-      }
+      },
+      "disabled": true
     },
     "crew": {
       "type": "size-table",
@@ -47,28 +57,36 @@
         "r1": {
           "type": "row",
           "settings": {
-            "label": "Body width",
-            "values": ""
+            "label": "Chest width",
+            "values": "20, 21, 23, 25, 26½"
           }
         },
         "r2": {
           "type": "row",
           "settings": {
             "label": "Body length",
-            "values": ""
+            "values": "27, 28, 29, 30, 31"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "label": "Sleeve length",
+            "values": "23½, 24, 24, 24, 24"
           }
         }
       },
       "block_order": [
         "r1",
-        "r2"
+        "r2",
+        "r3"
       ],
       "settings": {
         "heading": "Crewneck Sweatshirt",
-        "text": "",
+        "text": "<p>Our crewnecks run small, so we recommend ordering one size up.</p>",
         "first_column": "Measurement",
         "sizes": "S, M, L, XL, 2XL",
-        "footnote": "Measurements in inches.",
+        "footnote": "Garment measurements in inches, measured flat.",
         "padding_top": 32,
         "padding_bottom": 32
       }
@@ -79,15 +97,15 @@
         "r1": {
           "type": "row",
           "settings": {
-            "label": "Body width",
-            "values": ""
+            "label": "Chest width",
+            "values": "20, 21, 23, 25, 26½"
           }
         },
         "r2": {
           "type": "row",
           "settings": {
             "label": "Body length",
-            "values": ""
+            "values": "27, 28, 29, 30, 31"
           }
         }
       },
@@ -97,10 +115,10 @@
       ],
       "settings": {
         "heading": "Hoodie",
-        "text": "",
+        "text": "<p>Our hoodies run small, so we recommend ordering one size up.</p>",
         "first_column": "Measurement",
         "sizes": "S, M, L, XL, 2XL",
-        "footnote": "Measurements in inches.",
+        "footnote": "Garment measurements in inches, measured flat.",
         "padding_top": 32,
         "padding_bottom": 32
       }
@@ -112,8 +130,8 @@
           "type": "column",
           "settings": {
             "icon": "none",
-            "title": "Body width",
-            "text": "<p>Lay the shirt flat and measure straight across, 1 inch below the armpits.</p>"
+            "title": "Chest width",
+            "text": "<p>Lay the piece flat and measure straight across, armpit to armpit.</p>"
           }
         },
         "m2": {
@@ -129,7 +147,7 @@
           "settings": {
             "icon": "none",
             "title": "Compare",
-            "text": "<p>Measure a shirt you already love and match it to the chart.</p>"
+            "text": "<p>Measure a hoodie or crewneck you already love and match it to the chart.</p>"
           }
         }
       },
