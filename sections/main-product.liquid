@@ -2,6 +2,7 @@
   assign s = section.settings
   assign current_variant = product.selected_or_first_available_variant
   assign m = product.metafields.custom
+  assign size_guide = product.metafields.custom.size_guide.value | default: section.settings.size_guide_page
 
   assign badge = m.badge.value
   if badge == blank
@@ -109,7 +110,7 @@
             <fieldset class="option" data-option-index="{{ forloop.index0 }}">
               <div class="option__header">
                 <legend class="option__legend">{{ option.name }}: <span class="option__selected" data-selected-value>{{ option.selected_value }}</span></legend>
-                {%- if is_size and s.size_guide_page != blank -%}
+                {%- if is_size and size_guide != blank -%}
                   <button type="button" class="option__guide" data-modal-open="SizeGuide-{{ section.id }}">{{ 'products.size_guide' | t }}</button>
                 {%- endif -%}
               </div>
@@ -217,7 +218,7 @@
             <div class="accordion__content rte">
               {%- if m.fit_notes != blank -%}{{ m.fit_notes | metafield_tag }}{%- endif -%}
               {%- if m.care != blank -%}{{ m.care | metafield_tag }}{%- endif -%}
-              {%- if s.size_guide_page != blank -%}
+              {%- if size_guide != blank -%}
                 <p><button type="button" class="link-inline" data-modal-open="SizeGuide-{{ section.id }}">{{ 'products.size_guide' | t }}</button></p>
               {%- endif -%}
             </div>
@@ -245,18 +246,18 @@
     </button>
   </div>
 
-  {%- if s.size_guide_page != blank -%}
+  {%- if size_guide != blank -%}
     <div class="modal" id="SizeGuide-{{ section.id }}" role="dialog" aria-modal="true" aria-labelledby="SizeGuideTitle-{{ section.id }}" tabindex="-1" hidden data-modal>
       <div class="modal__backdrop" data-modal-close></div>
       <div class="modal__panel scheme-white">
         <div class="modal__header">
-          <h2 class="h3" id="SizeGuideTitle-{{ section.id }}">{{ s.size_guide_page.title }}</h2>
+          <h2 class="h3" id="SizeGuideTitle-{{ section.id }}">{{ size_guide.title }}</h2>
           <button type="button" class="icon-button" data-modal-close>
             {% render 'icon', icon: 'close' %}
             <span class="visually-hidden">{{ 'accessibility.close' | t }}</span>
           </button>
         </div>
-        <div class="modal__body rte">{{ s.size_guide_page.content }}</div>
+        <div class="modal__body rte">{{ size_guide.content }}</div>
       </div>
     </div>
   {%- endif -%}

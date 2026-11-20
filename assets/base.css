@@ -2133,13 +2133,19 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
 .size-table__inner { max-width: 88rem; margin: 0 auto; }
 .size-table__text { margin-bottom: 2.4rem; }
 .size-table__scroll { overflow-x: auto; }
-.size-table table { width: 100%; border-collapse: collapse; font-size: 1.5rem; min-width: 48rem; }
+.size-table table { width: 100%; border-collapse: collapse; font-size: 1.5rem; }
 .size-table th,
 .size-table td { padding: 1.4rem 1rem; border-bottom: 1px solid var(--color-border); text-align: center; }
 .size-table thead th { font-size: 1.2rem; font-weight: var(--font-body-semibold); letter-spacing: 0.14em; text-transform: uppercase; border-bottom-color: var(--color-navy); }
 .size-table tbody th { text-align: left; font-weight: var(--font-body-medium); }
 .size-table thead th:first-child { text-align: left; }
 .size-table__note { font-size: 1.4rem; margin-top: 1.6rem; }
+@media (max-width: 749px) {
+  .size-table table { font-size: 1.4rem; }
+  .size-table th,
+  .size-table td { padding: 1.2rem 0.4rem; }
+  .size-table thead th { letter-spacing: 0.08em; }
+}
 
 /* Design meanings */
 .meanings__list { display: grid; gap: 6.4rem; max-width: 110rem; margin: 0 auto; }
