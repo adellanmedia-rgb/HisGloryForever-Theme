@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "faq": {
@@ -20,7 +29,7 @@
           "type": "question",
           "settings": {
             "question": "How long until my order arrives?",
-            "answer": "<p>[Add your production time and shipping time.]</p>"
+            "answer": "<p>Each piece is made in 5 to 8 business days, then delivered within 3 to 5 business days after it ships (U.S. only). You will get a tracking link by email as soon as it is on its way. See our <a href=\"/policies/shipping-policy\">Shipping Policy</a>.</p>"
           }
         },
         "q3": {
@@ -39,8 +48,8 @@
         "q4": {
           "type": "question",
           "settings": {
-            "question": "How do your tees fit?",
-            "answer": "<p>A relaxed, classic fit. See the <a href=\"/pages/fit-guide\">Fit Guide</a> for measurements.</p>"
+            "question": "How do your hoodies and crewnecks fit?",
+            "answer": "<p>They run small, so we recommend ordering one size up. Every product has its own size guide, and our <a href=\"/pages/fit-guide\">Fit Guide</a> has full measurements.</p>"
           }
         },
         "g3": {
@@ -53,7 +62,7 @@
           "type": "question",
           "settings": {
             "question": "What is your return policy?",
-            "answer": "<p>[Add your return and exchange policy.]</p>"
+            "answer": "<p>Every piece is made for you, so we cannot accept returns or exchanges for a change of mind or the wrong size. If your order arrives damaged, defective, misprinted or is not what you ordered, email <a href=\"mailto:support@hisgloryforever.com\">support@hisgloryforever.com</a> within 30 days of delivery with your order number and a photo, and we will send a replacement or a full refund. You can cancel or change an order within 12 hours of placing it. See our <a href=\"/policies/refund-policy\">Refund Policy</a>.</p>"
           }
         },
         "g4": {
@@ -72,8 +81,8 @@
         "q7": {
           "type": "question",
           "settings": {
-            "question": "Where is the verse on Scripture Editorial pieces?",
-            "answer": "<p>The verse reference is embroidered on the left sleeve. The front carries the message on its own, by design.</p>"
+            "question": "Where is the verse on your pieces?",
+            "answer": "<p>The verse reference is stitched at the left wrist. On some designs the front carries the message on its own, by design, and the verse at the wrist starts the conversation.</p>"
           }
         }
       },
