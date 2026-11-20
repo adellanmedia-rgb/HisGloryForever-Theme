@@ -164,7 +164,7 @@
     const s = theme.strings || {};
     let text;
     if (cart.item_count === 0) text = (s.freeShippingIntro || '').replace('[amount]', formatMoneyShort(threshold));
-    else if (remaining > 0) text = (s.freeShippingAway || '').replace('[amount]', formatMoney(remaining));
+    else if (remaining > 0) text = (s.freeShippingAway || '').replace('[amount]', formatMoneyShort(remaining));
     else text = s.freeShippingUnlocked || '';
     $$('[data-free-shipping-text]').forEach((el) => (el.textContent = text));
     $$('[data-free-shipping-fill]').forEach((el) => {

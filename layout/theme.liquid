@@ -47,9 +47,9 @@
         freeShippingThreshold: {{ settings.free_shipping_threshold | times: 100 | json }},
         moneyFormat: {{ shop.money_format | json }},
         strings: {
-          freeShippingAway: {{ 'general.free_shipping.away' | t: amount: '[amount]' | json }},
-          freeShippingUnlocked: {{ 'general.free_shipping.unlocked' | t | json }},
-          freeShippingIntro: {{ 'general.free_shipping.intro' | t: amount: '[amount]' | json }}
+          freeShippingAway: {{ 'general.free_shipping.away' | t: amount: '[amount]' | replace: '&#39;', "'" | json }},
+          freeShippingUnlocked: {{ 'general.free_shipping.unlocked' | t | replace: '&#39;', "'" | json }},
+          freeShippingIntro: {{ 'general.free_shipping.intro' | t: amount: '[amount]' | replace: '&#39;', "'" | json }}
         }
       };
     </script>
