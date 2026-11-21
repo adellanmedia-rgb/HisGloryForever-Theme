@@ -22,7 +22,7 @@
 
       {%- if s.show_signup -%}
         {%- form 'customer', id: 'CrestNotify', class: 'newsletter-form newsletter-form--center crest-teaser__form' -%}
-          <input type="hidden" name="contact[tags]" value="signature-waitlist">
+          <input type="hidden" name="contact[tags]" value="signature-waitlist,welcome10">
           {%- if form.posted_successfully? -%}
             <p class="crest-teaser__success" role="status">{{ s.success_message }}</p>
           {%- else -%}

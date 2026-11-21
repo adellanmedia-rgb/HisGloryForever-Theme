@@ -5,7 +5,7 @@
       {%- if s.heading != blank -%}<h2 class="h2">{{ s.heading }}</h2>{%- endif -%}
       {%- if s.text != blank -%}<div class="rte text-muted">{{ s.text }}</div>{%- endif -%}
       {%- form 'customer', id: 'NewsletterSection', class: 'newsletter-form newsletter-form--center' -%}
-        <input type="hidden" name="contact[tags]" value="newsletter,weekly-verse">
+        <input type="hidden" name="contact[tags]" value="newsletter,weekly-verse,welcome10">
         <div class="field">
           <label class="visually-hidden" for="NewsletterSectionEmail">{{ 'sections.footer.email' | t }}</label>
           <input id="NewsletterSectionEmail" class="field__input" type="email" name="contact[email]" autocomplete="email" placeholder="{{ 'sections.footer.email' | t }}" required>

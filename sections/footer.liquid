@@ -17,7 +17,7 @@
           <div class="brevo-embed brevo-embed--left">{{ section.settings.brevo_form }}</div>
         {%- else -%}
         {%- form 'customer', id: 'FooterSignup', class: 'newsletter-form' -%}
-          <input type="hidden" name="contact[tags]" value="newsletter,weekly-verse">
+          <input type="hidden" name="contact[tags]" value="newsletter,weekly-verse,welcome10">
           {%- if section.settings.show_perk and section.settings.perk_text != blank -%}
             <p class="footer__perk">{{ section.settings.perk_text }}</p>
           {%- endif -%}
