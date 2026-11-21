@@ -134,14 +134,14 @@
       "type": "featured-collection",
       "settings": {
         "color_scheme": "light",
-        "eyebrow": "The First Collection",
+        "eyebrow": "More from His Glory Forever",
         "heading": "Worn to carry His Word.",
-        "limit": 8,
+        "limit": 4,
         "columns": "4",
-        "show_view_all": true,
+        "show_view_all": false,
         "padding_top": 80,
         "padding_bottom": 80,
-        "collection": "frontpage"
+        "collection": "home-more"
       }
     },
     "best_periodic": {
@@ -171,7 +171,8 @@
         "button_style": "solid",
         "image": "shopify://shop_images/HGF-KingHoodie-Lifestyle-2.jpg",
         "button_link": "shopify://collections/the-king-collection"
-      }
+      },
+      "disabled": true
     },
     "walk": {
       "type": "editorial-duo",
@@ -274,12 +275,44 @@
         "padding_bottom": 96
       },
       "disabled": true
+    },
+    "king_video": {
+      "type": "video-feature",
+      "settings": {
+        "video": "shopify://files/videos/HGF-EP01-916-TT.mp4",
+        "video_label": "The Meaning Series · EP.01",
+        "color_scheme": "navy",
+        "eyebrow": "The King Collection",
+        "heading": "The King is coming. Be ready.",
+        "text": "<p>Designs on the King and His reign: the promise of His return, the name above every name, a kingdom with no end. Each piece is embroidered, with its verse stitched at the left wrist, for the conversation it starts.</p>",
+        "verse": "Revelation 22:12",
+        "button_label": "Shop the King Collection",
+        "button_link": "shopify://collections/the-king-collection",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "king_row": {
+      "type": "featured-collection",
+      "settings": {
+        "color_scheme": "white",
+        "eyebrow": "The King Collection",
+        "heading": "Four pieces. One King.",
+        "limit": 4,
+        "columns": "4",
+        "show_view_all": true,
+        "padding_top": 64,
+        "padding_bottom": 80,
+        "collection": "the-king-collection"
+      }
     }
   },
   "order": [
     "hero",
     "statement",
     "categories",
+    "king_video",
+    "king_row",
     "best_statement",
     "best_periodic",
     "scripture",

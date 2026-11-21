@@ -9,7 +9,7 @@
 <div class="page-width section-spacing" style="--pad-top: 0px; --pad-bottom: 96px;">
   <ul class="tiles-grid tiles-grid--3" role="list">
     {%- for collection in collections -%}
-      {%- if collection.products_count == 0 or collection.handle == "bmp-collection" or collection.handle == "frontpage" -%}{%- continue -%}{%- endif -%}
+      {%- if collection.products_count == 0 or collection.handle == "bmp-collection" or collection.handle == "frontpage" or collection.handle == "home-more" -%}{%- continue -%}{%- endif -%}
       {%- unless collection.handle == 'frontpage' -%}
         <li class="tile">
           <a href="{{ collection.url }}" class="tile__link">

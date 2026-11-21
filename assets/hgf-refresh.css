@@ -49,3 +49,50 @@
   .slide--has-mobile .button-group { flex-direction: row; flex-wrap: nowrap; gap: 0.8rem; }
   .slide--has-mobile .button-group .button { flex: 1 1 0; min-width: 0; padding-left: 0.8rem; padding-right: 0.8rem; font-size: 1.15rem; letter-spacing: 0.08em; white-space: nowrap; }
 }
+
+/* ===== Video feature (King Collection / EP.01) ===== */
+.video-feature { padding: var(--pad-top, 96px) 0 var(--pad-bottom, 96px); }
+.video-feature__grid { display: grid; gap: 4rem; align-items: center; }
+.video-feature__media { display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
+.video-feature__frame {
+  position: relative;
+  width: min(100%, 36rem);
+  aspect-ratio: 9 / 16;
+  border-radius: 1.6rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 2.4rem 6rem rgba(0, 0, 0, 0.28);
+}
+.video-feature__frame video,
+.video-feature__frame img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.video-feature__sound {
+  position: absolute; right: 1.2rem; bottom: 1.2rem;
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.8rem 1.2rem; border: 0; border-radius: 99rem;
+  background: rgba(19, 35, 63, 0.72); color: #fff;
+  font-size: 1.2rem; letter-spacing: 0.12em; text-transform: uppercase;
+  cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.video-feature__sound:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.video-feature__sound .video-feature__sound-off { display: none; }
+.video-feature__sound.is-on .video-feature__sound-on { display: none; }
+.video-feature__sound.is-on .video-feature__sound-off { display: inline; }
+.video-feature__caption { margin: 0; font-size: 1.2rem; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; }
+.video-feature__content { max-width: 52rem; text-align: center; margin: 0 auto; }
+.video-feature__content .button-group { justify-content: center; }
+.video-feature__heading { text-wrap: balance; margin-bottom: 1.6rem; }
+.video-feature__text { opacity: 0.88; }
+.video-feature__verse { font-style: italic; opacity: 0.75; margin: 1.6rem 0 2.8rem; }
+@media (min-width: 750px) {
+  .video-feature__grid { grid-template-columns: auto minmax(0, 52rem); gap: 9.6rem; justify-content: center; }
+  .video-feature__frame { width: clamp(30rem, 30vw, 40rem); }
+  .video-feature__content { text-align: left; margin: 0; }
+  .video-feature__content .button-group { justify-content: flex-start; }
+}
+@media (max-width: 749px) {
+  .video-feature__frame { width: 86%; }
+  .video-feature__grid { gap: 3.2rem; }
+}

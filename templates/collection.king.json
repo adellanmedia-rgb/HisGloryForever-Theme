@@ -1,0 +1,34 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "king_video": {
+      "type": "video-feature",
+      "settings": {
+        "video": "shopify://files/videos/HGF-EP01-916-TT.mp4",
+        "video_label": "The Meaning Series · EP.01",
+        "color_scheme": "navy",
+        "eyebrow": "The King Collection",
+        "heading": "The King is coming. Be ready.",
+        "text": "<p>Designs on the King and His reign: the promise of His return, the name above every name, a kingdom with no end. Each piece is embroidered, with its verse stitched at the left wrist, for the conversation it starts.</p>",
+        "verse": "Revelation 22:12",
+        "button_label": "",
+        "button_link": "",
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": { "show_image": false, "show_description": false, "products_per_page": 24, "columns": "4" }
+    }
+  },
+  "order": ["king_video", "main"]
+}
