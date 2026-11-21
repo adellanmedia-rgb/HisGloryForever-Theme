@@ -95,8 +95,8 @@
       if (mobile) { tabWatch(); } else open();
     }
     function tabWatch() {
-      function upd() { root.classList.toggle('is-tab', tabOnly || scrollY > innerHeight * 0.9); }
-      upd(); addEventListener('scroll', upd, { passive: true });
+      function upd() { root.classList.add('is-tab'); }
+      upd();
     }
     tab.addEventListener('click', open);
     root.querySelector('.welcome__close').addEventListener('click', function () { close(true); });
