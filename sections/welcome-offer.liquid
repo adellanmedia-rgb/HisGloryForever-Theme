@@ -1,7 +1,7 @@
 {%- comment -%}
   Welcome 10% offer. Desktop and phones: a gold "10% off" tab bottom-left.
   The card opens only when the tab is tapped (phones: as a bottom panel). Never on cart/checkout,
-  never for logged-in customers or visitors arriving from email. Closed = hidden 14 days,
+  never for logged-in customers or visitors arriving from email. Closing only closes the card (the tab stays);
   signed up = never again. Add ?welcome=preview to any URL to open it right away (testing).
 {%- endcomment -%}
 {%- liquid
@@ -70,27 +70,27 @@
   (function () {
     var root = document.getElementById('HgfWelcome');
     if (!root) return;
-    var KEY_DONE = 'hgf-welcome-done', KEY_SHUT = 'hgf-welcome-closed';
+    var KEY_DONE = 'hgf-welcome-done', KEY_SHUT = 'hgf-welcome-closed-visit';
+    try { localStorage.removeItem('hgf-welcome-closed'); } catch (e) {}
+    var visit = { get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }, set: function (k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} } };
     var params = new URLSearchParams(location.search);
     var preview = params.get('welcome') === 'preview' || params.get('welcome') === 'tab';
     var tabOnly = params.get('welcome') === 'tab';
     var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
     if (!preview) {
       if (store.get(KEY_DONE)) return;
-      var shut = parseInt(store.get(KEY_SHUT) || '0', 10);
-      if (shut && Date.now() - shut < 14 * 864e5) return;
       var src = ((params.get('utm_medium') || '') + ' ' + (params.get('utm_source') || '')).toLowerCase();
       if (/email|sms|brevo|klaviyo|newsletter/.test(src)) return;
       if (/^\/(cart|checkouts?|account)/.test(location.pathname)) return;
     }
     var mobile = window.matchMedia('(max-width: 749px)').matches;
     var tab = root.querySelector('.welcome__tab');
-    var shown = false;
+    var shown = false, done = false;
     root.hidden = false;
     function open() { root.classList.add('is-open'); tab.setAttribute('aria-expanded', 'true'); }
     function close(remember) {
       root.classList.remove('is-open'); tab.setAttribute('aria-expanded', 'false');
-      if (remember) { store.set(KEY_SHUT, String(Date.now())); setTimeout(function () { root.hidden = true; }, 450); }
+      if (done) { setTimeout(function () { root.hidden = true; }, 450); } else if (remember) { tab.focus(); }
     }
     function reveal() {
       if (shown) return; shown = true;
@@ -119,7 +119,7 @@
       var host = root.querySelector('shopify-forms-embed');
       var sr = host && host.shadowRoot;
       if (sr && !sr.querySelector('style[data-hgf]')) { var el = document.createElement('style'); el.setAttribute('data-hgf', ''); el.textContent = css; sr.appendChild(el); }
-      if (sr && /WELCOME10/.test(sr.textContent || '')) { store.set(KEY_DONE, '1'); return; }
+      if (sr && /WELCOME10/.test(sr.textContent || '')) { store.set(KEY_DONE, '1'); done = true; return; }
       if (tries++ < 2400) setTimeout(watch, 500);
     })();
   })();
