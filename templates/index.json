@@ -16,16 +16,16 @@
           "type": "slide",
           "settings": {
             "layout": "split_center",
-            "text_position": "center",
+            "text_position": "bottom",
             "heading": "Not for us. For His glory.",
             "text": "Clothing made to carry the Word into everyday life.",
             "button_1_label": "Shop the Collection",
             "button_1_link": "/collections/all",
             "button_2_label": "Shop Hoodies",
             "button_2_link": "shopify://collections/hoodies",
-            "image_1": "shopify://shop_images/HGF-KingHoodie-Lifestyle-1.jpg",
-            "image_2": "shopify://shop_images/HGF-King-Lifestyle-Friends.jpg",
-            "image_mobile": "shopify://shop_images/HGF-KingHoodie-Lifestyle-1.jpg"
+            "image_1": "shopify://shop_images/HGF-Hero-KingHoodie-Maroon-Wide.jpg",
+            "image_2": "shopify://shop_images/HGF-Hero-ChildOfGod-CarolinaBlue-Wide.jpg",
+            "image_mobile": "shopify://shop_images/HGF-Hero-KingHoodie-Maroon-Mobile.jpg"
           }
         },
         "slide-2": {
@@ -78,7 +78,7 @@
             "title": "Hoodies",
             "link": "shopify://collections/hoodies",
             "audience": "all",
-            "image": "shopify://shop_images/HGF-KingHoodie-Maroon-Front.jpg"
+            "image": "shopify://shop_images/HGF-KingJesusHoodie-TeamRoyal-Front.jpg"
           }
         },
         "c2": {

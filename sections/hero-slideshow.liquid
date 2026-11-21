@@ -50,7 +50,7 @@
           endif
           assign fpm = fp1
           if b.image_mobile != blank
-            assign fpm = b.image_mobile.presentation.focal_point | default: '50% 50%'
+            assign fpm = b.image_mobile.presentation.focal_point | default: '50% 0%'
           endif
         -%}
         <div class="slide__media">
