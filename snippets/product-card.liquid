@@ -37,9 +37,32 @@
       endif
     endfor
 
+    comment
+      Hover image: the embroidery close-up (media alt text contains "close-up"),
+      preferring the first close-up after the card's lead image so it matches the lead colour.
+      No close-up = no hover (Printful mockups are never used).
+    endcomment
     assign second_image = nil
-    if product.media.size > 1
-      assign second_image = product.media[1]
+    assign past_featured = false
+    for m in product.media
+      if m.id == product.featured_media.id
+        assign past_featured = true
+        continue
+      endif
+      assign m_alt = m.alt | downcase
+      if past_featured and m_alt contains 'close-up'
+        assign second_image = m
+        break
+      endif
+    endfor
+    if second_image == nil
+      for m in product.media
+        assign m_alt = m.alt | downcase
+        if m.id != product.featured_media.id and m_alt contains 'close-up'
+          assign second_image = m
+          break
+        endif
+      endfor
     endif
   -%}
   <div class="card">
