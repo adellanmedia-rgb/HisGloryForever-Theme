@@ -13,22 +13,30 @@
       "type": "video-feature",
       "settings": {
         "video": "shopify://files/videos/HGF-EP01-916-TT.mp4",
-        "video_label": "The Meaning Series · EP.01",
+        "video_label": "",
         "color_scheme": "navy",
-        "eyebrow": "The King Collection",
-        "heading": "The King is coming. Be ready.",
+        "eyebrow": "The Meaning Series · EP.01",
+        "heading": "Watch the story.",
         "text": "<p>Designs on the King and His reign: the promise of His return, the name above every name, a kingdom with no end. Each piece is embroidered, with its verse stitched at the left wrist, for the conversation it starts.</p>",
         "verse": "Revelation 22:12",
         "button_label": "",
         "button_link": "",
-        "padding_top": 72,
-        "padding_bottom": 72
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "main": {
       "type": "main-collection",
-      "settings": { "show_image": false, "show_description": false, "products_per_page": 24, "columns": "4" }
+      "settings": {
+        "show_image": false,
+        "show_description": true,
+        "products_per_page": 24,
+        "columns": "4"
+      }
     }
   },
-  "order": ["king_video", "main"]
+  "order": [
+    "main",
+    "king_video"
+  ]
 }
