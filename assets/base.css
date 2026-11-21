@@ -2591,3 +2591,18 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
   line-height: 1.45;
 }
 .product__story blockquote p { margin: 0; }
+
+/* Phones (no hover): close-up via swipe on grid pages, plus a one-at-a-time zigzag fade
+   (row 1 left, row 2 right, ...) run by theme.js. Desktop keeps hover only. */
+.card__dots { display: none; }
+@media (hover: none) {
+  .card .card__image--second { transition: opacity 0.6s ease; }
+  .card.is-swapped .card__image--second { opacity: 1; }
+  .product-grid:not(.product-grid--scroll-mobile) .card__dots { display: flex; justify-content: center; gap: 0.6rem; margin-top: -0.6rem; }
+  .card__dots i { width: 0.6rem; height: 0.6rem; border-radius: 50%; background: #cfcfcf; transition: background 0.3s ease; }
+  .card__dots i:first-child, .card.is-swapped .card__dots i:last-child { background: #3a3a3a; }
+  .card.is-swapped .card__dots i:first-child { background: #cfcfcf; }
+}
+@media (hover: none) and (prefers-reduced-motion: reduce) {
+  .card .card__image--second { transition: none; }
+}

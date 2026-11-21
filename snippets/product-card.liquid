@@ -76,6 +76,7 @@
         {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
       {%- endif -%}
     </a>
+    {%- if second_image -%}<span class="card__dots" aria-hidden="true"><i></i><i></i></span>{%- endif -%}
     <div class="card__info">
       <h3 class="card__title"><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>
       <p class="card__meta">

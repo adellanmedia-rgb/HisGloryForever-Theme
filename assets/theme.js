@@ -799,3 +799,80 @@
     loop();
   });
 })();
+
+/* Phone product cards (grid pages only: collection, search):
+   - swipe a card left/right to see its embroidery close-up (dots show which image)
+   - zigzag: one card per row fades to its close-up, one at a time as rows come into view
+     (row 1 left, row 2 right, ...), holds 2s, fades back. Once per page per visit.
+   Desktop is untouched (hover). Zigzag is skipped for reduced motion. */
+(function () {
+  if (!window.matchMedia || !window.matchMedia('(hover: none)').matches) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var GRID = '.product-grid:not(.product-grid--scroll-mobile)';
+  var FADE = 600, HOLD = 2000, DELAY = 800;
+
+  function bindSwipe(card) {
+    var media = card.querySelector('.card__media--hover');
+    if (!media || card.hasAttribute('data-swipe')) return;
+    card.setAttribute('data-swipe', '');
+    var x0 = 0, y0 = 0, moved = false;
+    media.addEventListener('touchstart', function (e) { var t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; moved = false; }, { passive: true });
+    media.addEventListener('touchend', function (e) {
+      var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+      if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        moved = true;
+        card.setAttribute('data-user', '');
+        if (dx < 0) card.classList.add('is-swapped'); else card.classList.remove('is-swapped');
+      }
+    }, { passive: true });
+    media.addEventListener('click', function (e) { if (moved) { e.preventDefault(); moved = false; } });
+    var img = card.querySelector('.card__image--second');
+    if (img) img.loading = 'eager';
+  }
+
+  function zigzag(grid) {
+    if (reduce || !('IntersectionObserver' in window) || grid.hasAttribute('data-zig')) return;
+    grid.setAttribute('data-zig', '');
+    var key = 'hgf-zig:' + location.pathname;
+    try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, '1'); } catch (err) {}
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.card'));
+    if (!cards.length) return;
+    var cols = Math.max(1, Math.round(grid.clientWidth / cards[0].offsetWidth));
+    var queue = [];
+    cards.forEach(function (c, i) {
+      var row = Math.floor(i / cols), col = i % cols;
+      var pick = (row % 2 === 0) ? 0 : cols - 1;
+      if (col === pick && c.querySelector('.card__image--second')) queue.push(c);
+    });
+    var busy = false, visible = new Set();
+    function next() {
+      if (busy || !queue.length) return;
+      var c = queue[0];
+      if (!visible.has(c)) return;
+      queue.shift();
+      if (c.hasAttribute('data-user')) { next(); return; }
+      busy = true;
+      setTimeout(function () {
+        if (!c.hasAttribute('data-user')) c.classList.add('is-swapped');
+        setTimeout(function () {
+          if (!c.hasAttribute('data-user')) c.classList.remove('is-swapped');
+          setTimeout(function () { busy = false; next(); }, FADE);
+        }, FADE + HOLD);
+      }, DELAY);
+    }
+    queue.forEach(function (c) {
+      var o = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.intersectionRatio >= 0.9) visible.add(c); else visible.delete(c); });
+        next();
+      }, { threshold: [0, 0.9] });
+      o.observe(c.querySelector('.card__media') || c);
+    });
+  }
+
+  function init() {
+    document.querySelectorAll(GRID + ' .card').forEach(bindSwipe);
+    document.querySelectorAll(GRID).forEach(zigzag);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  new MutationObserver(function () { document.querySelectorAll(GRID + ' .card').forEach(bindSwipe); }).observe(document.documentElement, { childList: true, subtree: true });
+})();
