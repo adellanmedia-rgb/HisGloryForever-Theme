@@ -1,6 +1,6 @@
 {%- comment -%}
-  Welcome 10% offer. Desktop: small card slides in bottom-right (above the chat bubble).
-  Phones: a "10% off" tab bottom-left that opens a bottom panel. Never on cart/checkout,
+  Welcome 10% offer. Desktop and phones: a gold "10% off" tab bottom-right, just above the chat bubble.
+  The card opens only when the tab is tapped (phones: as a bottom panel). Never on cart/checkout,
   never for logged-in customers or visitors arriving from email. Closed = hidden 14 days,
   signed up = never again. Add ?welcome=preview to any URL to open it right away (testing).
 {%- endcomment -%}
@@ -46,18 +46,20 @@
   .welcome__text { margin: .8rem auto 0; max-width: 30rem; font-size: 1.35rem; line-height: 1.5; color: rgba(255,255,255,.78); }
   .welcome__form { margin-top: 1.2rem; }
   .welcome__nothanks { display: block; margin: .2rem auto 0; background: none; border: 0; color: rgba(255,255,255,.6); font-size: 1.2rem; text-decoration: underline; text-underline-offset: .25em; cursor: pointer; padding: .6rem; }
-  .welcome__tab { pointer-events: auto; display: none; }
+  .welcome__tab { display: block; position: fixed; z-index: 61; pointer-events: none; background: #C9A44C; color: #13233F; font-weight: 600; border: 0; border-radius: 10rem; padding: 1rem 1.6rem; font-size: 1.2rem; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; box-shadow: 0 .6rem 2rem rgba(10,20,40,.25); opacity: 0; transform: translateY(1rem); transition: opacity .35s ease, transform .35s ease; }
+  .welcome.is-tab .welcome__tab { opacity: 1; transform: none; pointer-events: auto; }
+  .welcome.is-open .welcome__tab { opacity: 0; pointer-events: none; }
   /* desktop: corner card above the chat bubble */
   @media (min-width: 750px) {
     .welcome { inset: auto 2.4rem 10rem auto; width: 36rem; }
+    .welcome__tab { right: 2.4rem; bottom: 10rem; }
+    .welcome:not(.is-open) .welcome__panel { visibility: hidden; transition: transform .45s ease, opacity .45s ease, visibility 0s .45s; }
     .welcome__panel { border-radius: .4rem; transform: translateY(2rem); opacity: 0; transition: transform .45s ease, opacity .45s ease; }
     .welcome.is-open .welcome__panel { transform: none; opacity: 1; }
   }
-  /* phones: tab bottom-left, panel slides up from the bottom */
+  /* phones: tab bottom-right, panel slides up from the bottom */
   @media (max-width: 749px) {
-    .welcome__tab { display: block; position: fixed; left: 1.2rem; bottom: 1.6rem; background: #C9A44C; color: #13233F; font-weight: 600; border: 0; border-radius: 10rem; padding: 1rem 1.6rem; font-size: 1.2rem; letter-spacing: .14em; text-transform: uppercase; box-shadow: 0 .6rem 2rem rgba(10,20,40,.25); opacity: 0; transform: translateY(1rem); transition: opacity .35s ease, transform .35s ease; }
-    .welcome.is-tab .welcome__tab { opacity: 1; transform: none; }
-    .welcome.is-open .welcome__tab { opacity: 0; pointer-events: none; }
+    .welcome__tab { right: 1.6rem; bottom: 9rem; }
     .welcome__panel { position: fixed; left: 0; right: 0; bottom: 0; max-height: 88vh; overflow-y: auto; border-radius: 1.2rem 1.2rem 0 0; transform: translateY(105%); transition: transform .4s ease; }
     .welcome:not(.is-open) .welcome__panel { visibility: hidden; transition: transform .4s ease, visibility 0s .4s; }
     .welcome.is-open .welcome__panel { transform: none; }
@@ -92,7 +94,7 @@
     }
     function reveal() {
       if (shown) return; shown = true;
-      if (mobile) { tabWatch(); } else open();
+      tabWatch();
     }
     function tabWatch() {
       function upd() { root.classList.add('is-tab'); }
