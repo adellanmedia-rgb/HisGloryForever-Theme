@@ -125,7 +125,7 @@
         "color_scheme": "white",
         "heading": "Shop by category",
         "default_tab": "women",
-        "padding_top": 0,
+        "padding_top": 80,
         "padding_bottom": 80,
         "tile_width": 240
       }
@@ -309,11 +309,11 @@
   },
   "order": [
     "hero",
-    "statement",
-    "categories",
     "king_video",
+    "categories",
     "king_row",
     "best_statement",
+    "statement",
     "best_periodic",
     "scripture",
     "walk",
