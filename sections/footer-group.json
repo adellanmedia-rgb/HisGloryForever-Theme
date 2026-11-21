@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Footer group",
@@ -82,10 +91,37 @@
       "settings": {
         "color_scheme": "navy"
       }
+    },
+    "welcome-offer": {
+      "type": "welcome-offer",
+      "blocks": {
+        "forms_inline_welcome": {
+          "type": "shopify://apps/forms/blocks/inline/8744a304-fcb1-4347-b211-bb6b4759a76a",
+          "settings": {
+            "form_id": "1268480",
+            "text_color": "#FFFFFF",
+            "button_background_color": "#FFFFFF",
+            "button_label_color": "#1B3158",
+            "links_color": "#FFFFFF",
+            "errors_color": "#FF8A8A",
+            "text_alignment": "left",
+            "form_alignment": "center",
+            "padding_top": 0,
+            "padding_bottom": 4,
+            "padding_right": 0,
+            "padding_left": 0
+          }
+        }
+      },
+      "block_order": [
+        "forms_inline_welcome"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "trust-row",
-    "footer"
+    "footer",
+    "welcome-offer"
   ]
 }

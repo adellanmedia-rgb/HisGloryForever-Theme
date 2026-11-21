@@ -1,0 +1,142 @@
+{%- comment -%}
+  Welcome 10% offer. Desktop: small card slides in bottom-right (above the chat bubble).
+  Phones: a "10% off" tab bottom-left that opens a bottom panel. Never on cart/checkout,
+  never for logged-in customers or visitors arriving from email. Closed = hidden 14 days,
+  signed up = never again. Add ?welcome=preview to any URL to open it right away (testing).
+{%- endcomment -%}
+{%- liquid
+  assign hide = false
+  if customer
+    assign hide = true
+  endif
+  if template.name == 'cart' or template.name == 'password' or request.design_mode
+    assign hide = true
+  endif
+  assign app_blocks = section.blocks | where: 'type', '@app'
+-%}
+{%- unless hide or app_blocks.size == 0 -%}
+<div class="welcome" id="HgfWelcome" hidden data-delay="{{ section.settings.delay }}" data-scroll="{{ section.settings.scroll }}">
+  <button type="button" class="welcome__tab" aria-controls="HgfWelcomePanel" aria-expanded="false">{{ section.settings.tab_label }}</button>
+  <div class="welcome__panel" id="HgfWelcomePanel" role="dialog" aria-modal="false" aria-labelledby="HgfWelcomeTitle">
+    <button type="button" class="welcome__close" aria-label="Close">
+      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+    </button>
+    <div class="welcome__head">
+      {% render 'crest', class: 'welcome__crest' %}
+      <p class="welcome__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="welcome__title" id="HgfWelcomeTitle">{{ section.settings.title }}</h2>
+      {%- if section.settings.text != blank -%}<p class="welcome__text">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    <div class="welcome__form">
+      {%- for block in app_blocks -%}{% render block %}{%- endfor -%}
+    </div>
+    <button type="button" class="welcome__nothanks">{{ section.settings.no_thanks }}</button>
+  </div>
+</div>
+<style>
+  .welcome { position: fixed; z-index: 60; inset: auto 0 0 0; pointer-events: none; font-size: 1.4rem; }
+  .welcome[hidden] { display: none; }
+  .welcome__panel { pointer-events: auto; background: var(--color-navy, #13233F); color: #fff; box-shadow: 0 1.2rem 4rem rgba(10,20,40,.28); padding: 2.4rem 2.4rem 1.6rem; position: relative; }
+  .welcome__close { position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: 0; color: rgba(255,255,255,.7); padding: .6rem; cursor: pointer; line-height: 0; }
+  .welcome__close:hover { color: #fff; }
+  .welcome__head { text-align: center; }
+  .welcome__crest { display: block; margin: 0 auto; width: 2.6rem; height: auto; color: #fff; opacity: .9; }
+  .welcome__eyebrow { margin: 1rem 0 .4rem; font-size: 1.1rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+  .welcome__title { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 2.6rem; line-height: 1.15; margin: 0; color: #fff; }
+  .welcome__text { margin: .8rem auto 0; max-width: 30rem; font-size: 1.35rem; line-height: 1.5; color: rgba(255,255,255,.78); }
+  .welcome__form { margin-top: 1.2rem; }
+  .welcome__nothanks { display: block; margin: .2rem auto 0; background: none; border: 0; color: rgba(255,255,255,.6); font-size: 1.2rem; text-decoration: underline; text-underline-offset: .25em; cursor: pointer; padding: .6rem; }
+  .welcome__tab { pointer-events: auto; display: none; }
+  /* desktop: corner card above the chat bubble */
+  @media (min-width: 750px) {
+    .welcome { inset: auto 2.4rem 10rem auto; width: 36rem; }
+    .welcome__panel { border-radius: .4rem; transform: translateY(2rem); opacity: 0; transition: transform .45s ease, opacity .45s ease; }
+    .welcome.is-open .welcome__panel { transform: none; opacity: 1; }
+  }
+  /* phones: tab bottom-left, panel slides up from the bottom */
+  @media (max-width: 749px) {
+    .welcome__tab { display: block; position: fixed; left: 1.2rem; bottom: 1.6rem; background: #C9A44C; color: #13233F; font-weight: 600; border: 0; border-radius: 10rem; padding: 1rem 1.6rem; font-size: 1.2rem; letter-spacing: .14em; text-transform: uppercase; box-shadow: 0 .6rem 2rem rgba(10,20,40,.25); opacity: 0; transform: translateY(1rem); transition: opacity .35s ease, transform .35s ease; }
+    .welcome.is-tab .welcome__tab { opacity: 1; transform: none; }
+    .welcome.is-open .welcome__tab { opacity: 0; pointer-events: none; }
+    .welcome__panel { position: fixed; left: 0; right: 0; bottom: 0; max-height: 88vh; overflow-y: auto; border-radius: 1.2rem 1.2rem 0 0; transform: translateY(105%); transition: transform .4s ease; }
+    .welcome:not(.is-open) .welcome__panel { visibility: hidden; transition: transform .4s ease, visibility 0s .4s; }
+    .welcome.is-open .welcome__panel { transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .welcome__panel, .welcome__tab { transition: none !important; } }
+</style>
+<script>
+  (function () {
+    var root = document.getElementById('HgfWelcome');
+    if (!root) return;
+    var KEY_DONE = 'hgf-welcome-done', KEY_SHUT = 'hgf-welcome-closed';
+    var params = new URLSearchParams(location.search);
+    var preview = params.get('welcome') === 'preview' || params.get('welcome') === 'tab';
+    var tabOnly = params.get('welcome') === 'tab';
+    var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+    if (!preview) {
+      if (store.get(KEY_DONE)) return;
+      var shut = parseInt(store.get(KEY_SHUT) || '0', 10);
+      if (shut && Date.now() - shut < 14 * 864e5) return;
+      var src = ((params.get('utm_medium') || '') + ' ' + (params.get('utm_source') || '')).toLowerCase();
+      if (/email|sms|brevo|klaviyo|newsletter/.test(src)) return;
+      if (/^\/(cart|checkouts?|account)/.test(location.pathname)) return;
+    }
+    var mobile = window.matchMedia('(max-width: 749px)').matches;
+    var tab = root.querySelector('.welcome__tab');
+    var shown = false;
+    root.hidden = false;
+    function open() { root.classList.add('is-open'); tab.setAttribute('aria-expanded', 'true'); }
+    function close(remember) {
+      root.classList.remove('is-open'); tab.setAttribute('aria-expanded', 'false');
+      if (remember) { store.set(KEY_SHUT, String(Date.now())); setTimeout(function () { root.hidden = true; }, 450); }
+    }
+    function reveal() {
+      if (shown) return; shown = true;
+      if (mobile) { tabWatch(); } else open();
+    }
+    function tabWatch() {
+      function upd() { root.classList.toggle('is-tab', tabOnly || scrollY > innerHeight * 0.9); }
+      upd(); addEventListener('scroll', upd, { passive: true });
+    }
+    tab.addEventListener('click', open);
+    root.querySelector('.welcome__close').addEventListener('click', function () { close(true); });
+    root.querySelector('.welcome__nothanks').addEventListener('click', function () { close(true); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('is-open')) close(true); });
+    if (preview) { reveal(); if (mobile && !tabOnly) open(); }
+    else {
+      setTimeout(reveal, (parseInt(root.dataset.delay, 10) || 10) * 1000);
+      window.addEventListener('scroll', function onScroll() {
+        var h = document.documentElement.scrollHeight - innerHeight;
+        if (h > 0 && scrollY / h >= (parseInt(root.dataset.scroll, 10) || 40) / 100) { reveal(); removeEventListener('scroll', onScroll); }
+      }, { passive: true });
+    }
+    // style the Shopify Forms embed (shadow DOM) and detect a successful signup
+    var css = '[class*=formSubmitButton],[class*=formSubmitButton] *{text-transform:uppercase!important;letter-spacing:.14em!important;font-size:13px!important;font-weight:500!important}[class*=checkboxField] [class*=textBody]{font-size:12px!important;line-height:1.45!important;color:rgba(255,255,255,.72)!important}';
+    var tries = 0;
+    (function watch() {
+      var host = root.querySelector('shopify-forms-embed');
+      var sr = host && host.shadowRoot;
+      if (sr && !sr.querySelector('style[data-hgf]')) { var el = document.createElement('style'); el.setAttribute('data-hgf', ''); el.textContent = css; sr.appendChild(el); }
+      if (sr && /WELCOME10/.test(sr.textContent || '')) { store.set(KEY_DONE, '1'); return; }
+      if (tries++ < 2400) setTimeout(watch, 500);
+    })();
+  })();
+</script>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Welcome offer",
+  "class": "section-welcome-offer",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Welcome to His Glory Forever" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "10% off your first order" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Join for the Weekly Verse, new releases and offers." },
+    { "type": "text", "id": "tab_label", "label": "Phone tab label", "default": "10% off" },
+    { "type": "text", "id": "no_thanks", "label": "No thanks label", "default": "No thanks" },
+    { "type": "range", "id": "delay", "label": "Show after (seconds)", "min": 3, "max": 30, "step": 1, "default": 10 },
+    { "type": "range", "id": "scroll", "label": "Or after scrolling (%)", "min": 10, "max": 90, "step": 5, "default": 40 }
+  ],
+  "blocks": [{ "type": "@app" }]
+}
+{% endschema %}
