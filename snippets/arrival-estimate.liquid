@@ -1,0 +1,58 @@
+{%- comment -%}
+  Estimated arrival line. Dates are worked out in the visitor's browser from today's date,
+  counting business days (Mon–Fri) from the next business day and skipping the holidays
+  set in Theme settings > Cart and shipping.
+  Params: min_days, max_days
+{%- endcomment -%}
+{%- if settings.arrival_enabled -%}
+  {%- assign holidays = settings.arrival_holidays | strip | newline_to_br | split: '<br />' | join: ',' | strip_newlines | remove: ' ' -%}
+  <p
+    class="arrival-estimate"
+    data-arrival
+    data-min="{{ min_days }}"
+    data-max="{{ max_days }}"
+    data-holidays="{{ holidays | escape }}"
+    data-template="{{ 'products.arrival.order_today' | t | escape }}"
+    hidden
+  ></p>
+  <script>
+    (function () {
+      var el = document.currentScript && document.currentScript.previousElementSibling;
+      if (!el || !el.hasAttribute('data-arrival')) return;
+      var min = parseInt(el.dataset.min, 10), max = parseInt(el.dataset.max, 10);
+      if (!(min > 0) || !(max >= min)) return;
+      var holidays = (el.dataset.holidays || '').split(',').filter(Boolean);
+      function key(d) {
+        var m = d.getMonth() + 1, day = d.getDate();
+        return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
+      }
+      function isBusinessDay(d) {
+        var w = d.getDay();
+        return w !== 0 && w !== 6 && holidays.indexOf(key(d)) === -1;
+      }
+      function addBusinessDays(start, n) {
+        var d = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+        var count = 0;
+        while (count < n) {
+          d.setDate(d.getDate() + 1);
+          if (isBusinessDay(d)) count++;
+        }
+        return d;
+      }
+      var today = new Date();
+      var first = addBusinessDays(today, min);
+      var last = addBusinessDays(today, max);
+      var fmt = function (d, withMonth) {
+        return withMonth
+          ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+          : String(d.getDate());
+      };
+      var sameMonth = first.getMonth() === last.getMonth() && first.getFullYear() === last.getFullYear();
+      var range = sameMonth
+        ? fmt(first, true) + '–' + fmt(last, false)
+        : fmt(first, true) + ' – ' + fmt(last, true);
+      el.textContent = el.dataset.template.replace('[range]', range);
+      el.hidden = false;
+    })();
+  </script>
+{%- endif -%}
