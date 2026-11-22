@@ -23,9 +23,9 @@
             "button_1_link": "/collections/all",
             "button_2_label": "Shop Hoodies",
             "button_2_link": "shopify://collections/hoodies",
-            "image_1": "shopify://shop_images/HGF-Hero-KingHoodie-Maroon-Wide.jpg",
-            "image_2": "shopify://shop_images/HGF-Hero-ChildOfGod-CarolinaBlue-Wide.jpg",
-            "image_mobile": "shopify://shop_images/HGF-KingHoodie-Lifestyle-1.jpg"
+            "image_1": "shopify://shop_images/HGF-Hero-KingHoodie-Maroon-Wide-v3.jpg",
+            "image_2": "shopify://shop_images/HGF-Hero-ChildOfGod-CarolinaBlue-Wide-v3.jpg",
+            "image_mobile": "shopify://shop_images/HGF-KingHoodie-Lifestyle-1-v8.jpg"
           }
         },
         "slide-2": {
@@ -40,9 +40,9 @@
             "button_1_link": "shopify://products/king-jesus-hoodie",
             "button_2_label": "Shop the crewneck",
             "button_2_link": "shopify://products/forever-king-crewneck",
-            "image_1": "shopify://shop_images/HGF-KingJesusHoodie-TeamRoyal-Front.jpg",
-            "image_2": "shopify://shop_images/HGF-ForeverKingCrewneck-SkyBlue-Front.jpg",
-            "image_mobile": "shopify://shop_images/HGF-KingJesusHoodie-TeamRoyal-Front.jpg"
+            "image_1": "shopify://shop_images/HGF-KingJesusHoodie-TeamRoyal-Front-v8.jpg",
+            "image_2": "shopify://shop_images/HGF-ForeverKingCrewneck-SkyBlue-Front-v8.jpg",
+            "image_mobile": "shopify://shop_images/HGF-KingJesusHoodie-TeamRoyal-Front-v8.jpg"
           }
         }
       },
@@ -78,7 +78,7 @@
             "title": "Hoodies",
             "link": "shopify://collections/hoodies",
             "audience": "all",
-            "image": "shopify://shop_images/HGF-KingJesusHoodie-TeamRoyal-Front.jpg"
+            "image": "shopify://shop_images/HGF-KingJesusHoodie-TeamRoyal-Front-v8.jpg"
           }
         },
         "c2": {
@@ -87,7 +87,7 @@
             "title": "Crewnecks",
             "link": "shopify://collections/crewnecks",
             "audience": "all",
-            "image": "shopify://shop_images/HGF-King-Bone-Maroon-Front.jpg"
+            "image": "shopify://shop_images/HGF-King-Bone-Maroon-Front-v8.jpg"
           }
         },
         "c3": {
@@ -183,7 +183,7 @@
             "title": "I Am a Child of God",
             "button_label": "Shop",
             "link": "shopify://collections/i-am-a-child-of-god",
-            "image": "shopify://shop_images/HGF-ChildOfGodHoodie-Lavender-Front.jpg"
+            "image": "shopify://shop_images/HGF-ChildOfGodHoodie-Lavender-Front-v7.jpg"
           }
         },
         "his": {
@@ -192,7 +192,7 @@
             "title": "The King Collection",
             "button_label": "Shop",
             "link": "shopify://collections/the-king-collection",
-            "image": "shopify://shop_images/HGF-King-TeamRoyal-OldGold-Front.jpg"
+            "image": "shopify://shop_images/HGF-King-TeamRoyal-OldGold-Front-v8.jpg"
           }
         }
       },
@@ -249,7 +249,7 @@
         "button_label": "Read our story",
         "button_link": "shopify://pages/about",
         "button_style": "outline",
-        "image": "shopify://shop_images/HGF-King-Lifestyle-Fishing.jpg"
+        "image": "shopify://shop_images/HGF-King-Lifestyle-Fishing-v8.jpg"
       }
     },
     "prayer": {
