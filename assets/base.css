@@ -2606,3 +2606,7 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
 @media (hover: none) and (prefers-reduced-motion: reduce) {
   .card .card__image--second { transition: none; }
 }
+
+/* Estimated arrival line (product page) */
+.made-for-you-note__text { display: flex; flex-direction: column; gap: 0.2rem; }
+.arrival-estimate { margin: 0; font-weight: 600; color: var(--fg, currentColor); }
