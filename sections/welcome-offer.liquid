@@ -1,6 +1,7 @@
 {%- comment -%}
-  Welcome 10% offer. Desktop and phones: a gold "10% off" tab bottom-left.
-  The card opens only when the tab is tapped (phones: as a bottom panel). Never on cart/checkout,
+  Welcome 10% offer. Desktop and phones: a small navy teaser card bottom-left
+  ("10% off your first order / Sign up to get your code"). Its x shrinks it to the gold "10% off" pill for the visit.
+  The sign-up card opens only when the teaser or pill is tapped (phones: as a bottom panel). Never on cart/checkout,
   never for logged-in customers or visitors arriving from email. Closing only closes the card (the tab stays);
   signed up = never again. Add ?welcome=preview to any URL to open it right away (testing).
 {%- endcomment -%}
@@ -16,6 +17,18 @@
 -%}
 {%- unless hide or app_blocks.size == 0 -%}
 <div class="welcome" id="HgfWelcome" hidden data-delay="{{ section.settings.delay }}" data-scroll="{{ section.settings.scroll }}">
+  <div class="welcome__teaser">
+    <button type="button" class="welcome__card" aria-controls="HgfWelcomePanel" aria-expanded="false">
+      <span class="welcome__card-mark" aria-hidden="true">{% render 'crest', class: 'welcome__card-crest' %}</span>
+      <span class="welcome__card-body">
+        <span class="welcome__card-title">{{ section.settings.teaser_title }}</span>
+        <span class="welcome__card-text"><span class="welcome__card-link">{{ section.settings.teaser_text }}</span> <span class="welcome__card-arrow" aria-hidden="true">&rarr;</span></span>
+      </span>
+    </button>
+    <button type="button" class="welcome__card-x" aria-label="Minimise offer">
+      <svg viewBox="0 0 16 16" width="10" height="10" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+    </button>
+  </div>
   <button type="button" class="welcome__tab" aria-controls="HgfWelcomePanel" aria-expanded="false">{{ section.settings.tab_label }}</button>
   <div class="welcome__panel" id="HgfWelcomePanel" role="dialog" aria-modal="false" aria-labelledby="HgfWelcomeTitle">
     <button type="button" class="welcome__close" aria-label="Close">
@@ -46,31 +59,56 @@
   .welcome__text { margin: .8rem auto 0; max-width: 30rem; font-size: 1.35rem; line-height: 1.5; color: rgba(255,255,255,.78); }
   .welcome__form { margin-top: 1.2rem; }
   .welcome__nothanks { display: block; margin: .2rem auto 0; background: none; border: 0; color: rgba(255,255,255,.6); font-size: 1.2rem; text-decoration: underline; text-underline-offset: .25em; cursor: pointer; padding: .6rem; }
-  .welcome__tab { display: block; position: fixed; z-index: 61; pointer-events: none; background: #C9A44C; color: #13233F; font-weight: 600; border: 0; border-radius: 10rem; padding: 1rem 1.6rem; font-size: 1.2rem; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; box-shadow: 0 .6rem 2rem rgba(10,20,40,.25); opacity: 0; transform: translateY(1rem); transition: opacity .35s ease, transform .35s ease; }
-  .welcome.is-tab .welcome__tab { opacity: 1; transform: none; pointer-events: auto; }
+  .welcome__tab { display: block; position: fixed; z-index: 61; pointer-events: none; background: #FBF8F2; color: var(--color-navy, #13233F); font-family: var(--font-heading); font-weight: var(--font-heading-weight); border: 1px solid rgba(201,164,76,.6); border-radius: 10rem; padding: .9rem 1.8rem; font-size: 1.3rem; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; box-shadow: 0 1.2rem 3rem -1rem rgba(10,20,40,.45); opacity: 0; transform: translateY(1rem); transition: opacity .35s ease, transform .35s ease; }
+  .welcome.is-tab.is-mini .welcome__tab { opacity: 1; transform: none; pointer-events: auto; }
   .welcome.is-open .welcome__tab { opacity: 0; pointer-events: none; }
+  /* teaser card: ivory gift card with crest, serif title, gold hairline */
+  .welcome__teaser { position: fixed; z-index: 61; width: 34rem; pointer-events: none; opacity: 0; visibility: hidden; transform: translateY(1.2rem); filter: blur(3px); transition: opacity .35s ease, transform .35s ease, filter .35s ease, visibility 0s .35s; }
+  .welcome.is-tab:not(.is-mini):not(.is-open) .welcome__teaser { pointer-events: auto; opacity: 1; visibility: visible; transform: none; filter: none; transition: opacity .8s ease, transform .9s cubic-bezier(.16,1,.3,1), filter .8s ease, visibility 0s; }
+  .welcome__card { position: relative; display: flex; align-items: center; gap: 1.4rem; width: 100%; text-align: left; cursor: pointer; background: #FBF8F2; color: var(--color-navy, #13233F); border: 1px solid rgba(201,164,76,.45); border-radius: 1.2rem; padding: 1.5rem 3.8rem 1.5rem 1.5rem; box-shadow: 0 1.8rem 4.5rem -1.2rem rgba(10,20,40,.45), 0 .2rem .6rem rgba(10,20,40,.12); font: inherit; overflow: hidden; transition: box-shadow .4s ease, transform .4s ease; }
+  .welcome__card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, transparent, #C9A44C 20%, #E6CF8E 50%, #C9A44C 80%, transparent); transform: scaleX(0); transform-origin: left; }
+  .welcome.is-tab:not(.is-mini):not(.is-open) .welcome__card::before { animation: hgfLine 1.1s cubic-bezier(.65,0,.35,1) .45s forwards; }
+  .welcome__card:hover { transform: translateY(-2px); box-shadow: 0 2.4rem 5rem -1.2rem rgba(10,20,40,.5), 0 .2rem .6rem rgba(10,20,40,.12); }
+  .welcome__card-mark { flex: 0 0 auto; display: grid; place-items: center; width: 4.6rem; height: 4.6rem; border-radius: 50%; background: var(--color-navy, #13233F); box-shadow: inset 0 0 0 1px rgba(201,164,76,.6); }
+  .welcome__card-crest { display: block; width: 2.4rem; height: auto; color: #C9A44C; }
+  .welcome__card-body { display: block; min-width: 0; }
+  .welcome__card-title { display: block; font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 1.5rem; letter-spacing: .1em; text-transform: uppercase; line-height: 1.25; color: var(--color-navy, #13233F); white-space: nowrap; }
+  .welcome__card-text { display: block; margin-top: .5rem; font-size: 1.3rem; line-height: 1.3; color: #3E4759; }
+  .welcome__card-link { background: linear-gradient(#C9A44C, #C9A44C) 0 100% / 0 1px no-repeat; transition: background-size .35s ease, color .35s ease; }
+  .welcome__card:hover .welcome__card-link { background-size: 100% 1px; color: var(--color-navy, #13233F); }
+  .welcome__card-arrow { display: inline-block; color: #B08D3C; animation: hgfNudge 4s ease-in-out 2s infinite; }
+  .welcome__card-x { position: absolute; top: .5rem; right: .5rem; background: none; border: 0; color: rgba(19,35,63,.45); padding: .8rem; line-height: 0; cursor: pointer; transition: color .2s ease; }
+  .welcome__card-x:hover { color: var(--color-navy, #13233F); }
+  @keyframes hgfLine { to { transform: scaleX(1); } }
+  @keyframes hgfNudge { 0%, 80%, 100% { transform: translateX(0); } 88% { transform: translateX(.5rem); } 94% { transform: translateX(0); } }
   /* desktop: corner card above the chat bubble */
   @media (min-width: 750px) {
     .welcome { inset: auto 2.4rem 10rem auto; width: 36rem; }
-    .welcome__tab { left: 2.4rem; bottom: 2.4rem; }
+    .welcome__tab, .welcome__teaser { left: 2.4rem; bottom: 2.4rem; }
     .welcome:not(.is-open) .welcome__panel { visibility: hidden; transition: transform .45s ease, opacity .45s ease, visibility 0s .45s; }
     .welcome__panel { border-radius: .4rem; transform: translateY(2rem); opacity: 0; transition: transform .45s ease, opacity .45s ease; }
     .welcome.is-open .welcome__panel { transform: none; opacity: 1; }
   }
   /* phones: tab bottom-left, panel slides up from the bottom */
   @media (max-width: 749px) {
-    .welcome__tab { left: 1.2rem; bottom: 1.6rem; }
+    .welcome__tab, .welcome__teaser { left: 1.2rem; bottom: 1.6rem; }
+    .welcome__teaser { width: calc(100vw - 2.4rem); max-width: 32rem; }
+    .welcome__card { gap: 1.2rem; padding: 1.2rem 3.4rem 1.2rem 1.2rem; }
+    .welcome__card-mark { width: 4rem; height: 4rem; }
+    .welcome__card-crest { width: 2.1rem; }
+    .welcome__card-title { font-size: 1.3rem; letter-spacing: .08em; }
+    .welcome__card-text { font-size: 1.25rem; }
     .welcome__panel { position: fixed; left: 0; right: 0; bottom: 0; max-height: 88vh; overflow-y: auto; border-radius: 1.2rem 1.2rem 0 0; transform: translateY(105%); transition: transform .4s ease; }
     .welcome:not(.is-open) .welcome__panel { visibility: hidden; transition: transform .4s ease, visibility 0s .4s; }
     .welcome.is-open .welcome__panel { transform: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .welcome__panel, .welcome__tab { transition: none !important; } }
+  @media (prefers-reduced-motion: reduce) { .welcome__panel, .welcome__tab, .welcome__teaser { transition: none !important; } .welcome__card::before { animation: none !important; transform: scaleX(1) !important; } .welcome__card-arrow { animation: none !important; } .welcome__teaser { filter: none !important; } }
 </style>
 <script>
   (function () {
     var root = document.getElementById('HgfWelcome');
     if (!root) return;
-    var KEY_DONE = 'hgf-welcome-done', KEY_SHUT = 'hgf-welcome-closed-visit';
+    var KEY_DONE = 'hgf-welcome-done', KEY_SHUT = 'hgf-welcome-closed-visit', KEY_MINI = 'hgf-welcome-mini';
     try { localStorage.removeItem('hgf-welcome-closed'); } catch (e) {}
     var visit = { get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }, set: function (k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} } };
     var params = new URLSearchParams(location.search);
@@ -85,13 +123,16 @@
     }
     var mobile = window.matchMedia('(max-width: 749px)').matches;
     var tab = root.querySelector('.welcome__tab');
+    var card = root.querySelector('.welcome__card');
     var shown = false, done = false;
     root.hidden = false;
-    function open() { root.classList.add('is-open'); tab.setAttribute('aria-expanded', 'true'); }
+    if (visit.get(KEY_MINI)) root.classList.add('is-mini');
+    function open() { root.classList.add('is-open'); tab.setAttribute('aria-expanded', 'true'); card.setAttribute('aria-expanded', 'true'); }
     function close(remember) {
-      root.classList.remove('is-open'); tab.setAttribute('aria-expanded', 'false');
-      if (done) { setTimeout(function () { root.hidden = true; }, 450); } else if (remember) { tab.focus(); }
+      root.classList.remove('is-open'); tab.setAttribute('aria-expanded', 'false'); card.setAttribute('aria-expanded', 'false');
+      if (done) { setTimeout(function () { root.hidden = true; }, 450); } else if (remember) { (root.classList.contains('is-mini') ? tab : card).focus(); }
     }
+    function minimise() { root.classList.add('is-mini'); visit.set(KEY_MINI, '1'); tab.focus(); }
     function reveal() {
       if (shown) return; shown = true;
       tabWatch();
@@ -101,6 +142,8 @@
       upd();
     }
     tab.addEventListener('click', open);
+    card.addEventListener('click', open);
+    root.querySelector('.welcome__card-x').addEventListener('click', minimise);
     root.querySelector('.welcome__close').addEventListener('click', function () { close(true); });
     root.querySelector('.welcome__nothanks').addEventListener('click', function () { close(true); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('is-open')) close(true); });
@@ -134,7 +177,9 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Welcome to His Glory Forever" },
     { "type": "text", "id": "title", "label": "Heading", "default": "10% off your first order" },
     { "type": "text", "id": "text", "label": "Text", "default": "Join for the Weekly Verse, new releases and offers." },
-    { "type": "text", "id": "tab_label", "label": "Phone tab label", "default": "10% off" },
+    { "type": "text", "id": "teaser_title", "label": "Teaser card heading", "default": "10% off your first order" },
+    { "type": "text", "id": "teaser_text", "label": "Teaser card text", "default": "Sign up to get your code" },
+    { "type": "text", "id": "tab_label", "label": "Minimised pill label", "default": "10% off" },
     { "type": "text", "id": "no_thanks", "label": "No thanks label", "default": "No thanks" },
     { "type": "range", "id": "delay", "label": "Show after (seconds)", "min": 3, "max": 30, "step": 1, "default": 10 },
     { "type": "range", "id": "scroll", "label": "Or after scrolling (%)", "min": 10, "max": 90, "step": 5, "default": 40 }
