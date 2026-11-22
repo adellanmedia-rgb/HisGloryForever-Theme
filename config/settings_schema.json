@@ -231,6 +231,65 @@
         "label": "\"Made for you\" note",
         "info": "Shown in the cart and on product pages.",
         "default": "<p>Each piece is made for you after you order.</p>"
+      },
+      {
+        "type": "header",
+        "content": "Estimated arrival date"
+      },
+      {
+        "type": "paragraph",
+        "content": "Shows \"Order today, arrives …\" under Add to Cart. Dates are counted in business days (Monday to Friday), starting the next business day, and skip the holidays listed below."
+      },
+      {
+        "type": "checkbox",
+        "id": "arrival_enabled",
+        "label": "Show estimated arrival date",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "arrival_min_days",
+        "label": "Earliest arrival (business days)",
+        "default": 6
+      },
+      {
+        "type": "number",
+        "id": "arrival_max_days",
+        "label": "Latest arrival (business days)",
+        "default": 11
+      },
+      {
+        "type": "text",
+        "id": "arrival_extended_tag",
+        "label": "Product tag for a longer window",
+        "info": "Products with this tag use the longer window below (for example, items made by a slower supplier).",
+        "default": "arrival-extended"
+      },
+      {
+        "type": "number",
+        "id": "arrival_extended_min_days",
+        "label": "Longer window: earliest (business days)",
+        "default": 8
+      },
+      {
+        "type": "number",
+        "id": "arrival_extended_max_days",
+        "label": "Longer window: latest (business days)",
+        "default": 15
+      },
+      {
+        "type": "richtext",
+        "id": "made_for_you_note_extended",
+        "label": "\"Made for you\" note for tagged products",
+        "info": "Shown instead of the regular note on products with the tag above.",
+        "default": "<p>Made for you after you order · Ships free</p>"
+      },
+      {
+        "type": "textarea",
+        "id": "arrival_holidays",
+        "label": "Holidays to skip",
+        "info": "One date per line, as YYYY-MM-DD.",
+        "default": "2026-11-26\n2026-12-25\n2027-01-01\n2027-05-31\n2027-07-05\n2027-09-06\n2027-11-25\n2027-12-24\n2027-12-31"
       }
     ]
   },
