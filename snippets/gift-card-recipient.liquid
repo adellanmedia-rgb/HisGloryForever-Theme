@@ -1,0 +1,52 @@
+{%- comment -%}
+  Gift card recipient form. Render inside the product form on gift card products.
+  Uses Shopify's gift card recipient properties so the card is emailed to the recipient.
+{%- endcomment -%}
+<div class="gift-recipient" data-gift-recipient>
+  <label class="gift-recipient__toggle">
+    <input type="checkbox" name="properties[__shopify_send_gift_card_to_recipient]" value="on" data-gift-recipient-toggle>
+    <span>{{ 'products.gift_card.send_to_recipient' | t }}</span>
+  </label>
+  <div class="gift-recipient__fields" data-gift-recipient-fields hidden>
+    <div>
+      <label class="gift-recipient__label" for="GiftEmail-{{ section_id }}">{{ 'products.gift_card.recipient_email' | t }}</label>
+      <input class="field__input" type="email" id="GiftEmail-{{ section_id }}" name="properties[Recipient email]" autocomplete="off" disabled>
+    </div>
+    <div>
+      <label class="gift-recipient__label" for="GiftName-{{ section_id }}">{{ 'products.gift_card.recipient_name' | t }}</label>
+      <input class="field__input" type="text" id="GiftName-{{ section_id }}" name="properties[Recipient name]" autocomplete="off" disabled>
+    </div>
+    <div>
+      <label class="gift-recipient__label" for="GiftMessage-{{ section_id }}">{{ 'products.gift_card.message' | t }}</label>
+      <textarea class="field__input" id="GiftMessage-{{ section_id }}" name="properties[Message]" maxlength="200" aria-describedby="GiftMessageHelp-{{ section_id }}" disabled></textarea>
+      <p class="gift-recipient__help" id="GiftMessageHelp-{{ section_id }}">{{ 'products.gift_card.message_help' | t }}</p>
+    </div>
+    <div>
+      <label class="gift-recipient__label" for="GiftDate-{{ section_id }}">{{ 'products.gift_card.send_on' | t }}</label>
+      <input class="field__input" type="date" id="GiftDate-{{ section_id }}" name="properties[Send on]" pattern="\d{4}-\d{2}-\d{2}" aria-describedby="GiftDateHelp-{{ section_id }}" disabled>
+      <p class="gift-recipient__help" id="GiftDateHelp-{{ section_id }}">{{ 'products.gift_card.send_on_help' | t }}</p>
+    </div>
+    <input type="hidden" name="properties[__shopify_offset]" value="" data-gift-offset disabled>
+  </div>
+</div>
+<script>
+  (function () {
+    var root = document.currentScript.previousElementSibling;
+    var toggle = root.querySelector('[data-gift-recipient-toggle]');
+    var fields = root.querySelector('[data-gift-recipient-fields]');
+    var inputs = fields.querySelectorAll('input, textarea');
+    var date = fields.querySelector('input[type="date"]');
+    var today = new Date();
+    var max = new Date(today.getTime() + 90 * 86400000);
+    var fmt = function (d) { return d.toISOString().slice(0, 10); };
+    date.min = fmt(today);
+    date.max = fmt(max);
+    root.querySelector('[data-gift-offset]').value = new Date().getTimezoneOffset().toString();
+    toggle.addEventListener('change', function () {
+      var on = toggle.checked;
+      fields.hidden = !on;
+      inputs.forEach(function (el) { el.disabled = !on; });
+      fields.querySelector('input[type="email"]').required = on;
+    });
+  })();
+</script>

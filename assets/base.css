@@ -2610,3 +2610,13 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
 /* Estimated arrival line (product page) */
 .made-for-you-note__text { display: flex; flex-direction: column; gap: 0.2rem; }
 .arrival-estimate { margin: 0; font-weight: 600; color: var(--fg, currentColor); }
+
+/* ---------- Gift card recipient form ---------- */
+.gift-recipient { margin: 0 0 2rem; }
+.gift-recipient__toggle { display: flex; align-items: center; gap: 1rem; font-size: 1.4rem; cursor: pointer; }
+.gift-recipient__toggle input { width: 1.8rem; height: 1.8rem; accent-color: var(--fg, var(--color-navy)); margin: 0; }
+.gift-recipient__fields { display: grid; gap: 1.2rem; margin-top: 1.6rem; }
+.gift-recipient__fields[hidden] { display: none; }
+.gift-recipient__label { display: block; font-size: 1.2rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem; }
+.gift-recipient textarea.field__input { min-height: 9rem; }
+.gift-recipient__help { font-size: 1.2rem; color: var(--fg-muted); margin: 0.4rem 0 0; }

@@ -104,6 +104,15 @@
     "gallery": "Product images",
     "arrival": {
       "order_today": "Order today, arrives [range]"
+    },
+    "gift_card": {
+      "send_to_recipient": "Send as a gift to someone",
+      "recipient_email": "Recipient email",
+      "recipient_name": "Recipient name",
+      "message": "Message (optional)",
+      "send_on": "Send on (optional)",
+      "send_on_help": "Leave blank to send right after checkout.",
+      "message_help": "Up to 200 characters."
     }
   },
   "collections": {

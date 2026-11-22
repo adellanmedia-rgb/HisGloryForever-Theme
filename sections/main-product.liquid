@@ -161,6 +161,8 @@
           <p class="product__model-note">{{ m.model_info }}</p>
         {%- endif -%}
 
+        {%- if product.gift_card? -%}{%- render 'gift-card-recipient', section_id: section.id -%}{%- endif -%}
+
         <div class="product__buttons">
           <button
             type="submit"
@@ -198,7 +200,14 @@
           assign product_note = settings.made_for_you_note
         endif
       -%}
-      {%- if product_note != blank or settings.arrival_enabled -%}
+      {%- if product.gift_card? -%}
+        {%- if s.gift_card_note != blank -%}
+          <div class="made-for-you-note product__made-for-you">
+            {% render 'icon', icon: 'made' %}
+            <div class="made-for-you-note__text rte">{{ s.gift_card_note }}</div>
+          </div>
+        {%- endif -%}
+      {%- elsif product_note != blank or settings.arrival_enabled -%}
         <div class="made-for-you-note product__made-for-you">
           {% render 'icon', icon: 'made' %}
           <div class="made-for-you-note__text">
@@ -227,7 +236,7 @@
         {%- endif -%}
 
         {%- if product.description != blank -%}
-          <details class="accordion__item"{% if s.open_meaning == false %} open{% endif %}>
+          <details class="accordion__item"{% if s.open_meaning == false or product.gift_card? %} open{% endif %}>
             <summary>{{ 'products.description' | t }} {% render 'icon', icon: 'plus', class: 'icon--small icon-plus' %}</summary>
             <div class="accordion__content rte">{{ story_rest }}</div>
           </details>
@@ -246,7 +255,7 @@
           </details>
         {%- endif -%}
 
-        {%- if s.shipping_text != blank -%}
+        {%- if s.shipping_text != blank and product.gift_card? == false -%}
           <details class="accordion__item">
             <summary>{{ 'products.shipping' | t }} {% render 'icon', icon: 'plus', class: 'icon--small icon-plus' %}</summary>
             <div class="accordion__content rte">{{ s.shipping_text }}</div>
@@ -311,6 +320,13 @@
     { "type": "page", "id": "size_guide_page", "label": "Size guide page", "info": "Opens in a pop-up from the size selector. Use your Fit Guide page." },
     { "type": "checkbox", "id": "show_wishlist", "label": "Show wishlist button", "default": true },
     { "type": "checkbox", "id": "open_meaning", "label": "Open \"The meaning behind this design\" by default", "default": true },
+    {
+      "type": "richtext",
+      "id": "gift_card_note",
+      "label": "Gift card delivery note",
+      "info": "Shown on gift card products in place of the delivery estimate.",
+      "default": "<p><strong>Delivered by email.</strong> Sent right after checkout, or on the date you choose.</p>"
+    },
     {
       "type": "richtext",
       "id": "shipping_text",
