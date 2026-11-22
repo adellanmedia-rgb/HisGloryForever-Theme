@@ -21,7 +21,7 @@
     <button type="button" class="welcome__card" aria-controls="HgfWelcomePanel" aria-expanded="false">
       <span class="welcome__card-mark" aria-hidden="true">{% render 'crest', class: 'welcome__card-crest' %}</span>
       <span class="welcome__card-body">
-        <span class="welcome__card-title">{{ section.settings.teaser_title }}</span>
+        <span class="welcome__card-title">{%- assign hgf_t = section.settings.teaser_title | split: ' ' -%}{%- if hgf_t.first contains '%' -%}<span class="welcome__num">{{ hgf_t.first }}</span>{{ section.settings.teaser_title | remove_first: hgf_t.first }}{%- else -%}{{ section.settings.teaser_title }}{%- endif -%}</span>
         <span class="welcome__card-text"><span class="welcome__card-link">{{ section.settings.teaser_text }}</span> <span class="welcome__card-arrow" aria-hidden="true">&rarr;</span></span>
       </span>
     </button>
@@ -29,7 +29,7 @@
       <svg viewBox="0 0 16 16" width="10" height="10" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
     </button>
   </div>
-  <button type="button" class="welcome__tab" aria-controls="HgfWelcomePanel" aria-expanded="false">{{ section.settings.tab_label }}</button>
+  <button type="button" class="welcome__tab" aria-controls="HgfWelcomePanel" aria-expanded="false">{%- assign hgf_p = section.settings.tab_label | split: ' ' -%}{%- if hgf_p.first contains '%' -%}<span class="welcome__num">{{ hgf_p.first }}</span>{{ section.settings.tab_label | remove_first: hgf_p.first }}{%- else -%}{{ section.settings.tab_label }}{%- endif -%}</button>
   <div class="welcome__panel" id="HgfWelcomePanel" role="dialog" aria-modal="false" aria-labelledby="HgfWelcomeTitle">
     <button type="button" class="welcome__close" aria-label="Close">
       <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
@@ -79,6 +79,7 @@
   .welcome__card-arrow { display: inline-block; color: #B08D3C; animation: hgfNudge 4s ease-in-out 2s infinite; }
   .welcome__card-x { position: absolute; top: .5rem; right: .5rem; background: none; border: 0; color: rgba(19,35,63,.45); padding: .8rem; line-height: 0; cursor: pointer; transition: color .2s ease; }
   .welcome__card-x:hover { color: var(--color-navy, #13233F); }
+  .welcome__num { font-size: 1.28em; line-height: 0; letter-spacing: .04em; }
   @keyframes hgfLine { to { transform: scaleX(1); } }
   @keyframes hgfNudge { 0%, 80%, 100% { transform: translateX(0); } 88% { transform: translateX(.5rem); } 94% { transform: translateX(0); } }
   /* desktop: corner card above the chat bubble */
