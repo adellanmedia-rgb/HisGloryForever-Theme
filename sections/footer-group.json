@@ -116,7 +116,9 @@
       "block_order": [
         "forms_inline_welcome"
       ],
-      "settings": {}
+      "settings": {
+        "delay": 3
+      }
     }
   },
   "order": [
