@@ -14,7 +14,7 @@
     assign threshold_money = threshold | money_without_trailing_zeros
     assign remaining_money = remaining | money_without_trailing_zeros
   -%}
-  <div class="free-shipping" data-free-shipping>
+  <div class="free-shipping" data-free-shipping{% if cart.item_count > 0 and cart.requires_shipping == false %} hidden{% endif %}>
     <p class="free-shipping__text" data-free-shipping-text>
       {%- if cart.item_count == 0 -%}
         {{ 'general.free_shipping.intro' | t: amount: threshold_money }}

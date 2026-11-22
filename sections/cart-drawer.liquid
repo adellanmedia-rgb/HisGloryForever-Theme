@@ -45,8 +45,8 @@
         <span>{{ cart.total_price | money_with_currency }}</span>
       </div>
       <p class="cart-drawer__note">{{ 'sections.cart.taxes_shipping' | t }}</p>
-      {%- if settings.made_for_you_note != blank -%}
-        <div class="made-for-you-note">
+      {%- if settings.made_for_you_note != blank -%}{%- assign gift_only = false -%}{%- if cart.item_count > 0 and cart.requires_shipping == false -%}{%- assign gift_only = true -%}{%- endif -%}
+        <div class="made-for-you-note" data-shipping-note{% if gift_only %} hidden{% endif %}>
           {% render 'icon', icon: 'made' %}
           <div class="rte">{{ settings.made_for_you_note }}</div>
         </div>

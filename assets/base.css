@@ -2620,3 +2620,6 @@ input:checked + .facet__option .facet__swatch { box-shadow: 0 0 0 2px var(--colo
 .gift-recipient__label { display: block; font-size: 1.2rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem; }
 .gift-recipient textarea.field__input { min-height: 9rem; }
 .gift-recipient__help { font-size: 1.2rem; color: var(--fg-muted); margin: 0.4rem 0 0; }
+
+/* Gift-card-only carts: hide shipping messages */
+.free-shipping[hidden], .made-for-you-note[hidden] { display: none; }
