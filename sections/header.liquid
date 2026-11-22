@@ -52,7 +52,7 @@
                       {%- endfor -%}
                     {%- else -%}
                       <div class="mega__column">
-                        <a href="{{ link.url }}" class="mega__heading">{{ 'sections.header.shop_all' | t: title: link.title }}</a>
+                        <a href="{{ link.url }}" class="mega__heading">{%- assign title_lower = link.title | downcase -%}{%- if title_lower == 'shop' -%}{{ link.title | escape }}{%- else -%}{{ 'sections.header.shop_all' | t: title: link.title }}{%- endif -%}</a>
                         <ul class="mega__list" role="list">
                           {%- for child in link.links -%}
                             <li><a href="{{ child.url }}">{{ child.title | escape }}</a></li>
@@ -162,7 +162,7 @@
             <details>
               <summary>{{ link.title | escape }} {% render 'icon', icon: 'plus', class: 'icon--small icon-plus' %}</summary>
               <ul class="menu-drawer__sublist" role="list">
-                <li><a href="{{ link.url }}" class="menu-drawer__subheading">{{ 'sections.header.shop_all' | t: title: link.title }}</a></li>
+                <li><a href="{{ link.url }}" class="menu-drawer__subheading">{%- assign title_lower = link.title | downcase -%}{%- if title_lower == 'shop' -%}{{ link.title | escape }}{%- else -%}{{ 'sections.header.shop_all' | t: title: link.title }}{%- endif -%}</a></li>
                 {%- for child in link.links -%}
                   <li><a href="{{ child.url }}"{% if child.links != blank %} class="menu-drawer__subheading"{% endif %}>{{ child.title | escape }}</a></li>
                   {%- for grandchild in child.links -%}
