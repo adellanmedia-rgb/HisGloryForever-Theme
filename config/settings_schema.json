@@ -288,7 +288,7 @@
         "type": "textarea",
         "id": "arrival_holidays",
         "label": "Holidays to skip",
-        "info": "One date per line, as YYYY-MM-DD.",
+        "info": "One date per line, written as YYYY-MM-DD.",
         "default": "2026-11-26\n2026-12-25\n2027-01-01\n2027-05-31\n2027-07-05\n2027-09-06\n2027-11-25\n2027-12-24\n2027-12-31"
       }
     ]
