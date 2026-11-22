@@ -101,7 +101,10 @@
     "fit_care": "Fit & care",
     "shipping": "Shipping & returns",
     "shop_design": "Shop this design",
-    "gallery": "Product images"
+    "gallery": "Product images",
+    "arrival": {
+      "order_today": "Order today, arrives [range]"
+    }
   },
   "collections": {
     "filter": "Filter",
