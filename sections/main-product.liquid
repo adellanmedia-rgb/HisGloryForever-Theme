@@ -182,10 +182,31 @@
         <p class="cart-error" data-form-error role="alert" hidden></p>
       {%- endform -%}
 
-      {%- if settings.made_for_you_note != blank -%}
+      {%- liquid
+        assign arrival_tag = settings.arrival_extended_tag | strip
+        assign is_extended = false
+        if arrival_tag != blank and product.tags contains arrival_tag
+          assign is_extended = true
+        endif
+        if is_extended
+          assign arrival_min = settings.arrival_extended_min_days
+          assign arrival_max = settings.arrival_extended_max_days
+          assign product_note = settings.made_for_you_note_extended
+        else
+          assign arrival_min = settings.arrival_min_days
+          assign arrival_max = settings.arrival_max_days
+          assign product_note = settings.made_for_you_note
+        endif
+      -%}
+      {%- if product_note != blank or settings.arrival_enabled -%}
         <div class="made-for-you-note product__made-for-you">
           {% render 'icon', icon: 'made' %}
-          <div class="rte">{{ settings.made_for_you_note }}</div>
+          <div class="made-for-you-note__text">
+            {% render 'arrival-estimate', min_days: arrival_min, max_days: arrival_max %}
+            {%- if product_note != blank -%}
+              <div class="rte">{{ product_note }}</div>
+            {%- endif -%}
+          </div>
         </div>
       {%- endif -%}
 
