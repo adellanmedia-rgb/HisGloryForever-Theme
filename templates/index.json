@@ -56,6 +56,7 @@
             "text": "Luke 2:10",
             "button_1_label": "Shop Christmas",
             "button_1_link": "shopify://collections/christmas",
+            "button_2_label": "",
             "image_1": "shopify://shop_images/HGF-Christmas-Hero-Desktop-v2.jpg",
             "image_mobile": "shopify://shop_images/HGF-Christmas-Hero-Mobile-v2.jpg"
           }
