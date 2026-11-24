@@ -34,7 +34,7 @@
         assign ph_b = forloop.index | plus: 1 | modulo: 3 | plus: 1
       -%}
       <div
-        class="slide slide--{{ b.layout }} slide--text-{{ b.text_position }}{% if b.image_mobile != blank %} slide--has-mobile{% endif %}{% if forloop.first %} is-active{% endif %}"
+        class="slide slide--{{ b.layout }} slide--text-{{ b.text_position }}{% if b.image_mobile != blank %} slide--has-mobile{% endif %}{% if b.tint == 'fade' %} slide--tint-fade{% endif %}{% if forloop.first %} is-active{% endif %}"
         role="group"
         aria-roledescription="slide"
         aria-label="{{ forloop.index }} / {{ slide_count }}"
@@ -197,6 +197,17 @@
             { "value": "bottom", "label": "Bottom" }
           ],
           "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "tint",
+          "label": "Darkening",
+          "options": [
+            { "value": "section", "label": "Even tint (uses the section setting)" },
+            { "value": "fade", "label": "Soft fade behind the text only" }
+          ],
+          "default": "section",
+          "info": "Use the fade for evening or darker photos so faces and lights stay bright."
         },
         { "type": "text", "id": "eyebrow", "label": "Small label above heading", "info": "Not used in the two-panel layout." },
         { "type": "text", "id": "heading", "label": "Heading (left side in two-panel layout)", "default": "Not for us. For His glory." },
