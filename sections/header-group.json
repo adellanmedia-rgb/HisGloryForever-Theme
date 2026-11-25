@@ -5,18 +5,71 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
-        "message-1": {
+        "bf-offer": {
+          "type": "message",
+          "settings": {
+            "text": "Black Friday: 15% Off Everything + Free U.S. Shipping",
+            "link": "",
+            "link_label": "",
+            "details": "<p>15% off is applied automatically at checkout, no code needed. Ends Monday, Nov 30, 2026 at 11:59 PM ET. Free standard shipping on every U.S. order. Gift cards excluded. <a href=\"/pages/black-friday\" title=\"Black Friday terms\">See full terms</a></p>",
+            "details_label": "Details",
+            "starts_at": "",
+            "ends_at": "2026-11-30 23:59:59 -0500"
+          }
+        },
+        "bf-deadline": {
+          "type": "message",
+          "settings": {
+            "text": "Ends Monday, Nov 30 at Midnight ET",
+            "link": "/collections/all",
+            "link_label": "Shop Now",
+            "details": "",
+            "details_label": "Details",
+            "starts_at": "",
+            "ends_at": "2026-11-30 23:59:59 -0500"
+          }
+        },
+        "free-shipping": {
+          "type": "message",
+          "settings": {
+            "text": "Free Shipping on Every U.S. Order",
+            "link": "",
+            "link_label": "",
+            "details": "<p>Free standard shipping on every U.S. order, no minimum. Each piece is made for you after you order and ships within 2 to 5 business days. <a href=\"/policies/shipping-policy\" title=\"Shipping policy\">Shipping policy</a></p>",
+            "details_label": "Details",
+            "starts_at": "2026-12-01 00:00:00 -0500",
+            "ends_at": ""
+          }
+        },
+        "christmas-cutoff": {
+          "type": "message",
+          "settings": {
+            "text": "Order by Dec 10 for Christmas Delivery",
+            "link": "/collections/all",
+            "link_label": "Shop Now",
+            "details": "",
+            "details_label": "Details",
+            "starts_at": "2026-12-01 00:00:00 -0500",
+            "ends_at": "2026-12-10 23:59:59 -0500"
+          }
+        },
+        "made-for-you": {
           "type": "message",
           "settings": {
             "text": "Each piece is made for you after you order.",
-            "link": ""
+            "link": "",
+            "link_label": "",
+            "details": "",
+            "details_label": "Details",
+            "starts_at": "2026-12-11 00:00:00 -0500",
+            "ends_at": ""
           }
         }
       },
-      "block_order": ["message-1"],
+      "block_order": ["bf-offer", "bf-deadline", "free-shipping", "christmas-cutoff", "made-for-you"],
       "settings": {
         "color_scheme": "navy",
-        "show_free_shipping": true,
+        "show_free_shipping": false,
         "interval": 5
       }
     },

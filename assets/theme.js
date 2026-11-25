@@ -138,14 +138,43 @@
       const slides = $$('.announcement-bar__slide', wrap);
       if (!slides.length) return;
       if (!slides.some((s) => s.classList.contains('is-active'))) slides[0].classList.add('is-active');
+
+      // "Details" fine print: opening it pauses the rotation until it is closed.
+      let detailsOpen = false;
+      const closeDetails = () => {
+        $$('[data-announcement-details-toggle]', wrap).forEach((btn) => {
+          btn.setAttribute('aria-expanded', 'false');
+          const panel = document.getElementById(btn.getAttribute('aria-controls'));
+          if (panel) panel.hidden = true;
+        });
+        detailsOpen = false;
+      };
+      $$('[data-announcement-details-toggle]', wrap).forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const open = btn.getAttribute('aria-expanded') !== 'true';
+          closeDetails();
+          if (open) {
+            btn.setAttribute('aria-expanded', 'true');
+            const panel = document.getElementById(btn.getAttribute('aria-controls'));
+            if (panel) panel.hidden = false;
+            detailsOpen = true;
+          }
+        });
+      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && detailsOpen) closeDetails(); });
+
       if (slides.length < 2) return;
       const interval = Number(wrap.dataset.interval) || 5000;
       let index = slides.findIndex((s) => s.classList.contains('is-active'));
-      let paused = false;
-      wrap.addEventListener('mouseenter', () => (paused = true));
-      wrap.addEventListener('mouseleave', () => (paused = false));
+      let hovered = false;
+      let touchPauseUntil = 0;
+      wrap.addEventListener('mouseenter', () => (hovered = true));
+      wrap.addEventListener('mouseleave', () => (hovered = false));
+      wrap.addEventListener('touchstart', () => (touchPauseUntil = Date.now() + 8000), { passive: true });
+      wrap.addEventListener('focusin', () => (hovered = true));
+      wrap.addEventListener('focusout', () => (hovered = false));
       setInterval(() => {
-        if (paused || document.hidden) return;
+        if (hovered || detailsOpen || Date.now() < touchPauseUntil || document.hidden) return;
         slides[index].classList.remove('is-active');
         index = (index + 1) % slides.length;
         slides[index].classList.add('is-active');

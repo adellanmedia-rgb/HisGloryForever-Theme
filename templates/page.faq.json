@@ -36,7 +36,7 @@
           "type": "question",
           "settings": {
             "question": "Do you offer free shipping?",
-            "answer": "<p>Yes, on orders over $100 within the U.S.</p>"
+            "answer": "<p>Yes, standard shipping is free on every order within the U.S.</p>"
           }
         },
         "g2": {

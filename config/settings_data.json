@@ -18,7 +18,8 @@
       }
     },
     "content_for_index": [],
-    "made_for_you_note": "<p>Made for you after you order · Free U.S. shipping over $100, $6 under</p>",
+    "free_shipping_enabled": false,
+    "made_for_you_note": "<p>Made for you after you order · Free U.S. shipping on every order</p>",
     "made_for_you_note_extended": "<p>Made for you after you order · Ships free</p>"
   },
   "presets": {

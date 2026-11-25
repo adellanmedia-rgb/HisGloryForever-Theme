@@ -1,39 +1,117 @@
+{%- comment -%}
+  Announcement bar.
+  One bar on every screen size; messages rotate (pauses on hover, tap, or while Details is open).
+  Each message can be scheduled with "Show from" / "Show until" so promos switch on and off by themselves.
+  Dates use the format 2026-11-30 23:59:59 -0500 (the -0500 is Eastern Time).
+{%- endcomment -%}
 {%- liquid
-  assign slide_count = section.blocks.size
+  assign now_ts = 'now' | date: '%s' | plus: 0
   assign fs_shown = false
   if section.settings.show_free_shipping and settings.free_shipping_enabled and settings.free_shipping_threshold > 0
     assign fs_shown = true
-    assign slide_count = slide_count | plus: 1
   endif
 -%}
-{%- if slide_count > 0 -%}
+{%- if section.blocks.size > 0 or fs_shown -%}
   <div class="announcement-bar scheme-{{ section.settings.color_scheme }}" role="region" aria-label="{{ 'sections.announcement.label' | t }}" {{ section.shopify_attributes }}>
     <div class="page-width announcement-bar__inner">
-      <div class="announcement-bar__slides" data-announcement data-interval="{{ section.settings.interval | times: 1000 }}">
+      <div class="announcement-bar__slides" id="Announcements-{{ section.id }}" data-announcement data-interval="{{ section.settings.interval | times: 1000 }}">
+        {%- assign active_set = false -%}
         {%- if fs_shown -%}
           <div class="announcement-bar__slide is-active">
             {% render 'free-shipping-bar', show_track: false %}
           </div>
+          {%- assign active_set = true -%}
         {%- endif -%}
         {%- for block in section.blocks -%}
-          <p class="announcement-bar__slide{% if forloop.first and fs_shown == false %} is-active{% endif %}" {{ block.shopify_attributes }}>
-            {%- if block.settings.link != blank -%}
-              <a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
-            {%- else -%}
-              {{ block.settings.text }}
+          {%- liquid
+            assign b_start = 0
+            assign b_end = 0
+            if block.settings.starts_at != blank
+              assign b_start = block.settings.starts_at | date: '%s' | plus: 0
+            endif
+            if block.settings.ends_at != blank
+              assign b_end = block.settings.ends_at | date: '%s' | plus: 0
+            endif
+            assign b_live = false
+            if b_start <= now_ts
+              if b_end == 0 or b_end > now_ts
+                assign b_live = true
+              endif
+            endif
+            if request.design_mode
+              assign b_live = true
+            endif
+          -%}
+          <div
+            class="announcement-bar__slide{% if b_live and active_set == false %} is-active{% endif %}"
+            data-start="{{ b_start }}"
+            data-end="{{ b_end }}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if b_live and active_set == false -%}{%- assign active_set = true -%}{%- endif -%}
+            <p class="announcement-bar__text">
+              {%- if block.settings.link != blank and block.settings.link_label == blank -%}
+                <a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+              {%- else -%}
+                <span>{{ block.settings.text }}</span>
+              {%- endif -%}
+              {%- if block.settings.link != blank and block.settings.link_label != blank -%}
+                <span class="announcement-bar__sep" aria-hidden="true">·</span>
+                <a class="announcement-bar__cta" href="{{ block.settings.link }}">{{ block.settings.link_label }}</a>
+              {%- endif -%}
+              {%- if block.settings.details != blank -%}
+                <span class="announcement-bar__sep" aria-hidden="true">·</span>
+                <button
+                  type="button"
+                  class="announcement-bar__details-toggle"
+                  aria-expanded="false"
+                  aria-controls="AnnouncementDetails-{{ block.id }}"
+                  data-announcement-details-toggle
+                >
+                  {{- block.settings.details_label | default: 'Details' -}}
+                </button>
+              {%- endif -%}
+            </p>
+            {%- if block.settings.details != blank -%}
+              <div class="announcement-bar__details rte" id="AnnouncementDetails-{{ block.id }}" hidden>
+                {{ block.settings.details }}
+              </div>
             {%- endif -%}
-          </p>
+          </div>
         {%- endfor -%}
       </div>
     </div>
   </div>
+  {%- unless request.design_mode -%}
+    <script>
+      (function () {
+        var wrap = document.getElementById('Announcements-{{ section.id }}');
+        if (!wrap) return;
+        var now = Math.floor(Date.now() / 1000);
+        var slides = Array.prototype.slice.call(wrap.querySelectorAll('.announcement-bar__slide'));
+        slides.forEach(function (s) {
+          var start = Number(s.getAttribute('data-start') || 0);
+          var end = Number(s.getAttribute('data-end') || 0);
+          var live = start <= now && (end === 0 || end > now);
+          if (!live) s.remove();
+        });
+        var left = wrap.querySelectorAll('.announcement-bar__slide');
+        if (!left.length) {
+          var bar = wrap.closest('.announcement-bar');
+          if (bar) bar.remove();
+          return;
+        }
+        if (!wrap.querySelector('.announcement-bar__slide.is-active')) left[0].classList.add('is-active');
+      })();
+    </script>
+  {%- endunless -%}
 {%- endif -%}
 
 {% schema %}
 {
   "name": "Announcement bar",
   "class": "section-announcement",
-  "max_blocks": 4,
+  "max_blocks": 8,
   "settings": [
     {
       "type": "select",
@@ -50,8 +128,8 @@
       "type": "checkbox",
       "id": "show_free_shipping",
       "label": "Show free-shipping progress",
-      "info": "Updates live as the cart changes. The amount is set in Theme settings > Cart and shipping.",
-      "default": true
+      "info": "Only used when Theme settings > Cart and shipping has a free-shipping minimum turned on.",
+      "default": false
     },
     {
       "type": "range",
@@ -70,7 +148,13 @@
       "name": "Message",
       "settings": [
         { "type": "text", "id": "text", "label": "Text", "default": "Each piece is made for you after you order." },
-        { "type": "url", "id": "link", "label": "Link" }
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "text", "id": "link_label", "label": "Link label", "info": "For example \"Shop Now\". Leave blank to make the whole message the link." },
+        { "type": "richtext", "id": "details", "label": "Details (fine print)", "info": "Shows a \"Details\" button that opens this text under the bar." },
+        { "type": "text", "id": "details_label", "label": "Details button label", "default": "Details" },
+        { "type": "header", "content": "Schedule" },
+        { "type": "text", "id": "starts_at", "label": "Show from", "info": "Optional. Format: 2026-11-24 00:00:00 -0500 (-0500 = Eastern Time)." },
+        { "type": "text", "id": "ends_at", "label": "Show until", "info": "Optional. Format: 2026-11-30 23:59:59 -0500 (-0500 = Eastern Time)." }
       ]
     }
   ],
