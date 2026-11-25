@@ -14,18 +14,43 @@
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
     {%- endif -%}
 
+    {%- liquid
+      assign hgf_title = page_title
+      assign hgf_description = page_description
+      if request.page_type == 'index'
+        assign hgf_now = 'now' | date: '%s' | plus: 0
+        assign hgf_sale_end = 0
+        if settings.home_sale_seo_ends_at != blank
+          assign hgf_sale_end = settings.home_sale_seo_ends_at | date: '%s' | plus: 0
+        endif
+        if settings.home_sale_seo_title != blank and hgf_sale_end > hgf_now
+          assign hgf_title = settings.home_sale_seo_title
+          if settings.home_sale_seo_description != blank
+            assign hgf_description = settings.home_sale_seo_description
+          endif
+        else
+          if settings.home_seo_title != blank
+            assign hgf_title = settings.home_seo_title
+          endif
+          if settings.home_seo_description != blank
+            assign hgf_description = settings.home_seo_description
+          endif
+        endif
+      endif
+    -%}
+
     <title>
-      {{ page_title }}
+      {{ hgf_title }}
       {%- if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags.first }}{% endif -%}
       {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      {%- unless hgf_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}">
+    {% if hgf_description %}
+      <meta name="description" content="{{ hgf_description | escape }}">
     {% endif %}
 
-    {% render 'meta-tags' %}
+    {% render 'meta-tags', title: hgf_title, description: hgf_description %}
     {{ 'cinzel-600.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
     {% render 'css-variables' %}
 

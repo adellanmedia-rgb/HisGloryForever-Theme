@@ -313,5 +313,18 @@
         "info": "Shown when your store is shared on social media or in messages. 1200 × 628px recommended."
       }
     ]
+  },
+  {
+    "name": "Homepage SEO",
+    "settings": [
+      { "type": "paragraph", "content": "Title and description shown in Google and in shared links for the homepage. Leave blank to use Online Store > Preferences." },
+      { "type": "text", "id": "home_seo_title", "label": "Homepage title", "info": "About 50–60 characters." },
+      { "type": "textarea", "id": "home_seo_description", "label": "Homepage description", "info": "About 140–155 characters." },
+      { "type": "header", "content": "Sale version" },
+      { "type": "paragraph", "content": "Used instead of the above until the end date, then switches back on its own." },
+      { "type": "text", "id": "home_sale_seo_title", "label": "Sale title" },
+      { "type": "textarea", "id": "home_sale_seo_description", "label": "Sale description" },
+      { "type": "text", "id": "home_sale_seo_ends_at", "label": "Sale version ends", "info": "Format: 2026-11-30 23:59:59 -0500 (-0500 = Eastern Time)." }
+    ]
   }
 ]
