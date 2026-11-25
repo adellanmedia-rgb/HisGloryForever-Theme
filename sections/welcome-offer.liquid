@@ -4,32 +4,62 @@
   The sign-up card opens only when the teaser or pill is tapped (phones: as a bottom panel). Never on cart/checkout,
   never for logged-in customers or visitors arriving from email. Closing only closes the card (the tab stays);
   signed up = never again. Add ?welcome=preview to any URL to open it right away (testing).
+  Promo mode: while a promo is scheduled (Promo card settings), the same card advertises the sale instead,
+  links to the promo page, and the sign-up offer is hidden. It switches back on its own when the promo ends.
 {%- endcomment -%}
 {%- liquid
+  assign now_ts = 'now' | date: '%s' | plus: 0
+  assign promo_start = 0
+  assign promo_end = 0
+  if section.settings.promo_starts_at != blank
+    assign promo_start = section.settings.promo_starts_at | date: '%s' | plus: 0
+  endif
+  if section.settings.promo_ends_at != blank
+    assign promo_end = section.settings.promo_ends_at | date: '%s' | plus: 0
+  endif
+  assign promo_configured = false
+  if section.settings.promo_title != blank and promo_end > 0
+    assign promo_configured = true
+  endif
+  assign promo_live = false
+  if promo_configured and promo_start <= now_ts and promo_end > now_ts
+    assign promo_live = true
+  endif
+
   assign hide = false
-  if customer
+  if customer and promo_live == false
     assign hide = true
   endif
   if template.name == 'cart' or template.name == 'password' or request.design_mode
     assign hide = true
   endif
   assign app_blocks = section.blocks | where: 'type', '@app'
+  assign has_form = true
+  if app_blocks.size == 0
+    assign has_form = false
+  endif
 -%}
-{%- unless hide or app_blocks.size == 0 -%}
-<div class="welcome" id="HgfWelcome" hidden data-delay="{{ section.settings.delay }}" data-scroll="{{ section.settings.scroll }}">
+{%- if hide == false and has_form or hide == false and promo_configured -%}
+<div class="welcome" id="HgfWelcome" hidden data-delay="{{ section.settings.delay }}" data-scroll="{{ section.settings.scroll }}"
+  data-promo-start="{{ promo_start }}" data-promo-end="{{ promo_end }}" data-promo-link="{{ section.settings.promo_link | default: '/collections/all' }}"
+  data-has-form="{{ has_form }}" data-customer="{% if customer %}true{% else %}false{% endif %}">
   <div class="welcome__teaser">
     <button type="button" class="welcome__card" aria-controls="HgfWelcomePanel" aria-expanded="false">
       <span class="welcome__card-mark" aria-hidden="true">{% render 'crest', class: 'welcome__card-crest' %}</span>
       <span class="welcome__card-body">
-        <span class="welcome__card-title">{%- assign hgf_t = section.settings.teaser_title | split: ' ' -%}{%- if hgf_t.first contains '%' -%}<span class="welcome__num">{{ hgf_t.first }}</span>{{ section.settings.teaser_title | remove_first: hgf_t.first }}{%- else -%}{{ section.settings.teaser_title }}{%- endif -%}</span>
-        <span class="welcome__card-text"><span class="welcome__card-link">{{ section.settings.teaser_text }}</span> <span class="welcome__card-arrow" aria-hidden="true">&rarr;</span></span>
+        <span class="welcome__card-title" data-mode="welcome">{%- assign hgf_t = section.settings.teaser_title | split: ' ' -%}{%- if hgf_t.first contains '%' -%}<span class="welcome__num">{{ hgf_t.first }}</span>{{ section.settings.teaser_title | remove_first: hgf_t.first }}{%- else -%}{{ section.settings.teaser_title }}{%- endif -%}</span>
+        <span class="welcome__card-text" data-mode="welcome"><span class="welcome__card-link">{{ section.settings.teaser_text }}</span> <span class="welcome__card-arrow" aria-hidden="true">&rarr;</span></span>
+        {%- if promo_configured -%}
+          <span class="welcome__card-title" data-mode="promo" hidden>{%- assign hgf_pt = section.settings.promo_title | split: ' ' -%}{%- if hgf_pt.first contains '%' -%}<span class="welcome__num">{{ hgf_pt.first }}</span>{{ section.settings.promo_title | remove_first: hgf_pt.first }}{%- else -%}{{ section.settings.promo_title }}{%- endif -%}</span>
+          <span class="welcome__card-text" data-mode="promo" hidden><span class="welcome__card-link">{{ section.settings.promo_text }}</span> <span class="welcome__card-arrow" aria-hidden="true">&rarr;</span></span>
+        {%- endif -%}
       </span>
     </button>
     <button type="button" class="welcome__card-x" aria-label="Minimise offer">
       <svg viewBox="0 0 16 16" width="10" height="10" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
     </button>
   </div>
-  <button type="button" class="welcome__tab" aria-controls="HgfWelcomePanel" aria-expanded="false">{%- assign hgf_p = section.settings.tab_label | split: ' ' -%}{%- if hgf_p.first contains '%' -%}<span class="welcome__num">{{ hgf_p.first }}</span>{{ section.settings.tab_label | remove_first: hgf_p.first }}{%- else -%}{{ section.settings.tab_label }}{%- endif -%}</button>
+  <button type="button" class="welcome__tab" aria-controls="HgfWelcomePanel" aria-expanded="false"><span data-mode="welcome">{%- assign hgf_p = section.settings.tab_label | split: ' ' -%}{%- if hgf_p.first contains '%' -%}<span class="welcome__num">{{ hgf_p.first }}</span>{{ section.settings.tab_label | remove_first: hgf_p.first }}{%- else -%}{{ section.settings.tab_label }}{%- endif -%}</span>{%- if promo_configured -%}<span data-mode="promo" hidden>{%- assign hgf_pp = section.settings.promo_tab_label | split: ' ' -%}{%- if hgf_pp.first contains '%' -%}<span class="welcome__num">{{ hgf_pp.first }}</span>{{ section.settings.promo_tab_label | remove_first: hgf_pp.first }}{%- else -%}{{ section.settings.promo_tab_label }}{%- endif -%}</span>{%- endif -%}</button>
   <div class="welcome__panel" id="HgfWelcomePanel" role="dialog" aria-modal="false" aria-labelledby="HgfWelcomeTitle">
     <button type="button" class="welcome__close" aria-label="Close">
       <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
@@ -49,6 +79,7 @@
 <style>
   .welcome { position: fixed; z-index: 60; inset: auto 0 0 0; pointer-events: none; font-size: 1.4rem; }
   .welcome[hidden] { display: none; }
+  .welcome [data-mode][hidden] { display: none !important; }
   .welcome__panel { pointer-events: auto; background: var(--color-navy, #13233F); color: #fff; box-shadow: 0 1.2rem 4rem rgba(10,20,40,.28); padding: 2.4rem 2.4rem 1.6rem; position: relative; }
   .welcome__close { position: absolute; top: 1.2rem; right: 1.2rem; background: none; border: 0; color: rgba(255,255,255,.7); padding: .6rem; cursor: pointer; line-height: 0; }
   .welcome__close:hover { color: #fff; }
@@ -110,6 +141,12 @@
     var root = document.getElementById('HgfWelcome');
     if (!root) return;
     var KEY_DONE = 'hgf-welcome-done', KEY_SHUT = 'hgf-welcome-closed-visit', KEY_MINI = 'hgf-welcome-mini';
+    var nowS = Math.floor(Date.now() / 1000);
+    var pStart = Number(root.dataset.promoStart || 0), pEnd = Number(root.dataset.promoEnd || 0);
+    var promo = pEnd > 0 && pStart <= nowS && nowS < pEnd;
+    if (!promo && (root.dataset.hasForm !== 'true' || root.dataset.customer === 'true')) { root.remove(); return; }
+    if (promo) KEY_MINI = 'hgf-promo-mini-' + pEnd;
+    root.querySelectorAll('[data-mode]').forEach(function (el) { el.hidden = el.getAttribute('data-mode') !== (promo ? 'promo' : 'welcome'); });
     try { localStorage.removeItem('hgf-welcome-closed'); } catch (e) {}
     var visit = { get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }, set: function (k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} } };
     var params = new URLSearchParams(location.search);
@@ -117,7 +154,7 @@
     var tabOnly = params.get('welcome') === 'tab';
     var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
     if (!preview) {
-      if (store.get(KEY_DONE)) return;
+      if (store.get(KEY_DONE) && !promo) return;
       var src = ((params.get('utm_medium') || '') + ' ' + (params.get('utm_source') || '')).toLowerCase();
       if (/email|sms|brevo|klaviyo|newsletter/.test(src)) return;
       if (/^\/(cart|checkouts?|account)/.test(location.pathname)) return;
@@ -142,13 +179,21 @@
       function upd() { root.classList.add('is-tab'); }
       upd();
     }
-    tab.addEventListener('click', open);
-    card.addEventListener('click', open);
+    if (promo) {
+      var go = function () { location.href = root.dataset.promoLink; };
+      tab.addEventListener('click', go);
+      card.addEventListener('click', go);
+      tab.removeAttribute('aria-controls'); card.removeAttribute('aria-controls');
+      tab.removeAttribute('aria-expanded'); card.removeAttribute('aria-expanded');
+    } else {
+      tab.addEventListener('click', open);
+      card.addEventListener('click', open);
+    }
     root.querySelector('.welcome__card-x').addEventListener('click', minimise);
     root.querySelector('.welcome__close').addEventListener('click', function () { close(true); });
     root.querySelector('.welcome__nothanks').addEventListener('click', function () { close(true); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('is-open')) close(true); });
-    if (preview) { reveal(); if (mobile && !tabOnly) open(); }
+    if (preview) { reveal(); if (mobile && !tabOnly && !promo) open(); }
     else {
       setTimeout(reveal, (parseInt(root.dataset.delay, 10) || 10) * 1000);
       window.addEventListener('scroll', function onScroll() {
@@ -168,7 +213,7 @@
     })();
   })();
 </script>
-{%- endunless -%}
+{%- endif -%}
 
 {% schema %}
 {
@@ -183,7 +228,14 @@
     { "type": "text", "id": "tab_label", "label": "Minimised pill label", "default": "10% off" },
     { "type": "text", "id": "no_thanks", "label": "No thanks label", "default": "No thanks" },
     { "type": "range", "id": "delay", "label": "Show after (seconds)", "min": 3, "max": 30, "step": 1, "default": 10 },
-    { "type": "range", "id": "scroll", "label": "Or after scrolling (%)", "min": 10, "max": 90, "step": 5, "default": 40 }
+    { "type": "range", "id": "scroll", "label": "Or after scrolling (%)", "min": 10, "max": 90, "step": 5, "default": 40 },
+    { "type": "header", "content": "Promo card", "info": "While a promo is running, the card advertises it instead of the sign-up offer, then switches back on its own." },
+    { "type": "text", "id": "promo_title", "label": "Promo card heading" },
+    { "type": "text", "id": "promo_text", "label": "Promo card text" },
+    { "type": "text", "id": "promo_tab_label", "label": "Promo minimised pill label" },
+    { "type": "url", "id": "promo_link", "label": "Promo card link" },
+    { "type": "text", "id": "promo_starts_at", "label": "Promo starts", "info": "Optional. Format: 2026-11-24 00:00:00 -0500 (-0500 = Eastern Time)." },
+    { "type": "text", "id": "promo_ends_at", "label": "Promo ends", "info": "Format: 2026-11-30 23:59:59 -0500 (-0500 = Eastern Time)." }
   ],
   "blocks": [{ "type": "@app" }]
 }
