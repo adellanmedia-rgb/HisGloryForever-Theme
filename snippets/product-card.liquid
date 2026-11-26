@@ -94,7 +94,7 @@
           <span class="card__badge">· {{ badge | escape }}</span>
         {%- endif -%}
       </p>
-{%- render 'bf-label', product: product, style: 'card' -%}
+      {%- render 'bf-label', product: product, style: 'card' -%}
       {%- if color_option and color_option.values.size > 1 -%}
         <ul class="card__swatches" role="list" aria-label="{{ 'products.colors_available' | t: count: color_option.values.size }}">
           {%- for value in color_option.values limit: 5 -%}
