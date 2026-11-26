@@ -496,7 +496,12 @@
           if (item && list) {
             if (window.matchMedia('(min-width: 990px)').matches) {
               list.prepend(item);
-              $$('.product__media-item', list).forEach((li, i) => li.classList.toggle('is-first', i === 0));
+              $$('.product__media-item', list).forEach((li, i) => {
+                li.classList.toggle('is-first', i === 0);
+                // Lead photo is shown large, so load a large copy of it
+                const img = li.querySelector('img');
+                if (img) img.sizes = i === 0 ? '(min-width: 990px) 45vw, 100vw' : '(min-width: 990px) 25vw, 100vw';
+              });
             } else {
               list.scrollTo({ left: item.offsetLeft, behavior: 'smooth' });
             }

@@ -28,12 +28,14 @@
             {%- when 'image' -%}
               {%- liquid
                 assign media_loading = 'lazy'
+                assign media_sizes = '(min-width: 990px) 25vw, 100vw'
                 if forloop.first
                   assign media_loading = 'eager'
+                  assign media_sizes = '(min-width: 990px) 45vw, 100vw'
                 endif
               -%}
               <div class="media product__media">
-                {{ media | image_url: width: 1600 | image_tag: loading: media_loading, sizes: '(min-width: 990px) 30vw, 100vw', widths: '600, 900, 1200, 1600', alt: media.alt | default: product.title }}
+                {{ media | image_url: width: 1800 | image_tag: loading: media_loading, sizes: media_sizes, widths: '600, 900, 1200, 1600, 1800', alt: media.alt | default: product.title }}
               </div>
             {%- when 'video' -%}
               <div class="media product__media">
