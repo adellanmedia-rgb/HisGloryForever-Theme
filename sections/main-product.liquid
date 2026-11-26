@@ -78,6 +78,7 @@
         {%- render 'product-price', variant: current_variant -%}
         {%- if badge != blank -%}<span class="product__badge">· {{ badge | escape }}</span>{%- endif -%}
       </p>
+{%- render 'bf-label', product: product, style: 'product' -%}
 
       {%- if product.metafields.custom.model_note != blank -%}
         <p class="product__model-note">{{ product.metafields.custom.model_note.value | escape }}</p>
