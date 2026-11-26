@@ -1,0 +1,16 @@
+{%- comment -%}
+Black Friday label (RL style). Shows until Mon Nov 30, 2026 11:59 PM ET, then hides itself.
+Params: product, style ('card' or 'product')
+{%- endcomment -%}
+{%- liquid
+assign bf_end = 1796101199
+assign bf_now = 'now' | date: '%s' | plus: 0
+-%}
+{%- if product.gift_card? == false and bf_now < bf_end -%}
+{%- if style == 'product' -%}
+<p class="bf-label" style="margin:6px 0 18px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#1B3158;font-weight:600;">Enjoy 15% off at checkout</p>
+{%- else -%}
+<p class="bf-label" style="margin:4px 0 0;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#1B3158;font-weight:600;white-space:nowrap;">15% off at checkout</p>
+{%- endif -%}
+<script>if(Date.now()/1000>{{ bf_end }}){var s=document.currentScript;if(s&&s.previousElementSibling)s.previousElementSibling.remove();}</script>
+{%- endif -%}
