@@ -1094,6 +1094,14 @@ textarea.field__input { resize: vertical; min-height: 14rem; }
 .card__info > .card__title { grid-column: 1; grid-row: 1; }
 .card__info > .card__meta { grid-column: 2; grid-row: 1; justify-content: flex-end; white-space: nowrap; line-height: 1.4; }
 .card__info > .card__swatches { grid-column: 1 / -1; }
+.card__info > .bf-label { grid-column: 1 / -1; }
+@media (max-width: 749px) {
+  /* Phones: stack title, price and labels so narrow cards never squeeze or overlap the title */
+  .card__info { grid-template-columns: minmax(0, 1fr); row-gap: 0.4rem; }
+  .card__info > .card__title, .card__info > .card__meta { grid-column: 1; grid-row: auto; }
+  .card__info > .card__meta { justify-content: flex-start; white-space: normal; }
+  .card__info > .card__swatches { margin-top: 0.4rem; }
+}
 
 .card__title {
   font-family: var(--font-body);
