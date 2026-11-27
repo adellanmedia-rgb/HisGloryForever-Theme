@@ -62,8 +62,8 @@
         var c = palette[Math.floor(Math.random() * palette.length)];
         var big = Math.random() < 0.4;
         return { x: rnd(0, W), y: rnd(0, H), r: big ? rnd(0.05, 0.11) * Math.max(W, H) : rnd(8, 34) * dpr,
-          c: c, a: big ? rnd(0.10, 0.22) : rnd(0.30, 0.70), vx: rnd(-0.08, 0.08) * dpr, vy: rnd(-0.22, -0.05) * dpr,
-          ph: rnd(0, Math.PI * 2), sp: rnd(0.003, 0.009) };
+          c: c, a: big ? rnd(0.10, 0.22) : rnd(0.30, 0.70), vx: rnd(-0.16, 0.16) * dpr, vy: rnd(-0.44, -0.10) * dpr,
+          ph: rnd(0, Math.PI * 2), sp: rnd(0.0045, 0.0135) };
       }
       function size() {
         dpr = Math.min(window.devicePixelRatio || 1, 2);
