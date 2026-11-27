@@ -754,6 +754,11 @@ p:last-child { margin-bottom: 0; }
 .footer__column { min-width: 0; }
 .footer__text a { overflow-wrap: anywhere; font-size: 1.3rem; }
 @media (min-width: 990px) { .footer__columns { gap: 2.4rem; } }
+@media (max-width: 749px) {
+  /* Phones: Contact and Our Why get the full width so email addresses don't break mid-word */
+  .footer__columns > .footer__column:nth-child(n+3) { grid-column: 1 / -1; }
+  .footer__text a { overflow-wrap: normal; }
+}
 
 .footer__heading {
   font-family: var(--font-body);
