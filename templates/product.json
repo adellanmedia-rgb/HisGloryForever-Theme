@@ -22,7 +22,7 @@
       "type": "product-recommendations",
       "settings": {
         "color_scheme": "white",
-        "heading": "Complete the look",
+        "heading": "You may also like",
         "limit": 4,
         "padding_top": 80,
         "padding_bottom": 80
