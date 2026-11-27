@@ -50,7 +50,7 @@
           "settings": {
             "icon": "none",
             "title": "Made for you",
-            "text": "<p>Each piece is made after you order: made in 5 to 8 business days, delivered 3 to 5 business days after it ships.</p>",
+            "text": "<p>Each piece is made after you order: made in 2 to 5 business days, delivered 3 to 5 business days after it ships.</p>",
             "link_label": "Shipping policy",
             "link": "/policies/shipping-policy"
           }

@@ -29,7 +29,7 @@
           "type": "question",
           "settings": {
             "question": "How long until my order arrives?",
-            "answer": "<p>Each piece is made in 5 to 8 business days, then delivered within 3 to 5 business days after it ships (U.S. only). You will get a tracking link by email as soon as it is on its way. See our <a href=\"/policies/shipping-policy\">Shipping Policy</a>.</p>"
+            "answer": "<p>Each piece is made in 2 to 5 business days, then delivered within 3 to 5 business days after it ships (U.S. only). You will get a tracking link by email as soon as it is on its way. See our <a href=\"/policies/shipping-policy\">Shipping Policy</a>.</p>"
           }
         },
         "q3": {
