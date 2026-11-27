@@ -1106,6 +1106,9 @@ textarea.field__input { resize: vertical; min-height: 14rem; }
   .card__info > .card__title, .card__info > .card__meta { grid-column: 1; grid-row: auto; }
   .card__info > .card__meta { justify-content: flex-start; white-space: normal; }
   .card__info > .card__swatches { margin-top: 0.4rem; }
+  .card__meta { row-gap: 0.2rem; }
+  .card__meta .card__badge { flex-basis: 100%; }
+  .card__meta .card__dot { display: none; }
 }
 
 .card__title {

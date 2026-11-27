@@ -89,9 +89,9 @@
           </span>
         {%- endif -%}
         {%- if product.available == false -%}
-          <span class="card__badge">· {{ 'products.sold_out' | t }}</span>
+          <span class="card__badge"><span class="card__dot" aria-hidden="true">· </span>{{ 'products.sold_out' | t }}</span>
         {%- elsif badge != blank -%}
-          <span class="card__badge">· {{ badge | escape }}</span>
+          <span class="card__badge"><span class="card__dot" aria-hidden="true">· </span>{{ badge | escape }}</span>
         {%- endif -%}
       </p>
       {%- render 'bf-label', product: product, style: 'card' -%}
