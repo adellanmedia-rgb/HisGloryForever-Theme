@@ -1090,14 +1090,14 @@ textarea.field__input { resize: vertical; min-height: 14rem; }
 
 .card__info {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: 1.2rem;
-  row-gap: 0.8rem;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 0.6rem;
   align-items: start;
 }
 
-.card__info > .card__title { grid-column: 1; grid-row: 1; }
-.card__info > .card__meta { grid-column: 2; grid-row: 1; justify-content: flex-end; white-space: nowrap; line-height: 1.4; }
+/* Name on its own line, then price and label underneath (all screen sizes) */
+.card__info > .card__title { grid-column: 1; }
+.card__info > .card__meta { grid-column: 1; justify-content: flex-start; line-height: 1.4; }
 .card__info > .card__swatches { grid-column: 1 / -1; }
 .card__info > .bf-label { grid-column: 1 / -1; }
 @media (max-width: 749px) {
