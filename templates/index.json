@@ -9,6 +9,51 @@
  */
 {
   "sections": {
+    "bf_hero": {
+      "type": "bf-hero",
+      "blocks": {
+        "b1": {
+          "type": "button",
+          "settings": {
+            "label": "Crewnecks",
+            "link": "shopify://collections/crewnecks"
+          }
+        },
+        "b2": {
+          "type": "button",
+          "settings": {
+            "label": "Hoodies",
+            "link": "shopify://collections/hoodies"
+          }
+        },
+        "b3": {
+          "type": "button",
+          "settings": {
+            "label": "Christmas",
+            "link": "shopify://collections/christmas"
+          }
+        },
+        "b4": {
+          "type": "button",
+          "settings": {
+            "label": "Gifts",
+            "link": "shopify://collections/gifts"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "eyebrow": "The Black Friday Event",
+        "heading": "15% Off Everything",
+        "subheading": "Taken off at checkout. No code needed. Through Monday, Nov 30.",
+        "footnote": "Free US shipping on every order"
+      }
+    },
     "hero": {
       "type": "hero-slideshow",
       "blocks": {
@@ -395,6 +440,7 @@
     }
   },
   "order": [
+    "bf_hero",
     "hero",
     "xmas_grid",
     "xmas_gifts",

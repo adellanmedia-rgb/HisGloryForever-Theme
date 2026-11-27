@@ -1,0 +1,124 @@
+{%- comment -%}
+  Black Friday hero: animated navy and gold light background (drawn in the browser, no video file),
+  with the offer as a text overlay. Added Nov 27, 2026. Remove from the homepage after the sale.
+{%- endcomment -%}
+{%- assign s = section.settings -%}
+<section class="bfh" data-bfh aria-label="{{ s.eyebrow | escape }}">
+  <canvas class="bfh__canvas" aria-hidden="true" data-bfh-canvas></canvas>
+  <div class="bfh__veil" aria-hidden="true"></div>
+  <div class="bfh__content">
+    {%- if s.eyebrow != blank -%}<p class="bfh__eyebrow">{{ s.eyebrow }}</p>{%- endif -%}
+    {%- if s.heading != blank -%}<h2 class="bfh__heading">{{ s.heading }}</h2>{%- endif -%}
+    {%- if s.subheading != blank -%}<p class="bfh__sub">{{ s.subheading }}</p>{%- endif -%}
+    <div class="bfh__buttons">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.label != blank -%}
+          <a class="bfh__btn" href="{{ block.settings.link | default: '/collections/all' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  {%- if s.footnote != blank -%}<p class="bfh__foot">{{ s.footnote }}</p>{%- endif -%}
+</section>
+
+<style>
+  .bfh { position: relative; overflow: hidden; color: #fff; text-align: center;
+    background: radial-gradient(ellipse at 50% 40%, #24406f 0%, #1B3158 45%, #0f1d36 100%);
+    min-height: 62rem; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 8rem 2rem 6rem; }
+  .bfh__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .bfh__veil { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(11,22,42,0.45) 0%, rgba(11,22,42,0) 65%); pointer-events: none; }
+  .bfh__content { position: relative; z-index: 1; max-width: 72rem; }
+  .bfh__eyebrow { font-family: var(--font-body); font-weight: var(--font-body-semibold, 600); font-size: 1.4rem; letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 1.8rem; color: #fff; }
+  .bfh__heading { font-family: var(--font-heading); font-weight: 400; font-size: clamp(4.2rem, 6.4vw, 7.6rem); line-height: 1.05; margin: 0 0 1.6rem; color: #fff; letter-spacing: -0.01em; }
+  .bfh__sub { font-family: var(--font-body); font-size: clamp(1.5rem, 1.6vw, 1.8rem); line-height: 1.5; margin: 0 auto 3.2rem; max-width: 62rem; color: rgba(255,255,255,0.88); }
+  .bfh__buttons { display: flex; flex-wrap: nowrap; justify-content: center; gap: 1.2rem 1.6rem; }
+  .bfh__btn { display: inline-flex; align-items: center; justify-content: center; min-width: 15rem; padding: 1.3rem 2.6rem; border: 1px solid rgba(255,255,255,0.9); color: #fff; text-decoration: none;
+    font-family: var(--font-body); font-weight: var(--font-body-semibold, 600); font-size: 1.3rem; letter-spacing: 0.16em; text-transform: uppercase; transition: background .25s, color .25s; }
+  .bfh__btn:hover, .bfh__btn:focus-visible { background: #fff; color: #1B3158; }
+  .bfh__foot { position: absolute; z-index: 1; bottom: 2.4rem; left: 0; right: 0; margin: 0; font-family: var(--font-body); font-weight: var(--font-body-semibold, 600); font-size: 1.4rem; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; }
+  @media (max-width: 989px) { .bfh__buttons { flex-wrap: wrap; } }
+  @media (max-width: 749px) {
+    .bfh { min-height: 50rem; padding: 5.2rem 1.8rem 6rem; }
+    .bfh__eyebrow { font-size: 1.2rem; letter-spacing: 0.2em; }
+    .bfh__sub { margin-bottom: 2.6rem; }
+    .bfh__buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; max-width: 36rem; margin: 0 auto; }
+    .bfh__btn { min-width: 0; padding: 1.3rem 1rem; font-size: 1.2rem; letter-spacing: 0.12em; }
+    .bfh__foot { font-size: 1.25rem; letter-spacing: 0.14em; padding: 0 1.6rem; }
+  }
+</style>
+
+<script>
+  (function () {
+    var sections = document.querySelectorAll('[data-bfh]');
+    Array.prototype.forEach.call(sections, function (sec) {
+      if (sec.__bfh) return; sec.__bfh = true;
+      var cv = sec.querySelector('[data-bfh-canvas]'); if (!cv) return;
+      var ctx = cv.getContext('2d');
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var W = 0, H = 0, dpr = 1, dots = [], running = true, last = 0;
+      var palette = [[214,176,86],[236,204,128],[201,164,76],[245,236,214],[150,178,226],[214,176,86]];
+      function rnd(a, b) { return a + Math.random() * (b - a); }
+      function make() {
+        var c = palette[Math.floor(Math.random() * palette.length)];
+        var big = Math.random() < 0.4;
+        return { x: rnd(0, W), y: rnd(0, H), r: big ? rnd(0.05, 0.11) * Math.max(W, H) : rnd(8, 34) * dpr,
+          c: c, a: big ? rnd(0.10, 0.22) : rnd(0.30, 0.70), vx: rnd(-0.08, 0.08) * dpr, vy: rnd(-0.22, -0.05) * dpr,
+          ph: rnd(0, Math.PI * 2), sp: rnd(0.003, 0.009) };
+      }
+      function size() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = cv.width = Math.round(sec.clientWidth * dpr); H = cv.height = Math.round(sec.clientHeight * dpr);
+        var n = Math.round(Math.min(60, Math.max(30, sec.clientWidth / 24)));
+        dots = []; for (var i = 0; i < n; i++) dots.push(make());
+      }
+      function draw(t) {
+        ctx.clearRect(0, 0, W, H);
+        ctx.globalCompositeOperation = 'lighter';
+        for (var i = 0; i < dots.length; i++) {
+          var d = dots[i];
+          if (!reduce) { d.x += d.vx; d.y += d.vy; d.ph += d.sp; }
+          if (d.y + d.r < 0) { d.y = H + d.r; d.x = rnd(0, W); }
+          if (d.x < -d.r) d.x = W + d.r; if (d.x > W + d.r) d.x = -d.r;
+          var a = d.a * (0.7 + 0.3 * Math.sin(d.ph));
+          var g = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r);
+          g.addColorStop(0, 'rgba(' + d.c + ',' + a + ')');
+          g.addColorStop(0.55, 'rgba(' + d.c + ',' + (a * 0.55) + ')');
+          g.addColorStop(1, 'rgba(' + d.c + ',0)');
+          ctx.fillStyle = g; ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.globalCompositeOperation = 'source-over';
+      }
+      function loop(t) { if (running) { draw(t); } if (!reduce) requestAnimationFrame(loop); }
+      size(); draw(0);
+      if (!reduce) requestAnimationFrame(loop);
+      var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { size(); draw(0); }, 150); });
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { running = e[0].isIntersecting; }).observe(sec);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Black Friday hero",
+  "tag": "div",
+  "class": "section-bf-hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small heading", "default": "The Black Friday Event" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "15% Off Everything" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Taken off at checkout. No code needed. Through Monday, Nov 30." },
+    { "type": "text", "id": "footnote", "label": "Bottom line", "default": "Free US shipping on every order" }
+  ],
+  "blocks": [
+    { "type": "button", "name": "Button", "limit": 4, "settings": [
+      { "type": "text", "id": "label", "label": "Label" },
+      { "type": "url", "id": "link", "label": "Link" }
+    ] }
+  ],
+  "presets": [ { "name": "Black Friday hero", "blocks": [
+    { "type": "button", "settings": { "label": "Crewnecks", "link": "shopify://collections/crewnecks" } },
+    { "type": "button", "settings": { "label": "Hoodies", "link": "shopify://collections/hoodies" } },
+    { "type": "button", "settings": { "label": "Christmas", "link": "shopify://collections/christmas" } },
+    { "type": "button", "settings": { "label": "Gifts", "link": "shopify://collections/gifts" } }
+  ] } ]
+}
+{% endschema %}
