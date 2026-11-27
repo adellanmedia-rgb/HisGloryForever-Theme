@@ -117,7 +117,8 @@
         "overlay": 25,
         "autoplay": true,
         "interval": 7
-      }
+      },
+      "disabled": true
     },
     "statement": {
       "type": "rich-text",
